@@ -11,3 +11,16 @@ mutation CREATE_FORMAT($createFormat:  CreateGigformatInput!){
     png
   }
 }`
+
+export const UPDATE_GIG_FORMAT = gql `
+mutation UPDATE_FORMAT($updateFormat: UpdateGigformatInput!){
+  updateGigformat(updateGigformatInput: $updateFormat){
+    id
+    ai
+    psd
+    swf
+    blend
+    jpg
+    png
+  }
+}`

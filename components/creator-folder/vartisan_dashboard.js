@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import React, { useContext, useEffect, useState } from 'react';
 import { MainContext } from '../context/mainContext';
+import { clean } from '../functions/functions';
 import { GET_ALL_QUERY } from '../queries/gigs/gig';
 
 const VartisanDashboard = () => {
@@ -8,10 +9,11 @@ const VartisanDashboard = () => {
     const [allGig, setGetAllGig] = useState([]);
     
 
-    const handleSingleGig = (e, id) => {
+    const handleSingleGig = async(e, id) => {
        e.preventDefault();
-       const result = allGig.find((data)=> data.id === id);
-       setGig({...gig, ...result});
+       let result = await allGig.find((data)=> data.id === id);
+      let value = await clean({...result});
+       setGig({...gig, ...value});
        createHandler();
     }
 

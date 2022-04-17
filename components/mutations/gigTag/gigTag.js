@@ -8,3 +8,12 @@ mutation CREATETAG($createtag: CreateGigTagInput!){
         }
   }
 `
+
+export const UPDATE_TAG = gql `
+mutation UPDATE_TAG($updateTag: UpdateGigTagInput!){
+  	updateGigTag(updateGigTagInput: $updateTag){
+    id
+    name
+    gigId
+  }
+}`

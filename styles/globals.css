@@ -5611,7 +5611,7 @@ border-top: 10px solid #55FFFF;
 }
 
 .project_description_header > p:last-child {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.5)
 }
@@ -5654,8 +5654,8 @@ border-top: 10px solid #55FFFF;
   width: 100%;
   align-items: flex-start!important;
   background-color: #F7F8FB;
-  padding: 1.5%;
-  width: 97%;
+  padding: 2.5%;
+  width: 100%;
   margin: 0 auto;
   margin-bottom: 4%;
   border-radius: 8px;
@@ -5683,7 +5683,12 @@ border-top: 10px solid #55FFFF;
 }
 
 .faq_header_details {
-  width: 90%;
+  width: 90%; 
+  margin-top: 0 !important;
+}
+
+.faq_header_details > p:first-child{
+  margin-top: 0;
 }
 
 .faq_more_button {
@@ -5735,7 +5740,7 @@ border-top: 10px solid #55FFFF;
   background-color: #f2f5ff;
   position: absolute;
   width: 85px;
-  top: 50px;
+  top: 30px;
   right: -10px;
   padding: 3%;
   border-radius: 6px;
@@ -5807,6 +5812,7 @@ border-top: 10px solid #55FFFF;
 
 .project_header_details {
   width: 90%;
+  margin-top: 0!important;
 }
 
 .project_header_details > p{

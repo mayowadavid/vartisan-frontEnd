@@ -1,13 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { MainContext } from '../../components/context/mainContext'
 import {useMutation, useQuery} from '@apollo/client';
-import { CREATE_GIG } from '../mutations/Gig/gig';
+import { CREATE_GIG, UPDATE_GIG } from '../mutations/Gig/gig';
 import { CREATE_TAG } from '../mutations/gigTag/gigTag';
 import { CREATE_GIG_FORMAT } from '../mutations/gigFormat/gigFormat';
+import { clean } from '../functions/functions';
 
 const Overview = () => {
     
-   const {category, gig, setGig, setPricing, setOverview} = useContext(MainContext);
+   const {
+       category, 
+       gig, 
+       setGig, 
+       setPricing, 
+       setOverview, 
+       initialState, 
+       updateGigFormat,
+       updateGigTag,
+       updateGig
+    } = useContext(MainContext);
    const [tag, setTag] = useState({name: ""});
    const [rotate, setRotate] = useState(false);
    const [secondRotate, setSecondRotate] = useState(false);
@@ -17,8 +28,10 @@ const Overview = () => {
    const [error, setError] = useState();
    const [categoryIndex, setCategoryIndex] = useState(0);
    
-    const {fileFormat} = gig;
-    const {ai, psd, swf, gif, blend, bmpr, eps, jpg, fig, ico, png, other, } = fileFormat;
+    const {gigFormat} = gig;
+    const newFormat = clean({...gigFormat});
+    const reFormat = {...initialState.gigFormat, ...newFormat};
+    const {ai, psd, swf, gif, blend, bmpr, eps, jpg, fig, ico, png, other, } = reFormat;
    useEffect(()=>{
     if(category !== undefined){const { categories } = category;
     setAllCategory(categories);
@@ -28,7 +41,11 @@ const Overview = () => {
 
 useEffect(()=> {
     console.log(gig);
-}, [])
+    if(gig.id !== ""){
+        const { gigTag } = gig;
+            gigTag.length !== 0 && setTagHolder(gigTag);
+    }
+}, [gig])
 
 const handleChange = (e) => {
     e.preventDefault();
@@ -55,28 +72,34 @@ const handleSubCategory = (e) => {
 
 const handleCheck = (e) => {
     const {name, checked} = e.target;
-    let {fileFormat} = gig;
-    fileFormat = {...fileFormat, [name]: checked};
-    setGig({...gig, fileFormat});
+    let {gigFormat} = gig;
+    gigFormat = {...gigFormat, [name]: checked};
+    setGig({...gig, gigFormat});
 }
 
 const tagSubmit = (e) => {
     e.preventDefault();
-    const {tags} =gig;
+    const {gigTag} = gig;
     const {name, value} = e.target;
     setTag({[name]: value});
-    if(tags.length !== 0){
-        const submitTags = tags.includes(tag);
-        submitTags == false ? tags.push(tag): setError("Tag already exists");
+    if(gigTag.length !== 0){
+        const submitTags = gigTag.find(({name})=> name == tag.name);
+        console.log(tag);
+        console.log(gigTag);
+        console.log(submitTags);
+        submitTags !== undefined || tag.name == " " ? setError("Tag already exists") : (gigTag = [...gigTag, tag]);
         error !== undefined && setError();
-        setTagHolder(tags);
-        setTag({name: ""});
-        return setGig({...gig, tags});
+        setTagHolder(gigTag);
+        setTag({[name]: value});
+        setGig({...gig, gigTag});
+        return setTag({name: ""});
     }else {
-        tags.push(tag);
-        setTagHolder(tags);
+        tag.name !== " " && 
+        (gigTag = [...gigTag, tag]),
+        setTagHolder(gigTag),
+        setTag({[name]: value}),
+        setGig({...gig, gigTag}),
         setTag({name: ""});
-        setGig({...gig, tags});
     }
 }
 
@@ -87,13 +110,13 @@ const tagChanger = (e) => {
 }
 const deleteTag = (e, id) => {
     e.preventDefault();
-    let {tags} =gig;
-    const tagRemoved = tags.filter(({name})=>{
+    let {gigTag} =gig;
+    const tagRemoved = gigTag.filter(({name})=>{
         return name !== id;
     })
-    tags = tagRemoved;
+    gigTag = tagRemoved;
     setTagHolder(tagRemoved);
-    return setGig({...gig, tags});
+    return setGig({...gig, gigTag});
 }
 
 const handleArrow = (e) => {
@@ -141,15 +164,29 @@ const [createGigTag, {data: createTagData}] = useMutation(CREATE_TAG, {
 })
 
 const submitTags = async (dataholder, tag) => {
-    const { creategig } = await dataholder;
-    const {id} = creategig;
     for (let x = 0; x < tag.length; x++){
         const name = tag[x].name;
         createGigTag({
             variables: {
                 createtag: {
                     name,
-                gigId: id,
+                gigId: dataholder.id,
+            }
+            }
+        })
+    }
+}
+
+const updateTags = async (dataholder, tag) => {
+    for (let x = 0; x < tag.length; x++){
+        const name = tag[x].name;
+        const id= tag[x].id;
+        updateGigTag({
+            variables: {
+                updateTag: {
+                    id,
+                    name,
+                gigId: dataholder.id,
             }
             }
         })
@@ -158,30 +195,67 @@ const submitTags = async (dataholder, tag) => {
 
 const overviewSubmit = async (e) => {
     e.preventDefault();
-    const { gigName, categoryId, subCategoryId, tags } = gig;
-    //  let {data: formatHolder} = await createGigFormat({
-    //     variables: {
-    //         createFormat: { ...fileFormat }
-    //     }
-    // })
-    // const { createGigformat } = await formatHolder;
-    // const { id } = await createGigformat;
-    // const {data: gigHolder, error} = await createGig({
-    //     variables: {
-    //         createGig: { 
-    //             name: gigName,
-    //         categoryId,
-    //         subCategoryId,
-    //         gigFormatId: id,
-    //         }
-    //     }
-    // })
-    // gigHolder !== undefined && console.log(gigHolder);
-    // error !== undefined && console.log(error.message);
-    // await tags.length !== 0 && submitTags(gigHolder, tags);
+    const { 
+        name, 
+        categoryId, 
+        subCategoryId, 
+        gigTag,
+        gigFormatId,
+        gigId } = gig;
+    if(gig.id == ""){
+        let {data: formatHolder} = await createGigFormat({
+            variables: {
+                createFormat: { ...gigFormat }
+            }
+        })
+    const { createGigformat } = await formatHolder;
+    const {data: gigHolder, error} = await createGig({
+        variables: {
+            createGig: { 
+            name: gigName,
+            categoryId,
+            subCategoryId,
+            gigFormatId: createGigformat.id,
+            }
+        }
+    })
+    gigHolder !== undefined && console.log(gigHolder);
+    error !== undefined && console.log(error.message);
+    const { creategig } = await gigHolder;
+    await gigTag.length !== 0 && submitTags(creategig, gigTag);
     setPricing(true);
     setOverview(false);
+    } else {
+        let cleanObj = {...gigFormat};
+        delete cleanObj['__typename'];
+        let {data: formatHolder, error} = await updateGigFormat({
+            variables: {
+                updateFormat: {...cleanObj}
+            }
+        })
+        const { updateGigformat } = await formatHolder;
+        const { id } = await updateGigformat;
+        let { data: gigHolder } = await updateGig({
+            variables: {
+                updateGig: { 
+                id: gig.id,
+                name,
+                categoryId,
+                subCategoryId,
+                gigFormatId: id,
+                }
+            }
+        })
+    const tagsWithoutId = await gigTag.filter((noId)=> noId.id == undefined);
+    console.log(tagsWithoutId);
+    await tagsWithoutId !== undefined && submitTags(gig, tagsWithoutId);
+    const tagsWithId = await gigTag.filter((noId)=> noId.id !== undefined); 
+    await tagsWithId !== undefined && updateTags(gig, tagsWithId);
+    setPricing(true);
+    setOverview(false);
+    }
 }
+
 
 const nextPage = (e) => {
     e.preventDefault();
@@ -233,7 +307,7 @@ const nextPage = (e) => {
                                     <p>Project title</p> <img src="/svg/info_circle.svg" alt=""/>
                                 </div>
                                 <span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hendrerit nec</p> </span>
-                                <input type="text" value={gig.name} name="gigName" onChange={handleChange} placeholder="Title of the project"/>
+                                <input type="text" value={gig?.name} name="name" onChange={handleChange} placeholder="Title of the project"/>
                             </div>
                             <div className="project_form">
                                 <div className="hint_display_header flex_show_row">
@@ -243,7 +317,7 @@ const nextPage = (e) => {
                                 <div className="project_category_selector flex_show_row form_border">
                                     <div className={rotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
                                     <select name="categoryOption" defaultValue="Select Category" onClick={handleArrow} onChange={handleCategory}>
-                                    <option defaultValue hidden>Select Category</option>
+                                    <option defaultValue hidden>{gig.categoryId !== "" ? gig?.category.name: "Select Category"}</option>
                                         {
                                            allCategory !== undefined && 
                                            allCategory.map(({name, id}, i)=> {
@@ -264,7 +338,7 @@ const nextPage = (e) => {
                                 <div className={secondRotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
                                 
                                 <select name="subCategoryOption" defaultValue="Select Sub-Category" onClick={handleSecondArrow} onChange={handleSubCategory}>
-                                    <option defaultValue hidden>Select Sub-Category</option>
+                                    <option defaultValue hidden>{gig?.subCategoryId !== "" ? gig?.subCategory.name: "select subCategory"}</option>
                                 {subCategory.map(({name}, i)=> { 
                                      return (<option key={i}>{name}</option> )
                                 })}

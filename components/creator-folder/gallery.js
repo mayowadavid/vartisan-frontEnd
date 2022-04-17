@@ -65,7 +65,7 @@ const Gallery = () => {
                         <p>Upload up to 5 images (.mp4 or .webm) Files must be less than 10MB each and less than 400 pixels</p>
                     </div>
                     <div className="gallery_row flex_show_row">
-                        <ProjectVideo />
+                        <ProjectVideo key="video" id="video" />
                     </div>
                 </div>
                 <div className="project_submit flex_show_row">

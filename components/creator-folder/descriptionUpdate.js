@@ -3,8 +3,8 @@ import { MainContext } from '../context/mainContext';
 
 const DescriptionUpdate = (props) => {
     const initialState = {
-        faqName: "",
-        faqDescription: "",
+        name: "",
+        description: "",
     }
     const [faq, setFaq] = useState(initialState);
     
@@ -38,8 +38,8 @@ const DescriptionUpdate = (props) => {
             </div>
            {openFaq == true && (<div className="faq_questions">
                 <div className="faq_header_details_update project_form project_description_header">
-                    <input type="text" name="faqName" value={faq.faqName} onChange={handleDecription}/>
-                    <textarea rows="4" value={faq.faqDescription} onChange={handleDecription} cols="50" name="faqDescription" form="usrform"></textarea>
+                    <input type="text" name="name" value={faq.name} onChange={handleDecription}/>
+                    <textarea rows="4" value={faq.description} onChange={handleDecription} cols="50" name="description" form="usrform"></textarea>
                 </div>
                 <div className="faq_submit_button remove_margin flex_show_row">
                     <p>Cancel</p>

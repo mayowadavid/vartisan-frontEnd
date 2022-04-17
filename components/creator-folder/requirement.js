@@ -14,7 +14,13 @@ const Requirement = () => {
     const {requirementName, required, text, link} = requirement;
     const [openRequirement, setOpenRequirement] = useState(false);
     
-    const {gig, setGig, proceedRequirement}= useContext(MainContext);
+    const {
+        gig, 
+        setGig, 
+        proceedRequirement, 
+        createRequirement,
+        updateRequirement
+    }= useContext(MainContext);
     const handleRequirement = (e) => {
         e.preventDefault();
         const {name, value} = e.target;
@@ -44,6 +50,59 @@ const Requirement = () => {
 
     const handleOpenRequirement = () => {
         setOpenRequirement(!openRequirement);
+    }
+
+    const createRequirements = (datum, data) => {
+        for (let x = 0; x < data.length; x++){
+            const requirementName = data[x].requirementName;
+            const required = data[x].required;
+            const text = data[x].text;
+            const link = data[x].link;
+            createRequirement({
+                variables: {
+                    createRequirement: {
+                        requirementName,
+                        required,
+                        text,
+                        link,
+                        gigId: datum.id,
+                    }
+                }
+            })
+        }
+    }
+
+    const updateRequirements = (datum, data) => {
+        for (let x = 0; x < data.length; x++){
+            const requirementName = data[x].requirementName;
+            const required = data[x].required;
+            const id = data[x].id;
+            const text = data[x].text;
+            const link = data[x].link;
+            updateRequirement({
+                variables: {
+                    updateRequirement: {
+                        id,
+                        requirementName,
+                        required,
+                        text,
+                        link,
+                        gigId: datum.id,
+                    }
+                }
+            })
+        }
+    }
+
+    const submitRequirement = async (e) => {
+        e.preventDefault();
+        const {gigRequirement} = gig;
+        const requirementWithId = await gigRequirement.filter((details)=> details.id !== undefined);
+        await requirementWithId !== undefined && updateRequirements(gig, requirementWithId);
+        const requirementWithoutId = await gigRequirement.filter((details) => details.id == undefined);
+        await requirementWithoutId !== undefined && createRequirements(gig, requirementWithoutId);
+        proceedRequirement()
+        
     }
 
 
@@ -77,7 +136,7 @@ const Requirement = () => {
                     </div>
                     <div className="project_submit project_submit_header flex_show_row">
                         <p>Save as Draft</p>
-                        <p onClick={proceedRequirement}>Continue</p>
+                        <p onClick={submitRequirement}>Continue</p>
                     </div>
                 </div>
                 <div className="creator_wrap_holder flex_show_row">
@@ -126,7 +185,7 @@ const Requirement = () => {
                             </div>)}
                             <div className="project_submit flex_show_row">
                                 <p>Save as Draft</p>
-                                <p onClick={proceedRequirement}>Continue</p>
+                                <p onClick={submitRequirement}>Continue</p>
                             </div>
                         </div>
                     </div>
@@ -142,7 +201,7 @@ const Requirement = () => {
                         <a href=""><p>Learn more about the Tips</p></a>
                     </div>
                 </div>
-        </div>
+    </div>
   )
 }
 

@@ -4,8 +4,10 @@ import { MainContext } from '../context/mainContext';
 const ProjectImage = ({data, i}) => {
     const [error, setError] = useState();
     const [temporaryImage, setTemporaryImage] = useState();
-    const {gig}= useContext(MainContext);
-    const { gigGallery } = gig;
+    const [projectName, setProjectName] = useState({name: ''});
+    const [selected, setSelected] = useState(false);
+    const {gig, setGig}= useContext(MainContext);
+    const { gigGallery, gigGalleryId } = gig;
     const handleFile = (e, i) => {
         const {files} = e.target;
         if(files){
@@ -17,18 +19,38 @@ const ProjectImage = ({data, i}) => {
         let hold = filteredImageSize == true && (URL.createObjectURL(selected)); 
         hold !== undefined && hold;
         setTemporaryImage(hold);
-        gigGallery[i] = {...gigGallery[i], file: files}
+        //clone due to no direct manipulation
+        const temp = [...gigGallery];
+        temp[i] = {...temp[i], file: files};
+        gigGallery = [...temp];
+        setGig({...gig, gigGallery});
         URL.revokeObjectURL(selected);   
         }
   };
   const handleNameChange = (e, i) => {
       e.preventDefault();
       const {name, value} = e.target;
-      gigGallery[i] = {...gigGallery[i], name: value}
+      //clone due to no direct manipulation
+      const temp = [...gigGallery];
+      temp[i] = {...temp[i], name: value};
+      gigGallery = [...temp];
+      setGig({...gig, gigGallery});
+      setProjectName({name: value});
   }
-  const handleCheck = (e, i) => {
+  const handleCheck = async(e, i) => {
     const {name, checked} = e.target;
-    gigGallery[i] = {...gigGallery[i], [name]: checked}
+    //clone due to no direct manipulation
+    const temp = await [...gigGallery];
+    const reset = await temp.map((d)=>{
+        if(d.default !== undefined){
+            d.default = false;
+        }
+        return d;
+    } );
+    reset[i] = {...reset[i], [name]: checked}
+    gigGallery = [...reset];
+    await setGig({...gig, gigGallery});
+    await setSelected(!selected);
   }
 
     return (
@@ -45,15 +67,15 @@ const ProjectImage = ({data, i}) => {
             {temporaryImage !== undefined &&
                 (<>
                 <input onChange={(e)=>handleFile(e, i)} name="file" type="file" id="file"/><label htmlFor="file">
-                <img onChange={(e)=>handleFile(e, i)} src={temporaryImage} alt=""/>
+                <img onChange={(e)=>handleFile(e, i)} src={gigGalleryId !== "" ? gigGallery[i].image : temporaryImage} alt=""/>
                 </label>
                 </>)
             }
             <div className="gallery_name">
-                <input type="text" name="name" onChange={(e)=>handleNameChange(e, i)} placeholder="Project description" name="" id="" />
+                <input type="text" id={i} value={gigGalleryId !== "" ? gigGallery[i].name : projectName.name} name="name" onChange={(e)=>handleNameChange(e, i)} placeholder="Project description" name="" id="" />
             </div>
             <div className="gallery_selector flex_show_row">
-                <input name="default" onChange={(e)=>handleCheck(e, i) } type="radio"/> <p>Set as project cover</p>
+                <input name="default" id={i} checked={gigGalleryId !== "" ? gigGallery[i].default : selected } onChange={(e)=>handleCheck(e, i) } type="radio"/> <p>Set as project cover</p>
             </div>
         </div>
     );

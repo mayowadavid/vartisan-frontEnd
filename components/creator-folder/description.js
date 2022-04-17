@@ -4,8 +4,16 @@ import DescriptionUpdate from './descriptionUpdate';
 import ProjectFaq from './projectFaq';
 
 const Description = () => {
-const {gig, setGig, setOpenFaq, handleDescription}= useContext(MainContext);
-
+const {
+    gig, 
+    setGig, 
+    setOpenFaq, 
+    handleDescription,
+    updateGig,
+    updateGigFaq,
+    createGigFaq
+}= useContext(MainContext);
+const {gigFaq} = gig;
 
 const handleDecription = (e) => {
     e.preventDefault();
@@ -20,12 +28,63 @@ const deleteAction = (e, id) => {
    return setGig({...gig, gigFaq});
 }
 
-const submitDescription = (e) => {
+const createGigFaqs = (dataholder, gigsFaq) => {
+    for (let x = 0; x < gigsFaq.length; x++){
+        const name = gigsFaq[x].name;
+        const description= gigsFaq[x].description;
+        createGigFaq({
+            variables: {
+                createFaq : {
+                    name,
+                    description,
+                    gigId: dataholder.id,
+                }
+            }
+        })
+    }
+}
+
+const updateGigFaqs = (dataholder, gigsFaq) => {
+    for (let x = 0; x < gigsFaq.length; x++){
+        const name = gigsFaq[x].name;
+        const description= gigsFaq[x].description;
+        const id = gigsFaq[x].id;
+        console.log(gigsFaq, dataholder);
+        updateGigFaq({
+            variables: {
+                updateFaq : {
+                    id,
+                    name,
+                    description,
+                    gigId: dataholder.id,
+                }
+            }
+        })
+    }
+}
+
+const submitDescription = async (e) => {
     e.preventDefault();
+    const { gigFaq } = gig;
+    if(gig.id !== ""){
+        const {data: gigData, error: gigError} = await updateGig({
+            variables: {
+                updateGig : {
+                    id: gig.id,
+                    description: gig.description,
+                }
+            }
+        });
+
+    const gigFaqWithId = await gigFaq.filter((details)=> details.id !== undefined);
+    await gigFaqWithId !== undefined && updateGigFaqs(gigData.updateGig, gigFaqWithId);
+    const gigFaqWithoutId = await gigFaq.filter((details) => details.id == undefined);
+    await gigFaqWithId !== undefined && createGigFaqs(gigData.updateGig, gigFaqWithoutId);
+    }
     handleDescription();
 }
 
-const {gigFaq} = gig;
+
   return (
     <div className="creator_manage_gig">
             <div className="gig_project_control flex_show_row">
@@ -71,7 +130,7 @@ const {gigFaq} = gig;
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hendrerit nec </p>
                             </div>
                             <div className="project_summary_wrapper form_border">
-                                <textarea name="description" onChange={handleDecription} id="" cols="30" rows="10"></textarea>
+                                <textarea value={gig.description} name="description" onChange={handleDecription} id="" cols="30" rows="10"></textarea>
                             </div>
                             <DescriptionUpdate />
                             {gigFaq.length !== 0 && gigFaq.map((data, i)=> {

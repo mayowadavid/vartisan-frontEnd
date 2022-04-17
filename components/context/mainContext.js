@@ -1,4 +1,13 @@
+import { useMutation } from '@apollo/client';
 import React, { createContext, useState, useEffect } from 'react';
+import { CREATE_GIG_FAQ, CREATE_REQUIREMENT, UPDATE_GIG, UPDATE_GIG_FAQ, UPDATE_REQUIREMENT } from '../mutations/Gig/gig';
+import { UPDATE_GIG_FORMAT } from '../mutations/gigFormat/gigFormat';
+import { UPDATE_TAG } from '../mutations/gigTag/gigTag';
+import { CREATE_PRIVATE_COMMiSSION } from '../mutations/PrivateCommission/privateCommission';
+import { CREATE_RUSH_ORDER } from '../mutations/RushOrder/rushOrder';
+import { CREATE_COMMERCIAL_USE } from '../mutations/commercialUse/commercialUse';
+import { useQuery } from '@apollo/client'
+import { FETCH_CATEGORIES } from '../queries/category/category';
 
 export const MainContext = createContext();
 
@@ -18,7 +27,7 @@ const MainContextProvider = (props) => {
     const [openFaq, setOpenFaq] = useState(false);
     const initialState = {
         id: "",
-        gigName: "",
+        name: "",
         categoryId: "",
         subCategoryId: "",
         deliveryPeriod: "",
@@ -30,7 +39,7 @@ const MainContextProvider = (props) => {
     customIllustration: false,
         gigFormatId: "",
         sourceFile: false,
-        fileFormat: {
+        gigFormat: {
             ai: false,
             psd: false,
             swf: false,
@@ -44,7 +53,8 @@ const MainContextProvider = (props) => {
             png: false,
             other: false,
          },
-        tags: [],
+         gigTagId: "",
+        gigTag: [],
     rushOrder: {
         status: false,
         price: "",
@@ -60,12 +70,24 @@ const MainContextProvider = (props) => {
         price: "",
         deliveryPeriod: "",
         },
+        gigGalleryId: "",
+        rushOrderId: "",
+        privateCommissionId: "",
+        commercialUseId: "",
         gigFaq: [],
         gigRequirement: [],
         gigGallery: [],
         gigVideo: [],
     };
     const [gig, setGig] = useState(initialState);
+
+    const{data, loading} = useQuery(FETCH_CATEGORIES,
+        {onCompleted: (data) => {
+          setCategory(data);
+        },
+        onError: (error) => {
+            console.log(error);
+        }});
 
     const createHandler = () => {
         setCloseDashboard(false);
@@ -90,6 +112,96 @@ const MainContextProvider = (props) => {
         setShowRequirement(false);
         setShowGallery(true);
     }
+
+    const [createPrivateCommission] = useMutation(CREATE_PRIVATE_COMMiSSION, {
+        onCompleted: (data)=> {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createCommercialUse] = useMutation(CREATE_COMMERCIAL_USE, {
+        onCompleted: (data)=> {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createRushOrder] = useMutation(CREATE_RUSH_ORDER, {
+        onCompleted: (data)=> {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [updateGig] = useMutation(UPDATE_GIG, {
+        onCompleted: (data)=> {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [updateGigFormat] = useMutation(UPDATE_GIG_FORMAT, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [updateGigTag] = useMutation(UPDATE_TAG, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createGigFaq] = useMutation(CREATE_GIG_FAQ, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [updateGigFaq] = useMutation(UPDATE_GIG_FAQ, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createRequirement] = useMutation(CREATE_REQUIREMENT, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [updateRequirement] = useMutation(UPDATE_REQUIREMENT, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
 
     return (
         <MainContext.Provider value={{ 
@@ -122,7 +234,17 @@ const MainContextProvider = (props) => {
         showGallery, 
         setShowGallery,
         proceedRequirement,
-        initialState
+        initialState,
+        updateGig,
+        updateGigFormat,
+        updateGigTag,
+        createRushOrder,
+        createPrivateCommission,
+        createCommercialUse,
+        updateGigFaq,
+        createGigFaq,
+        createRequirement,
+        updateRequirement
         }}>
             {props.children}
         </MainContext.Provider>

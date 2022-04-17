@@ -1,4 +1,3 @@
-import { set } from 'mongoose';
 import React, { useEffect, useState, useContext } from 'react'
 import { MainContext } from '../../components/context/mainContext'
 
@@ -7,7 +6,16 @@ const Pricing = () => {
   const [revision, setRevision] = useState();
   const [rotate, setRotate] = useState(false);
   const [secondRotate, setSecondRotate] = useState(false);
-  const {setShowDescription, setPricing, setGig, gig} = useContext(MainContext);
+  const {
+      setShowDescription,
+       setPricing, 
+       setGig, 
+       gig, 
+       updateGig, 
+       createRushOrder,
+       createPrivateCommission,
+       createCommercialUse
+    } = useContext(MainContext);
   const deliveryDaysArray = new Array(90);
   const value =()=>{
     let a = [];
@@ -18,6 +26,7 @@ const Pricing = () => {
     };
     useEffect(()=>{
         value();
+        console.log(gig);
     }, []);
 
   const revisionsArray = new Array(10);
@@ -32,6 +41,8 @@ const Pricing = () => {
         revisionValue();
     }, []);
 
+    const {aiFiles, customIllustration, commercial, sourceFile} = gig;
+
     const handleArrow = (e) => {
         e.preventDefault();
         setRotate(!rotate);
@@ -42,8 +53,75 @@ const Pricing = () => {
         setSecondRotate(!secondRotate);
     }
 
-    const submitPricing = (e) => {
+    const submitPricing = async (e) => {
         e.preventDefault();
+        const {
+            amount,
+             deliveryPeriod,
+              numberOfRevision,
+              sourceFile,
+              aiFiles,
+              commercial,
+              customIllustration,
+              rushOrder,
+              privateCommission,
+              commercialUse,
+              rushOrderId,
+              commercialUseId,
+              privateCommissionId
+
+            } = gig;
+
+    const {data: rushOrders } = await createRushOrder({
+        variables: {
+            createRush: {
+                status: rushOrder.status,
+                price: rushOrder.price,
+                deliveryPeriod: rushOrder.deliveryPeriod,
+                gigId: gig.id,
+            }
+        }
+    });
+
+    const {data: privateCommissioned } = await createPrivateCommission({
+        variables: {
+            createPrivateCommission: {
+                status: privateCommission.status,
+                price: privateCommission.price,
+                deliveryPeriod: privateCommission.deliveryPeriod,
+                gigId: gig.id
+            }
+        }
+    });
+
+    const {data: commercialUsage } = await createCommercialUse({
+        variables: {
+            createCommercialUse: {
+                status: commercialUse.status,
+                price: commercialUse.price,
+                deliveryPeriod: commercialUse.deliveryPeriod,
+                gigId: gig.id
+            }
+        }
+    });
+
+    const {data: gigUpdated, error} = await updateGig({
+            variables: {
+            updateGig: {
+            id: gig.id,
+            amount,
+            deliveryPeriod,
+            numberOfRevision,
+            sourceFile,
+            aiFiles,
+            commercial,
+            customIllustration,
+            rushOrderId: rushOrders.createRushOrder.id,
+            commercialUseId: commercialUsage.createCommercialUse.id,
+            privateCommissionId: privateCommissioned.createPrivateCommission.id,
+            }
+            }
+        })
         setPricing(false);
         setShowDescription(true);
     }
@@ -143,7 +221,8 @@ const Pricing = () => {
                                 <p>Delivery Days</p>
                                 <div className="project_delivery_days_selector flex_show_row form_border" >
                                 <div className={rotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
-                                    <select onClick={handleArrow} name="deliveryPeriod" onChange={handleChange}>
+                                    <select defaultValue="Select Days" onClick={handleArrow} name="deliveryPeriod" onChange={handleChange}>
+                                    <option defaultValue hidden>{gig.deliveryPeriod !== "" ? gig.deliveryPeriod: "Select Days"}</option>
                                         {deliveryDays !== undefined && 
                                         (deliveryDays.map((data, i)=> {
                                             return (<option key={i} >{data + " " + "days"}</option>);
@@ -155,7 +234,8 @@ const Pricing = () => {
                                 <p>Number of Revisions</p>
                                 <div className="project_delivery_days_selector flex_show_row form_border">
                                 <div className={rotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div>
-                                <select name="numberOfRevision" onClick={handleSecondArrow} onChange={handleChange}>
+                                <select defaultValue="Choose times" name="numberOfRevision" onClick={handleSecondArrow} onChange={handleChange}>
+                                <option defaultValue hidden>{gig.numberOfRevision !== "" ? gig.numberOfRevision: "Choose times"}</option>
                                         {revision !== undefined && 
                                         (revision.map((data, i)=> {
                                             return (<option key={i}>{data + " " + "days"}</option>);
@@ -171,16 +251,16 @@ const Pricing = () => {
                                 <div className="project_category_selector form_border">
                                     <div className="source_field_container flex_show_row">
                                         <div className="sourcebox_wrapper remove_margin flex_show_row">
-                                            <input name="sourceFile" onChange={handleCheck} type="checkbox" /> <p>Source File</p>
+                                            <input name="sourceFile" checked={sourceFile} onChange={handleCheck} type="checkbox" /> <p>Source File</p>
                                         </div>
                                         <div className="sourcebox_wrapper remove_margin flex_show_row">
-                                            <input  name="commercial" onChange={handleCheck} type="checkbox"/> <p>Commercial Use</p>
+                                            <input  name="commercial" checked={commercial} onChange={handleCheck} type="checkbox"/> <p>Commercial Use</p>
                                         </div>
                                         <div className="sourcebox_wrapper remove_margin flex_show_row">
-                                            <input name="aiFiles" onChange={handleCheck} type="checkbox"/> <p>Ai Files</p>
+                                            <input name="aiFiles" checked={aiFiles} onChange={handleCheck} type="checkbox"/> <p>Ai Files</p>
                                         </div>
                                         <div className="sourcebox_wrapper remove_margin flex_show_row">
-                                            <input name="customIllustration" onChange={handleCheck} type="checkbox"/> <p>Custom Illustration</p>
+                                            <input name="customIllustration" checked={customIllustration} onChange={handleCheck} type="checkbox"/> <p>Custom Illustration</p>
                                         </div>
                                         
                                     </div>
@@ -189,7 +269,7 @@ const Pricing = () => {
                             <div className="project_half_form flex_show_row upper_line">
                                 <p>Project Price</p>
                                 <div className="project_delivery_days_selector flex_show_row form_border">
-                                    <p>$</p> <input type="number" name="amount" onChange={handleChange} placeholder="20"/>
+                                    <p>$</p> <input type="number" value={gig.amount} name="amount" onChange={handleChange} placeholder="20"/>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +279,7 @@ const Pricing = () => {
                             </div>
                             <div className="gig_extra_package">
                                 <div className="gig_extra_selector flex_show_row">
-                                    <input name="status" onClick={handleRushCheck} type="checkbox"/>
+                                    <input name="status" checked={gig.rushOrder.status} onChange={handleRushCheck} type="checkbox"/>
                                     <p>Rush Order: 3 Day Delivery</p>
                                 </div>
                                 <div className="gig_extra_input flex_show_row">
@@ -207,7 +287,7 @@ const Pricing = () => {
                                         <p>For an extra</p>
                                         <div className="gig_extra_amount_row flex_show_row form_border">
                                             <p>$</p>
-                                            <input name="price" onChange={handleRushOrder} type="number" placeholder="25"/>
+                                            <input name="price" value={gig.rushOrder.price} onChange={handleRushOrder} type="number" placeholder="25"/>
                                         </div>
                                     </div>
                                     <div className="gig_extra_days">
@@ -215,6 +295,7 @@ const Pricing = () => {
                                         <div className="gig_extra_amount_row flex_show_row form_border">
                                         <div className={rotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
                                         <select name="deliveryPeriod" onClick={handleSecondArrow} onChange={handleRushOrder}>
+                                        <option defaultValue hidden>{gig.rushOrder.deliveryPeriod !== "" ? gig.rushOrder.deliveryPeriod: "Select Days"}</option>
                                             {revision !== undefined && 
                                             (revision.map((data, i)=> {
                                                 return (<option key={i}>{data + " " + "days"}</option>);
@@ -226,7 +307,7 @@ const Pricing = () => {
                             </div>
                             <div className="gig_extra_package">
                                 <div className="gig_extra_selector flex_show_row">
-                                    <input onChange={handleCommercialCheck} name="status" type="checkbox"/>
+                                    <input onChange={handleCommercialCheck} checked={gig.commercialUse.status} name="status" type="checkbox"/>
                                     <p>Commercial Fee</p>
                                 </div>
                                 <div className="gig_extra_input flex_show_row">
@@ -234,7 +315,7 @@ const Pricing = () => {
                                         <p>For an extra</p>
                                         <div className="gig_extra_amount_row flex_show_row form_border">
                                             <p>$</p>
-                                            <input name="price" type="number" onChange={handleCommercialUse} placeholder="20"/>
+                                            <input name="price" value={gig.commercialUse.price} type="number" onChange={handleCommercialUse} placeholder="20"/>
                                         </div>
                                     </div>
                                     <div className="gig_extra_days">
@@ -242,6 +323,7 @@ const Pricing = () => {
                                         <div className="gig_extra_amount_row flex_show_row form_border">
                                         <div className={rotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
                                         <select name="deliveryPeriod" onClick={handleSecondArrow} onChange={handleCommercialUse}>
+                                        <option defaultValue hidden>{gig.commercialUse.deliveryPeriod !== "" ? gig.commercialUse.deliveryPeriod: "Select Days"}</option>
                                             {revision !== undefined && 
                                             (revision.map((data, i)=> {
                                                 return (<option key={i}>{data + " " + "days"}</option>);
@@ -253,7 +335,7 @@ const Pricing = () => {
                             </div>
                             <div className="gig_extra_package">
                                 <div className="gig_extra_selector flex_show_row">
-                                    <input name="status" onChange={handlePrivateCheck} type="checkbox"/>
+                                    <input name="status" checked={gig.privateCommission.status} onChange={handlePrivateCheck} type="checkbox"/>
                                     <p>Private Commission</p>
                                 </div>
                                 <div className="gig_extra_input flex_show_row">
@@ -261,7 +343,7 @@ const Pricing = () => {
                                         <p>For an extra</p>
                                         <div className="gig_extra_amount_row flex_show_row form_border">
                                             <p>$</p>
-                                            <input name="price" type="number" onChange={handlePrivateCommission} placeholder="20"/>
+                                            <input name="price" type="number" value={gig.privateCommission.price} onChange={handlePrivateCommission} placeholder="20"/>
                                         </div>
                                     </div>
                                     <div className="gig_extra_days">
@@ -269,6 +351,7 @@ const Pricing = () => {
                                         <div className="gig_extra_amount_row flex_show_row form_border">
                                         <div className={rotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
                                         <select name="deliveryPeriod" onClick={handleSecondArrow} onChange={handlePrivateCommission}>
+                                        <option defaultValue hidden>{gig.privateCommission.deliveryPeriod !== "" ? gig.privateCommission.deliveryPeriod: "Select Days"}</option>
                                             {revision !== undefined && 
                                             (revision.map((data, i)=> {
                                                 return (<option key={i}>{data + " " + "days"}</option>);

@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { MainContext } from '../context/mainContext';
 
 const ProjectFaq = ({deleteAction, data, i}) => {
-    const {faqName, faqDescription} = data;
     const [addNew, setAddNew] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [faq, setFaq] = useState();
@@ -11,9 +10,10 @@ const ProjectFaq = ({deleteAction, data, i}) => {
                 e.preventDefault();
                 setAddNew(!addNew);
             }
+            
             const initialState = {
-                faqName: "",
-                faqDescription: "",
+                name: "",
+                description: "",
             }
 
             // const handleEdit = (e) => {
@@ -37,7 +37,9 @@ const ProjectFaq = ({deleteAction, data, i}) => {
             const handleSubmitFaq = (e) => {
                 e.preventDefault();
                 const {gigFaq} = gig;
-                gigFaq[i] = faq;
+                const gigFaqCopy = [...gigFaq];
+                gigFaqCopy[i] = faq;
+                gigFaq = [...gigFaqCopy]
                 setGig({...gig, gigFaq});
                 setFaq(initialState);
                 setOpenEdit(!openEdit);
@@ -45,9 +47,9 @@ const ProjectFaq = ({deleteAction, data, i}) => {
 
     return(<>
         {openEdit == false && (<div key={i} className="faq_questions flex_show_row">
-            <div className="faq_header_details project_description_header">
-                <p>{faqName}</p>
-                <p>{faqDescription}</p>
+            <div className="faq_header_details remove_margin project_description_header">
+                <p>{data.name}</p>
+                <p>{data.description}</p>
             </div>
             <div onClick={ handleAdd } className="faq_more_button">
                 {addNew == true && (<div className="faq_drop_button shadow flex_show_col">
@@ -69,8 +71,8 @@ const ProjectFaq = ({deleteAction, data, i}) => {
             (openEdit == true && faq !== undefined) && 
         (<div className="faq_questions">
             <div className="faq_header_details_update project_form project_description_header">
-                <input type="text" name="faqName" value={faq.faqName} onChange={handleDecription}/>
-                <textarea rows="4" value={faq.faqDescription} onChange={handleDecription} cols="50" name="faqDescription" form="usrform"></textarea>
+                <input type="text" name="name" value={faq.name} onChange={handleDecription}/>
+                <textarea rows="4" value={faq.description} onChange={handleDecription} cols="50" name="description" form="usrform"></textarea>
             </div>
             <div className="faq_submit_button remove_margin flex_show_row">
                 <p>Cancel</p>
