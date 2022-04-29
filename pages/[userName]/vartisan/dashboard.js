@@ -1,5 +1,5 @@
 import React from 'react'
-import Dashboard from '../../components/creator-folder/dashboard'
+import Dashboard from '../../../components/creator-folder/dashboard'
 
 const SellerDasboard = () => {
   return (

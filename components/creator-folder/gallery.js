@@ -1,10 +1,72 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useState, useEffect } from 'react'
+import { MainContext } from '../../components/context/mainContext'
 import ProjectImage from './projectImage';
 import ProjectVideo from './projectVideo';
 
 const Gallery = () => {
     
     const [layoutLength, setLayoutLength] = useState(["1", "2", "3"]);
+    const {gig, 
+        setGig,
+        setCloseDashboard,
+        setShowGallery,
+        getAllGig
+    } = useContext(MainContext);
+    
+    const uploadVideo = (datum, data) => {
+        for (let x = 0; x < data.length; x++){
+            const name = data[x].name;
+            const selected = data[x].selected;
+            const file = data[x].file;
+            const gigId = datum.id;
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('selected', selected);
+            formData.append('file', file);
+            formData.append('gigId', gigId);
+
+            axios.post('http://localhost:4000/gig-video/imageUpload', 
+            formData).then((dat)=> console.log(dat))
+            .catch((error)=> console.log(error));
+        }
+    }
+
+    const uploadImages = (datum, data) => {
+        
+        for (let x = 0; x < data.length; x++){
+            const name = data[x].name;
+            const selected = data[x].selected;
+            const file = data[x].file;
+            const gigId = datum.id;
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('selected', selected);
+            formData.append('file', file[0]);
+            formData.append('gigId', gigId);
+            axios.post('http://localhost:4000/gig-gallery/imageUpload', 
+            formData).then((dat)=> console.log(dat))
+            .catch((error)=> console.log(error));
+        }
+        
+    }
+
+    console.log(gig);
+    const submitGig = async(e) => {
+        e.preventDefault();
+        const { gigGallery, gigVideo } = gig;
+        const gigImageWithId = gigGallery.filter((data)=> data.id !== undefined);
+        await gigImageWithId !== undefined && uploadImages(gig, gigImageWithId)
+        const gigImageWithOutId = gigGallery.filter((data)=> data.id == undefined); 
+        await gigImageWithOutId !== undefined && uploadImages(gig, gigImageWithOutId)
+
+        await gigVideo.id !== undefined && uploadVideo(gig, [gigVideo]);
+        const {data: gigData, error: gigError} = await getAllGig();
+        console.log(gigData);
+        console.log(gigError);
+        setShowGallery(false);
+        setCloseDashboard(true);
+    }
 
 
   return (
@@ -37,7 +99,7 @@ const Gallery = () => {
         </div>
         <div className="project_submit project_submit_header flex_show_row">
             <p>Save as Draft</p>
-            <p>Publish</p>
+            <p onClick={submitGig}>Publish</p>
         </div>
     </div>
     <div className="creator_wrap_holder flex_show_row">
@@ -70,7 +132,7 @@ const Gallery = () => {
                 </div>
                 <div className="project_submit flex_show_row">
                     <p>Save as Draft</p>
-                    <p>Publish</p>
+                    <p onClick={submitGig}>Publish</p>
                 </div>
             </div>
         </div>

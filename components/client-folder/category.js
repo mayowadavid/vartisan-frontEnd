@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Footer from '../general-folder/footer'
 import ClientHeader from './clientHeader'
 import ClientMobileHeader from './clientMobileHeader'
 import Link from 'next/link'
+import { MainContext } from '../context/mainContext'
+import { useQuery } from '@apollo/client'
+import { FETCH_CATEGORIES } from '../queries/category/category'
 
 const Category = () => {
+    useEffect(()=> {
+
+    }, [])
+   const [singleCategory, setSingleCategory] = useState();
+   const {category, setCategory} = useContext(MainContext);
+    const{data, loading} = useQuery(FETCH_CATEGORIES,
+        {onCompleted: (data) => {
+            if(data){
+            console.log(data);
+            setCategory(data);
+            const {categories} = data;
+            setSingleCategory({...categories[0]});}
+        },
+        onError: (error) => {
+            console.log(error);
+    }});
+    singleCategory !== undefined && console.log(singleCategory);
   return (
     <div>
         <ClientHeader />
@@ -38,17 +58,17 @@ const Category = () => {
                                             <div className="range_drag">
                                                 <div className="wrapper">
                                                     <div className="range-slider">
-                                                        <input type="text" className="js-range-slider" value="" />
+                                                        <input type="text" className="js-range-slider" />
                                                     </div>
                                                     <div className="divider"></div>
                                                     <div className="extra_controls form-inline">
                                                         <div className="form-group">
                                                             <div className="input_wrapper">
-                                                                   <p>$</p><input type="text" className="js-input-from form-control" value="0" />
+                                                                   <p>$</p><input type="text" className="js-input-from form-control"/>
                                                             </div>
                                                             <div className="middle">-</div>
                                                             <div className="input_wrapper">
-                                                                   <p>$</p><input type="text" className="js-input-to form-control" value="0" />
+                                                                   <p>$</p><input type="text" className="js-input-to form-control" />
                                                             </div>
                                                            
                                                         </div>
@@ -85,388 +105,32 @@ const Category = () => {
             </div>
             <div className="displayed_category">
                 <div className="category_displayed_row">
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
+                    {singleCategory !== undefined && singleCategory?.gig?.map((data, i)=> {
+                        const { name, user, gigGallery, amount } = data;
+                       return (<div className="filtered_card" key={i}>
+                        <Link href={`/${user?.userName}/${name}`}><a>
+                        <img src={gigGallery[0]?.file[0] !== undefined ? gigGallery[0]?.file[0]?.image : "img/featured.png"} alt=""/>
+                        </a>
+                        </Link>
                         <div className="filtered_content">
                             <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
+                                <img src={"img/featured.png"} alt=""/>
                             </div>
                             <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
+                                <p>{ name }</p>
+                                <p>{user?.userName}</p>
                                 <div className="gig_creator_detail flex_show_row">
                                     <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
+                                    <p>{user?.userName}</p>
                                 </div>
                             </div>
                             <div className="filtered_price">
                                 <p>from</p>
-                                <p>$25</p>
+                                <p>{`$${amount}`}</p>
                             </div>
                         </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$25</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$25</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="filtered_card">
-                        <img src="img/featured.png" alt=""/>
-                        <div className="filtered_content">
-                            <div className="filtered_image">
-                                <img src="img/featured.png" alt=""/>
-                            </div>
-                            <div className="filtered_title">
-                                <p>Micheal John</p>
-                                <p>logo editing</p>
-                                <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
-                                    <p>Micheal John</p>
-                                </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p>from</p>
-                                <p>$40</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-
+                        </div>)
+                    })}
                 </div>
             </div>
         </div>

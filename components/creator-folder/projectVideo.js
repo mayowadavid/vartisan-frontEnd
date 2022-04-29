@@ -3,8 +3,13 @@ import { MainContext } from '../context/mainContext';
 const ProjectVideo = () => {
     const [error, setError] = useState();
     const [temporaryVideo, setTemporaryVideo] = useState();
-    const {gig}= useContext(MainContext);
-    const { gigVideo, setGig } = gig;
+    const initialState = {
+        name: '',
+        default: false
+    }
+    const [videoName, setVideoName] = useState(initialState);
+    const {gig, setGig}= useContext(MainContext);
+    const { gigVideo } = gig;
     const handleFile = (e) => {
         e.preventDefault();
         const {files} = e.target;
@@ -17,11 +22,29 @@ const ProjectVideo = () => {
         let hold = filteredVideoSize == true && (URL.createObjectURL(selected)); 
         hold !== undefined && hold;
         setTemporaryVideo(hold);
-        gigVideo = files;
-        setGig(gigVideo);
+        const temp = {...gigVideo};
+        gigVideo = {...temp, file: files};
+        setGig({...gig, gigVideo});
         URL.revokeObjectURL(selected);   
         }
   };
+  const handleChange = (e) => {
+      e.preventDefault();
+      const {name, value} = e.target;
+      setVideoName({...videoName, [name]: value});
+      const temp = {...gigVideo};
+      gigVideo = {...temp, [name]: value};
+        setGig({...gig, gigVideo});
+  }
+
+  const handleCheck = (e) => {
+      const {name, checked} = e.target;
+      const temp = {...gigVideo};
+      console.log(e);
+      console.log(checked);
+      gigVideo = {...temp, [name]: checked};
+      setGig({...gig, gigVideo});
+  }
 
     return(<div className="gallery_display">
                 {temporaryVideo === undefined && (
@@ -44,10 +67,10 @@ const ProjectVideo = () => {
                     </>)
                 }
                 <div className="gallery_name">
-                    <input type="text" placeholder="Project description" name="" id=""/>
+                    <input type="text" value={videoName.name} onChange={handleChange} placeholder="Project description" name="name"/>
                 </div>
                 <div className="gallery_selector flex_show_row">
-                    <input type="radio"/> <p>Set as video cover</p>
+                    <input name="selected" value={videoName.default} onChange={handleCheck} id="video" type="radio"/> <p>Set as video cover</p>
                 </div>
            </div>);
 }

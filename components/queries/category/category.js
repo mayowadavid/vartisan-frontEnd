@@ -8,9 +8,18 @@ export const FETCH_CATEGORIES = gql`
         description
         status
         displayBanner
-        file {
-        id
-        image
+        gig {
+        user {
+        userName
+        }
+        name
+        amount
+        gigGallery {
+            name
+            file {
+            image
+            }
+        }
         }
         subCategory{
         id

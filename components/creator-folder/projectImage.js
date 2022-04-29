@@ -42,8 +42,8 @@ const ProjectImage = ({data, i}) => {
     //clone due to no direct manipulation
     const temp = await [...gigGallery];
     const reset = await temp.map((d)=>{
-        if(d.default !== undefined){
-            d.default = false;
+        if(d.selected !== undefined){
+            d.selected = false;
         }
         return d;
     } );
@@ -75,7 +75,7 @@ const ProjectImage = ({data, i}) => {
                 <input type="text" id={i} value={gigGalleryId !== "" ? gigGallery[i].name : projectName.name} name="name" onChange={(e)=>handleNameChange(e, i)} placeholder="Project description" name="" id="" />
             </div>
             <div className="gallery_selector flex_show_row">
-                <input name="default" id={i} checked={gigGalleryId !== "" ? gigGallery[i].default : selected } onChange={(e)=>handleCheck(e, i) } type="radio"/> <p>Set as project cover</p>
+                <input name="selected" id={i} checked={gigGalleryId !== "" ? gigGallery[i].default : selected } onChange={(e)=>handleCheck(e, i) } type="radio"/> <p>Set as project cover</p>
             </div>
         </div>
     );

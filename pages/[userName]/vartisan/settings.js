@@ -1,9 +1,15 @@
-import React from 'react'
-import VartisanHeader from '../../components/creator-folder/vartisanHeader'
-import VartisanMobileHeader from '../../components/creator-folder/vartisanMobileHeader'
-import Sidebar from '../../components/creator-folder/sidebar'
+import React, { useContext, useEffect } from 'react'
+import VartisanHeader from '../../../components/creator-folder/vartisanHeader'
+import VartisanMobileHeader from '../../../components/creator-folder/vartisanMobileHeader'
+import Sidebar from '../../../components/creator-folder/sidebar'
+import { MainContext } from '../../../components/context/mainContext'
 
 const Settings = () => {
+    const {setChangeState, vartisanState} = useContext(MainContext);
+    useEffect(()=> {
+        setChangeState({...vartisanState, settings: true});
+    }, []);
+
   return (
     <div className="dashboard_wrapper">
     <Sidebar />
@@ -25,21 +31,21 @@ const Settings = () => {
                     <div className="settings_form_input">
                         <p>First Name</p>
                         <div className="settings_form_column flex_show_row">
-                            <img src="../svg/pen-edit.svg" alt=""/>
+                            <img src="../../../svg/pen-edit.svg" alt=""/>
                             <input type="text" />
                         </div>
                     </div>
                     <div className="settings_form_input">
                         <p>Last Name</p>
                         <div className="settings_form_column flex_show_row">
-                            <img src="../svg/pen-edit.svg" alt=""/>
+                            <img src="../../../svg/pen-edit.svg" alt=""/>
                             <input type="text" />
                         </div>
                     </div>
                     <div className="settings_form_input">
                         <p>Email</p>
                         <div className="settings_form_column flex_show_row">
-                            <img src="../svg/pen-edit.svg" alt=""/>
+                            <img src="../../../svg/pen-edit.svg" alt=""/>
                             <input type="text" />
                         </div>
                     </div>
@@ -50,7 +56,7 @@ const Settings = () => {
                                 <p>Graphics Design</p>
                             </div>
                             <div className="icon_wrapper">
-                                <img src="../svg/caret_down.png" alt=""/>
+                                <img src="../../../svg/caret_down.png" alt=""/>
                             </div>
                         </div>
                     </div>
@@ -61,7 +67,7 @@ const Settings = () => {
                                 <p>Intermediate</p>
                             </div>
                             <div className="icon_wrapper">
-                                <img src="../svg/caret_down.png" alt=""/>
+                                <img src="../../../svg/caret_down.png" alt=""/>
                             </div>
                         </div>
                     </div>
@@ -73,56 +79,56 @@ const Settings = () => {
                     <div className="settings_link_account flex_show_row">
                         <div className="social_link flex_show_row">
                             <div className="social_link_wrapper flex_show_row">
-                                <img src="../svg/selected.svg" alt=""/>
+                                <img src="../../../svg/selected.svg" alt=""/>
                                 <p>Twitter</p>
                             </div>
                             <div className="social_link_cancel">
-                                <img src="../svg/close_small.svg" alt=""/>
+                                <img src="../../../svg/close_small.svg" alt=""/>
                             </div>
                         </div>
                         <div className="social_link flex_show_row">
                             <div className="social_link_wrapper flex_show_row">
-                                <img src="../svg/selected.svg" alt=""/>
+                                <img src="../../../svg/selected.svg" alt=""/>
                                 <p>Dribbble</p>
                             </div>
                             <div className="social_link_cancel">
-                                <img src="../svg/close_small.svg" alt=""/>
+                                <img src="../../../svg/close_small.svg" alt=""/>
                             </div>
                         </div>
                         <div className="social_link flex_show_row">
                             <div className="social_link_wrapper flex_show_row">
-                                <img src="../svg/selected.svg" alt=""/>
+                                <img src="../../../svg/selected.svg" alt=""/>
                                 <p>DevianART</p>
                             </div>
                             <div className="social_link_cancel">
-                                <img src="../svg/close_small.svg" alt=""/>
+                                <img src="../../../svg/close_small.svg" alt=""/>
                             </div>
                         </div>
                         <div className="social_link flex_show_row">
                             <div className="social_link_wrapper flex_show_row">
-                                <img src="../svg/selected.svg" alt=""/>
+                                <img src="../../../svg/selected.svg" alt=""/>
                                 <p>Behance</p>
                             </div>
                             <div className="social_link_cancel">
-                                <img src="../svg/close_small.svg" alt=""/>
+                                <img src="../../../svg/close_small.svg" alt=""/>
                             </div>
                         </div>
                         <div className="social_link flex_show_row">
                             <div className="social_link_wrapper flex_show_row">
-                                <img src="../svg/selected.svg" alt=""/>
+                                <img src="../../../svg/selected.svg" alt=""/>
                                 <p>Linkedln</p>
                             </div>
                             <div className="social_link_cancel">
-                                <img src="../svg/close_small.svg" alt=""/>
+                                <img src="../../../svg/close_small.svg" alt=""/>
                             </div>
                         </div>
                         <div className="social_link flex_show_row">
                             <div className="social_link_wrapper flex_show_row">
-                                <img src="../svg/selected.svg" alt=""/>
+                                <img src="../../../svg/selected.svg" alt=""/>
                                 <p>instagram</p>
                             </div>
                             <div className="social_link_cancel">
-                                <img src="../svg/close_small.svg" alt=""/>
+                                <img src="../../../svg/close_small.svg" alt=""/>
                             </div>
                         </div>
                     </div>

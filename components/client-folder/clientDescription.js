@@ -8,43 +8,48 @@ import { MainContext } from '../context/mainContext';
 const ClientDescription = ({handleEditPop}) => {
     const mdParser = new MarkdownIt(/* Markdown-it options */);
   // Finish!
-    const [singleContent, setSingleContent] = useState();
-    const {userData, setUserProfile, setProfileId, profileId, userDescription} = useContext(MainContext);
+    const [contentHtml, setContentHtml] = useState('');
+    const [plainMarkDown, setPlainMarkDown] = useState('')
+    const { userProfile, setUserProfile } = useContext(MainContext);
 
-    const handleEditorChange = ({ html}) => {
-    setSingleContent({...singleContent, body: html});
+    const handleEditorChange = ({ html, text }) => {
+    setContentHtml(html);
+    const newValue = text.replace(/\d/g, "");
+    setPlainMarkDown(newValue);
+    setUserProfile({...userProfile, description: html, descriptionMarkDown: newValue})
     }
 
     useEffect(()=> {
-        // if(userDescription !== undefined || null){
-        //     console.log(String.raw(userDescription));
-        //     // const convert = String.raw(userDescription);
-        //     // console.log(convert);
-        //     // setSingleContent({...singleContent, body: convert});
-        // }
-    }, [userDescription])
+        const { descriptionMarkDown } = userProfile;
+        if( descriptionMarkDown !== null ){
+            setPlainMarkDown(descriptionMarkDown);
+        }
+    }, [userProfile])
 
-
-    const [updateProfile, {data, loading}] = useMutation(UPDATE_PROFILE, {
-        variables: {
-            updateProfileInput: {
-                id: profileId,
-                description: singleContent !== undefined && singleContent.body.toString(),
-            }
-        },
+    console.log(userProfile);
+    const [updateProfile, { data, loading, error }] = useMutation(UPDATE_PROFILE, {
         onCompleted: (data) => {
             data && handleEditPop();
-            setUserProfile(data);
+            console.log(data);
         },
         onError: (error) => {
-            console.log(error);
+            if(error){
+                console.log(error);
+            }
         }
     });
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("clicked");
-        updateProfile();
+        const { id, description, descriptionMarkDown } = userProfile;
+        
+        let { data, error } = await updateProfile({
+            variables: {
+                updateProfileInput: {
+                    id,
+                description, 
+                descriptionMarkDown
+            }
+        }});
     }
     return (
         <div className="references_pop_up flex_show_row">
@@ -62,7 +67,7 @@ const ClientDescription = ({handleEditPop}) => {
                     <label>Add your introduction to your profile. Markdown is enabled.</label>
                 </div>
                 <div className="markdown_body">
-                    <MdEditor style={{ height: '300px' }} renderHTML={text => mdParser.render(text)} value={userDescription} onChange={handleEditorChange} />
+                    <MdEditor style={{ height: '300px' }} renderHTML={text => mdParser.render(text)} value={plainMarkDown} onChange={handleEditorChange} />
                 </div>
                 <div className="reference_submit_button flex_show_row remove_margin border">
                     <p>Discard</p> <p onClick={handleSubmit}>Save</p>

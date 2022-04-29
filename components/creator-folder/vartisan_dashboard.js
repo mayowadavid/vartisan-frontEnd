@@ -70,7 +70,7 @@ const VartisanDashboard = () => {
                     </div>
                     <div className="creator_gig_body">
                         {allGig.length !== 0 && allGig.map((data, i) => {
-                            const {category, name, id} = data;
+                            const {category, name, id, gig, gigGallery} = data;
                             return (
                             <div key={i} onClick={(e)=> handleSingleGig(e, id)} className="creator_gig_row">
                                 <div className="creator_checkbox">
@@ -78,11 +78,11 @@ const VartisanDashboard = () => {
                                 </div>
                                 <div className="creator_project_content">
                                     <div className="creator_project_content_image">
-                                        <img src="../img/category.png" alt=""/>
+                                    <img src={gigGallery?.length !== 0 ? gigGallery[0]?.file[0].image : "../../img/category.png"} alt=""/>
                                     </div>
                                     <div className="creator_project_content_details">
                                         <p>{name}</p>
-                                        <p>{category.name}</p>
+                                        <p>{category?.name}</p>
                                     </div>
                                 </div>
                                 <div className="creator_project_impression">
@@ -99,7 +99,7 @@ const VartisanDashboard = () => {
                                 </div>
                                 <div className="creator_order_action">
                                     <div className="creator_order_action_image">
-                                        <img src="../svg/more_horizontal.svg" alt=""/>
+                                        <img src="../../svg/more_horizontal.svg" alt=""/>
                                     </div>
                                 </div>
                             </div>);

@@ -83,7 +83,7 @@ export const UPDATE_GIG = gql `
         id
         image
       }
-      default
+      selected
     }
     gigVideo {
       id

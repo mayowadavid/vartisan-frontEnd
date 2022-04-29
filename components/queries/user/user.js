@@ -1,13 +1,13 @@
 import { gql } from "@apollo/client"
 
-export const LOGIN = gql` query LOGIN($userEmail: String!) {
-        loginUser(email: $userEmail) {
-          id
-          userName
-          profile {
-            id
-          }
-        }
+export const LOGIN = gql` query LOGIN($userInput: CreateUserInput!){
+  loginUser(userData: $userInput){
+    userName
+    email
+    password
+    refreshToken
+    refreshTokenExp
+  }
 }`;
 
 export const CREATE_USER = gql`
@@ -49,13 +49,19 @@ query FETCH_PROFILE($userProfile: String!){
 
 export const FETCH_USER_BY_NAME = gql `
 query FETCH_USER_BY_NAME($userName: String!){
-      findUserByName( userName: $userName ){
+  findUserByName( userName: $userName ){
         id
+    		userName
     		profileId
    			 profile {
           id
+          createdAt
+          file {
+            image
+          }
           role
           description
+          descriptionMarkDown
         }
       }
 }`
@@ -65,6 +71,7 @@ export const UPDATE_PROFILE = gql `
         updateProfile(updateProfileInput: $updateProfileInput) {
     			id
         	description
+          descriptionMarkDown
     			language
   }
 }`

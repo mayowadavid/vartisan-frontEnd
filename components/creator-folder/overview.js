@@ -200,7 +200,7 @@ const overviewSubmit = async (e) => {
         categoryId, 
         subCategoryId, 
         gigTag,
-        gigFormatId,
+        gigFormat,
         gigId } = gig;
     if(gig.id == ""){
         let {data: formatHolder} = await createGigFormat({
@@ -225,7 +225,31 @@ const overviewSubmit = async (e) => {
     await gigTag.length !== 0 && submitTags(creategig, gigTag);
     setPricing(true);
     setOverview(false);
-    } else {
+    } else if(gigFormat.id == undefined && gig.id !== undefined ){
+        let {data: formatHolder} = await createGigFormat({
+            variables: {
+                createFormat: { ...gigFormat }
+            }
+        })
+        const { createGigformat } = await formatHolder;
+        let { data: gigHolder } = await updateGig({
+            variables: {
+                updateGig: { 
+                id: gig.id,
+                name,
+                categoryId,
+                subCategoryId,
+                gigFormatId: createGigformat.id,
+                }
+            }
+        })
+    const tagsWithoutId = await gigTag.filter((noId)=> noId.id == undefined);
+    await tagsWithoutId !== undefined && submitTags(gig, tagsWithoutId);
+    const tagsWithId = await gigTag.filter((noId)=> noId.id !== undefined); 
+    await tagsWithId !== undefined && updateTags(gig, tagsWithId);
+    setPricing(true);
+    setOverview(false);
+    } else{
         let cleanObj = {...gigFormat};
         delete cleanObj['__typename'];
         let {data: formatHolder, error} = await updateGigFormat({
@@ -248,9 +272,9 @@ const overviewSubmit = async (e) => {
         })
     const tagsWithoutId = await gigTag.filter((noId)=> noId.id == undefined);
     console.log(tagsWithoutId);
-    await tagsWithoutId !== undefined && submitTags(gig, tagsWithoutId);
+    await tagsWithoutId !== undefined && submitTags(gigHolder.updateGig, tagsWithoutId);
     const tagsWithId = await gigTag.filter((noId)=> noId.id !== undefined); 
-    await tagsWithId !== undefined && updateTags(gig, tagsWithId);
+    await tagsWithId !== undefined && updateTags(gigHolder.updateGig, tagsWithId);
     setPricing(true);
     setOverview(false);
     }

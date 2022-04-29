@@ -3,7 +3,7 @@ import { MainContext } from '../context/mainContext'
 
 
 const VartisanProfile = () => {
-    const { userDescription} = useContext(MainContext);
+    const { userProfile } = useContext(MainContext);
   return (
     <div  className="Category_page_wrapper">
     <div className="Category_page_wrapper">
@@ -73,11 +73,9 @@ const VartisanProfile = () => {
                     <div className="about_vartisan">
                         <div className="about_vartisan_header flex_show_row remove_margin">
                             <p>About the vartisan</p>
-                            <p>Join 10 july 2022</p>
+                            <p>{userProfile?.createdAt}</p>
                         </div>
-                        <div className="about_vartisan_description">
-                            {userDescription}
-                        </div>
+                        <div dangerouslySetInnerHTML={{__html: userProfile.description}} />
                     </div>
                     <div className="tab_controller">
                         <p>Projects</p>

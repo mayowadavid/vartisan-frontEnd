@@ -1,9 +1,15 @@
-import React from 'react'
-import VartisanHeader from '../../components/creator-folder/vartisanHeader';
-import VartisanMobileHeader from '../../components/creator-folder/vartisanMobileHeader';
-import Sidebar from '../../components/creator-folder/sidebar';
+import React, { useContext, useEffect } from 'react'
+import VartisanHeader from '../../../components/creator-folder/vartisanHeader';
+import VartisanMobileHeader from '../../../components/creator-folder/vartisanMobileHeader';
+import Sidebar from '../../../components/creator-folder/sidebar';
+import { MainContext } from '../../../components/context/mainContext';
 
 const Wallet = () => {
+   const {setChangeState, vartisanState} = useContext(MainContext);
+
+   useEffect(()=>{
+    setChangeState({...vartisanState, wallet: true});
+   }, [])
   return (
     <div className="dashboard_wrapper">
         <Sidebar />

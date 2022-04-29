@@ -1,6 +1,6 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
 import {Router, useRouter} from 'next/router';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LOGIN } from '../components/queries/user/user'
 
 export default function Login() {
@@ -20,9 +20,12 @@ export default function Login() {
 
     const [ queryUser, { data } ]= useLazyQuery(LOGIN, {
         fetchPolicy: "network-only",
-        onCompleted: (data) => {
+        onCompleted: async (data) => {
             console.log(data)
-            const {userName} = data.loginUser;
+            const { userName, refreshToken, refreshTokenExp } = data.loginUser;
+            const token = refreshToken;
+            await window.localStorage.setItem("token", JSON.stringify(token));
+            await window.localStorage.setItem("session", JSON.stringify(refreshTokenExp));
             router.replace(`/${userName}`);
         },
         onError: (error) => {
@@ -34,7 +37,7 @@ export default function Login() {
     const submitLogin = (e) => {
         e.preventDefault();
         queryUser({variables: {
-            userEmail: loginUser.email,
+            userInput: loginUser,
         }});
     }
 

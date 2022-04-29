@@ -18,15 +18,13 @@ const ClientProfile = () => {
         const {outerText} = e.target;
         setSelectedTab(outerText);
     }
-    const { userDescription } = useContext(MainContext);
-
+    const { userProfile, userData } = useContext(MainContext);
     const handlePop = (e) => {
         e.preventDefault();
         setPopReference(!popReference);
     }
 
-    const handleEditPop = (e) => {
-        e.preventDefault();
+    const handleEditPop = () => {
         setEditAbout(!editAbout);
     }
 
@@ -47,11 +45,18 @@ const ClientProfile = () => {
         <div className="client_wrapper">
             <div className="client_overview">
                 <div className="client_details">
+                    <input type="file" id="profileImage"/>
                     <div className="client_details_avatar">
-                        <img src="img/category.png" alt=""/>
+                        <label htmlFor="profileImage">
+                        <img src="svg/Upload_white.svg" alt=""/>
+                            <p>Change image</p>
+                        </label>
+                        <label htmlFor="profileImage">
+                            <img src="img/category.png" alt=""/>
+                        </label>
                     </div>
                     <div className="client_details_content">
-                        <p>Esther Howard</p>
+                        <p>{ userData.userName }</p>
                     </div>
                 </div>
                 <div className="client_gig_container">
@@ -111,7 +116,7 @@ const ClientProfile = () => {
                         </div>
                     </div>)}
                 </div>
-                {selectedTab == "About" && <ClientAbout userDescription={userDescription} />}
+                {selectedTab == "About" && <ClientAbout description={ userProfile.description } />}
                 {selectedTab == "Recent Orders" && <ClientRecentOrder />}
                 {selectedTab == "References" && <ClientReference handlePop={handlePop} />}
             </div>

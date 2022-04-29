@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Sidebar from './sidebar'
 import VartisanHeader from './vartisanHeader'
 import VartisanMobileHeader from './vartisanMobileHeader'
+import { MainContext } from '../../components/context/mainContext'
+import {useRouter} from 'next/router'
 
 const Dashboard = () => {
+   const { fetchVartisanOrders, setChangeState, vartisanState } = useContext(MainContext);
+   const router = useRouter();
+   const { userName } = router.query;
+   const [vartisanOrder, setVartisanOrder] = useState();
+
+    useEffect(async()=>{
+       if( userName !== undefined ){
+    const {data, error} = await fetchVartisanOrders()
+       await setVartisanOrder([...data.findSellerOrder]);
+       await console.log(data);
+    }
+    }, [userName])
+
+    useEffect(()=> {
+        setChangeState({...vartisanState, dashboard: true});
+    }, [])
+
+    const handleClick = (e, data) => {
+        e.preventDefault();
+        router.replace(`/${userName}/manage_orders/${data.id}`);
+    }
+
   return (
     <div className="dashboard_wrapper">
         <Sidebar />
@@ -18,7 +42,7 @@ const Dashboard = () => {
                                 <div>
                                     <span className="indicator online"></span>
                                 </div>
-                                <img src="../img/avatarpic.png" alt=""/>
+                                <img src="../../img/avatarpic.png" alt=""/>
                             </div>
                             <div className="avatar_content">
                                 <p>Creator Name</p>
@@ -33,7 +57,7 @@ const Dashboard = () => {
                                 <div className="creator_award">
                                     <div className="hexagon"></div>
                                     <div className="achievement_image">
-                                            <img src="../img/trophy.png" alt=""/>
+                                            <img src="../../img/trophy.png" alt=""/>
                                     </div>
                                 </div>
                                 <div className="creator_content">
@@ -45,7 +69,7 @@ const Dashboard = () => {
                                 <div className="creator_award">
                                         <div className="hexagon"></div>
                                         <div className="achievement_image">
-                                                <img src="../img/received.png" alt=""/>
+                                                <img src="../../img/received.png" alt=""/>
                                         </div>
                                 </div>
                                 <div className="creator_content">
@@ -57,7 +81,7 @@ const Dashboard = () => {
                                 <div className="creator_award">
                                         <div className="hexagon"></div>
                                         <div className="achievement_image">
-                                                <img src="../img/received 1.png" alt=""/>
+                                                <img src="../../img/received 1.png" alt=""/>
                                         </div>
                                 </div>
                                 <div className="creator_content">
@@ -107,11 +131,11 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div className="due_project_header">
-                            <p>Due Today</p>
+                            <p>Project Deadline</p>
                             <p>See all</p>
                         </div>
                         <div className="gig_table_header">
-                            <div className="project_name">
+                            <div className="project_name_header">
                                 <p>Project name</p>
                             </div>
                             <div className="order_by">
@@ -125,90 +149,42 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div className="gig_table">
-                            <div className="gig_table_row">
-                                <div className="gig_card_wrapper">
-                                    <div className="gig_card_image">
-                                        <img src="../img/gig1.png" alt=""/>
-                                    </div>
-                                    <div className="gig_card_content">
-                                        <p>Title of the project</p>
-                                        <p>Basic Package</p>
-                                    </div>
-                                </div>
-                                <div className="gig_order_details">
-                                    <div className="gig_order_image">
-                                        <img src="../img/gig_avatar.png" alt=""/>
-                                    </div>
-                                    <div className="gig_order_content">
-                                        <p>Michael John</p>
-                                    </div>
-                                </div>
-                                <div className="gig_order_price">
-                                    <p>$99,99</p>
-                                </div>
-                                <div className="gig_time">
-                                    <p>4h 18m Left</p>
-                                </div>
-                                <div className="gig_view">
-                                    <p>View</p>
-                                </div>
-                            </div>
-                            <div className="gig_table_row">
-                                <div className="gig_card_wrapper">
-                                    <div className="gig_card_image">
-                                        <img src="../img/gig1.png" alt=""/>
-                                    </div>
-                                    <div className="gig_card_content">
-                                        <p>Title of the project</p>
-                                        <p>Basic Package</p>
-                                    </div>
-                                </div>
-                                <div className="gig_order_details">
-                                    <div className="gig_order_image">
-                                        <img src="../img/gig_avatar.png" alt=""/>
-                                    </div>
-                                    <div className="gig_order_content">
-                                        <p>Michael John</p>
-                                    </div>
-                                </div>
-                                <div className="gig_order_price">
-                                    <p>$99,99</p>
-                                </div>
-                                <div className="gig_time">
-                                    <p>4h 18m Left</p>
-                                </div>
-                                <div className="gig_view">
-                                    <p>View</p>
-                                </div>
-                            </div>
-                            <div className="gig_table_row">
-                                <div className="gig_card_wrapper">
-                                    <div className="gig_card_image">
-                                        <img src="../img/gig1.png" alt=""/>
-                                    </div>
-                                    <div className="gig_card_content">
-                                        <p>Title of the project</p>
-                                        <p>Basic Package</p>
-                                    </div>
-                                </div>
-                                <div className="gig_order_details">
-                                    <div className="gig_order_image">
-                                        <img src="../img/gig_avatar.png" alt=""/>
-                                    </div>
-                                    <div className="gig_order_content">
-                                        <p>Michael John</p>
-                                    </div>
-                                </div>
-                                <div className="gig_order_price">
-                                    <p>$99,99</p>
-                                </div>
-                                <div className="gig_time">
-                                    <p>4h 18m Left</p>
-                                </div>
-                                <div className="gig_view">
-                                    <p>View</p>
-                                </div>
-                            </div>
+                            {
+                                vartisanOrder !== undefined && vartisanOrder.map(
+                                    (data, i) => {
+                                        return (
+                                            <div key={i} className="gig_table_row">
+                                                <div className="gig_card_wrapper">
+                                                    <div className="gig_card_image">
+                                                        <img src={data?.gigImage !== undefined? data?.gigImage :"../../img/gig_avatar.png"} alt=""/>
+                                                    </div>
+                                                    <div className="gig_card_content">
+                                                        <p>{data?.name}</p>
+                                                        <p>Basic Package</p>
+                                                    </div>
+                                                </div>
+                                                <div className="gig_order_details">
+                                                    <div className="gig_order_image">
+                                                        <img src="../../img/gig_avatar.png" alt=""/>
+                                                    </div>
+                                                    <div className="gig_order_content">
+                                                        <p>{data?.seller?.userName}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="gig_order_price">
+                                                    <p>{`$${data.amount}`}</p>
+                                                </div>
+                                                <div className="gig_time">
+                                                    <p>4h 18m Left</p>
+                                                </div>
+                                                <div className="gig_view">
+                                                    <p onClick={(e)=> handleClick(e, data)}>View</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                )
+                            }
                         </div>
                         <div className="gig_table_container">
                             <div className="active_gig_header">
@@ -218,10 +194,10 @@ const Dashboard = () => {
                             <div className="active_gig_card">
                                 <div className="active_card_row">
                                     <div className="active_card">
-                                        <img src="../img/featured.png" alt=""/>
+                                        <img src="../../img/featured.png" alt=""/>
                                         <div className="active_content">
                                             <div className="active_gig_image">
-                                                <img src="../img/featured.png" alt=""/>
+                                                <img src="../../img/featured.png" alt=""/>
                                             </div>
                                             <div className="active_gig_title">
                                                 <p>Micheal John</p>
@@ -234,10 +210,10 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="active_card">
-                                        <img src="../img/featured.png" alt=""/>
+                                        <img src="../../img/featured.png" alt=""/>
                                         <div className="active_content">
                                             <div className="active_gig_image">
-                                                <img src="../img/featured.png" alt=""/>
+                                                <img src="../../img/featured.png" alt=""/>
                                             </div>
                                             <div className="active_gig_title">
                                                 <p>Micheal John</p>
@@ -250,10 +226,10 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="active_card">
-                                        <img src="../img/featured.png" alt=""/>
+                                        <img src="../../img/featured.png" alt=""/>
                                         <div className="active_content">
                                             <div className="active_gig_image">
-                                                <img src="../img/featured.png" alt=""/>
+                                                <img src="../../img/featured.png" alt=""/>
                                             </div>
                                             <div className="active_gig_title">
                                                 <p>Micheal John</p>
@@ -266,10 +242,10 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="active_card">
-                                        <img src="../img/featured.png" alt=""/>
+                                        <img src="../../img/featured.png" alt=""/>
                                         <div className="active_content">
                                             <div className="active_gig_image">
-                                                <img src="../img/featured.png" alt=""/>
+                                                <img src="../../img/featured.png" alt=""/>
                                             </div>
                                             <div className="active_gig_title">
                                                 <p>Micheal John</p>

@@ -8,7 +8,7 @@ export default function PrimaryHeader() {
                     <p>Logo</p>
                 </div>
                 <div className="category_search_bar">
-                    <img src="../img/Search.png" alt=""/>
+                    <img src="../../img/Search.png" alt=""/>
                     <input type="text" placeholder="Search"/>
                 </div>
                 <div className="category_header_content">
@@ -21,7 +21,7 @@ export default function PrimaryHeader() {
                     <img src="../../svg/chat.svg" alt=""/>
                 </div>
                 <div className="category_header_avatar">
-                    <img src="../img/avatarpic.png" alt=""/>
+                    <img src="../../img/avatarpic.png" alt=""/>
                 </div>
             </div>
             <div className="category_container_header">

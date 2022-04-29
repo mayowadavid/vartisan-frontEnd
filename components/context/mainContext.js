@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { createContext, useState, useEffect } from 'react';
 import { CREATE_GIG_FAQ, CREATE_REQUIREMENT, UPDATE_GIG, UPDATE_GIG_FAQ, UPDATE_REQUIREMENT } from '../mutations/Gig/gig';
 import { UPDATE_GIG_FORMAT } from '../mutations/gigFormat/gigFormat';
@@ -8,15 +8,16 @@ import { CREATE_RUSH_ORDER } from '../mutations/RushOrder/rushOrder';
 import { CREATE_COMMERCIAL_USE } from '../mutations/commercialUse/commercialUse';
 import { useQuery } from '@apollo/client'
 import { FETCH_CATEGORIES } from '../queries/category/category';
+import { GET_ALL_QUERY } from '../queries/gigs/gig';
+import { CREATE_ORDER, CREATE_ORDER_REQUIREMENT, UPDATE_ORDER } from '../mutations/order/order';
+import { FIND_ORDER_BY_ID, FIND_ORDER_BY_CLIENT, FIND_ORDER_BY_SELLER } from '../queries/orders/order';
+import { CREATE_MESSAGE } from '../mutations/messages/message';
 
 export const MainContext = createContext();
 
 const MainContextProvider = (props) => {
 
-    const [userData, setUserData] = useState();
-    const [userProfile, setUserProfile]= useState();
     const [profileId, setProfileId]= useState();
-    const [userDescription, setUserDescription] = useState();
     const [closeDashboard, setCloseDashboard] = useState(true);
     const [overview, setOverview] = useState(false);
     const [pricing, setPricing] = useState(false);
@@ -25,6 +26,31 @@ const MainContextProvider = (props) => {
     const [showGallery, setShowGallery] = useState(false);
     const [category, setCategory] = useState();
     const [openFaq, setOpenFaq] = useState(false);
+    const [openSellerPage, setOpenSellerPage] = useState(true);
+    const [openOrderDetails, setOpenOrderDetails] = useState(false);
+    const [openOrderRequirement, setOpenOrderRequirement] = useState(false);
+    const [orderPayment, setOrderPayment] = useState(false);
+    const [openPopUp, setOpenPopUp] = useState(false);
+    const vartisanState = {
+        dashboard: false,
+        projects: false,
+        message: false,
+        earning: false,
+        analytic: false,
+        wallet: false,
+        profile: false,
+        settings: false,
+        logOut: false,
+    }
+
+    const [changeState, setChangeState] = useState(vartisanState);
+
+    const initialUser = {
+        id: '',
+        userName: '',
+        email: '',
+    }
+    const [userData, setUserData] = useState(initialUser);
     const initialState = {
         id: "",
         name: "",
@@ -80,10 +106,58 @@ const MainContextProvider = (props) => {
         gigVideo: [],
     };
     const [gig, setGig] = useState(initialState);
+    const profileState = {
+        id: '',
+        description: '',
+        descriptionMarkDown: '',
+        firstName: '',
+        lastName: '',
+        activeOrders: '',
+        completedOrder: '',
+        canceledOrder: '',
+        specialization: '',
+        achievement: '',
+        rank: '',
+        language: '',
+        onlineStatus: '',
+        reference: '',
+        role: ''
+    }
+    const [userProfile, setUserProfile] = useState(profileState);
 
-    const{data, loading} = useQuery(FETCH_CATEGORIES,
+    const orderData = {
+        id:'',
+        userId: '',
+        quantity: '',
+        category: '',
+        date: '',
+        name: '',
+        gigImage: '',
+        vartisan: '',
+        revision: '',
+        orderStatus: '',
+        amount: '',
+        sourceFile: false,
+        commercial: false,
+        rushOrder: false,
+        privateOrder: false,
+        rushOrderAmount: '',
+        rushOrderDelivery: '',
+        commercialOrderAmount: '',
+        commercialOrderDelivery: '',
+        privateOrderAmount: '',
+        privateOrderDelivery: '',
+        end: '',
+        orderFaqId: '',
+        orderRequirementId: '',
+    }
+
+    const [order, setOrder] = useState(orderData);
+
+    const {data, loading} = useQuery(FETCH_CATEGORIES,
         {onCompleted: (data) => {
           setCategory(data);
+          console.log(data);
         },
         onError: (error) => {
             console.log(error);
@@ -203,6 +277,80 @@ const MainContextProvider = (props) => {
         }
     })
 
+    const [getAllGig] = useLazyQuery(GET_ALL_QUERY, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
+    const [fetchSingleOrder] = useLazyQuery(FIND_ORDER_BY_ID, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
+    const [fetchVartisanOrders] = useLazyQuery(FIND_ORDER_BY_SELLER, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
+    const [fetchClientOrders] = useLazyQuery(FIND_ORDER_BY_CLIENT, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
+    const [createOrder] = useMutation(CREATE_ORDER, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createOrderRequirements] = useMutation(CREATE_ORDER_REQUIREMENT, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [updateOrder] = useMutation(UPDATE_ORDER, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createMessage] = useMutation(CREATE_MESSAGE, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+    
+
+
     return (
         <MainContext.Provider value={{ 
         userData,
@@ -211,8 +359,6 @@ const MainContextProvider = (props) => {
         setUserProfile,
         profileId,
         setProfileId,
-        userDescription,
-        setUserDescription,
         closeDashboard,
         createHandler,
         handleOverView,
@@ -230,6 +376,7 @@ const MainContextProvider = (props) => {
         handleOpenFaq,
         showRequirement, 
         setShowRequirement,
+        setCloseDashboard,
         handleDescription,
         showGallery, 
         setShowGallery,
@@ -244,7 +391,32 @@ const MainContextProvider = (props) => {
         updateGigFaq,
         createGigFaq,
         createRequirement,
-        updateRequirement
+        updateRequirement,
+        getAllGig,
+        userData, 
+        setUserData,
+        order, 
+        setOrder,
+        openOrderDetails, 
+        setOpenOrderDetails,
+        openOrderRequirement, 
+        setOpenOrderRequirement,
+        orderPayment, 
+        setOrderPayment,
+        openSellerPage, 
+        setOpenSellerPage,
+        createOrder,
+        createOrderRequirements,
+        updateOrder,
+        openPopUp, 
+        setOpenPopUp,
+        fetchSingleOrder,
+        createMessage,
+        fetchVartisanOrders,
+        changeState, 
+        setChangeState,
+        vartisanState,
+        fetchClientOrders
         }}>
             {props.children}
         </MainContext.Provider>
