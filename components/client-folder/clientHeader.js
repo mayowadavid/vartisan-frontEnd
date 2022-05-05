@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MainContext } from '../context/mainContext';
 
 const ClientHeader = () => {
+   const { userProfile } =useContext(MainContext);
   return (
     <div className="Category_page_wrapper">
         <div className="category_container">
@@ -22,7 +24,7 @@ const ClientHeader = () => {
                     <img src="svg/chat.svg" alt=""/>
                 </div>
                 <div className="category_header_avatar">
-                    <img src="img/avatarpic.png" alt=""/>
+                    <img src={userProfile?.file !== null? userProfile?.file?.image : "img/avatarpic.png"} alt=""/>
                 </div>
             </div>
         </div>

@@ -30,9 +30,9 @@ const ClientRecentOrder = () => {
                     <p>Show on profile</p>
                 </div>
                 {
-                    clientOrder !== undefined && clientOrder?.map((data)=>{
+                    clientOrder !== undefined && clientOrder?.map((data, i)=>{
                         return(
-                            <div className="client_recent_orders_card flex_show_row">
+                            <div key={i} className="client_recent_orders_card flex_show_row">
                                 <div className="recent_order_image">
                                     <img src={data?.gigImage !== undefined ? data.gigImage : "img/category5.png"} alt=""/>
                                 </div>
@@ -40,7 +40,7 @@ const ClientRecentOrder = () => {
                                     <p>{data?.name}</p>
                                     <div className="seller_recent_name remove_margin flex_show_row">
                                         <img src="img/category5.png" alt=""/>
-                                        <p>{data?.client?.userName}</p>
+                                        <p>{data?.seller?.userName}</p>
                                     </div>
                                 </div>
                                 <div className="recommend_project remove_margin flex_show_row">

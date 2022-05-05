@@ -5,40 +5,76 @@ const ClientReferencePop = ({handlePop}) => {
     const initialState = {
         title: "",
         description: "",
+        file: [],
+        selected: false,
     }
     const [layoutLength, setLayoutLength] = useState([1, 2]);
     const [reference, setReference] = useState(initialState);
-    const [formData, setFormData] = useState();
-    const [referenceFile, setReferenceFile] = useState();
-    const handleReference = (e) => {
+    const [allReference, setAllReference] = useState([]);
+    const [selected, setSelected] = useState(false);
+
+    const handleReference = (e, i) => {
         e.preventDefault();
         const {name, value} = e.target;
         setReference({...reference, [name]: value});
+        const referenceCopy = [...allReference];
+        referenceCopy[i] = {...referenceCopy[i], [name]: value};
+        allReference = referenceCopy
+        setAllReference([...allReference]);
     }
+
+   
     
-    const handleFile = (e) => {
+    const handleFile = (e, i) => {
         e.preventDefault();
         const {files} = e.target;
-        setReferenceFile(files);
+        setReference({...reference, file: files});
+        const referenceCopy = [...allReference];
+        referenceCopy[i] = {...referenceCopy[i], file: files};
+        allReference = referenceCopy
+        setAllReference([...allReference]);
+    }
+
+    const handleCheck = (e, i) => {
+        const {name, checked} = e.target;
+        //clone due to no direct manipulation
+        const referenceCopy = [...allReference];
+        const reset = referenceCopy.map((d)=>{
+            if(d.selected !== undefined){
+                d.selected = false;
+            }
+            return d;
+        } );
+        referenceCopy = reset;
+        referenceCopy[i] = {...referenceCopy[i], [name]: checked}
+        allReference = referenceCopy
+        setAllReference([...allReference]);
+        setSelected(!selected);
+      }
+    console.log(allReference);
+
+    const uploadReference = (data, headers) => {
+        
+        for (let x = 0; x < data.length; x++){
+            const title = data[x].title;
+            const description = data[x].description;
+            const file = data[x].file;
+            let formData = new FormData();
+            formData.append('name', title);
+            formData.append('description', description);
+            formData.append('file', file[0]);
+            axios.post('http://localhost:4000/reference/imageUpload', 
+            formData, {headers}).then((dat)=> console.log(dat))
+            .catch((error)=> console.log(error));
+        }
+        
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const {title, description} = reference;
-        formData = new FormData();
-        formData.append('name', title);
-        formData.append('description', description);
-        formData.append('file', referenceFile);
-        axios.post('http://localhost:4000/reference/imageUpload', formData)
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .then(function () {
-            // always executed
-          }); 
+        const token = localStorage.getItem('token');
+        const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""}
+        await uploadReference(allReference, headers);
     }
 
   return (
@@ -57,10 +93,10 @@ const ClientReferencePop = ({handlePop}) => {
                     <p>upload up to 10 images</p>
                 </div>
                 <div className="reference_image_wrapper flex_show_row">
-                {layoutLength.map((num)=> {
-                    return(<div className="reference_image_card" key={num}>
-                    <input  name="file" onChange={handleFile} type="file" id="file"/>
-                    <label htmlFor="file">
+                {layoutLength.map((num, i)=> {
+                    return(<div className="reference_image_card" key={i}>
+                    <input  name="file" onChange={(e)=> handleFile(e, i)} type="file" id={i}/>
+                    <label htmlFor={i}>
                         <div  className="change_reference_image flex_show_column offUpload">
                             <img src="svg/Upload_white.svg" alt=""/>
                             <p>Change image</p>
@@ -68,10 +104,10 @@ const ClientReferencePop = ({handlePop}) => {
                     </label>
                     <img src="img/category6.png" alt=""/>
                     <div className="references_content_input flex_show_column">
-                        <input onChange={handleReference} type="text" name="title" id=""/>
-                        <textarea onChange={handleReference} name="description" id="" cols="30" rows="10"></textarea>
+                        <input onChange={(e)=> handleReference(e, i)} type="text" name="title" id=""/>
+                        <textarea onChange={(e)=> handleReference(e, i)} name="description" id="" cols="30" rows="10"></textarea>
                         <div className="select_project_cover flex_show_row">
-                            <input type="radio" name="" id=""/>
+                            <input type="radio" name="selected" onChange={(e)=>handleCheck(e, i)} id=""/>
                             <p>select as project cover</p>
                         </div>
                     </div>

@@ -30,7 +30,14 @@ query Find_Order_By_Id($orderId: String!){
     privateOrderAmount
     message {
       date
+      time
       description
+      file {
+        image
+        video
+        name
+        document
+      }
       user {
         userName
       }

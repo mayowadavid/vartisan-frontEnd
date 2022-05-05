@@ -10,7 +10,9 @@ import ClientMobileHeader from '../../components/client-folder/clientMobileHeade
 import ClientHeader from '../../components/client-folder/clientHeader';
 import { clean } from '../../components/functions/functions';
 
+
 const SingleSeller = () => {
+ 
   const router = useRouter()
   const [role, setRole] = useState();
   let {userName} = router.query;
@@ -23,6 +25,10 @@ const SingleSeller = () => {
       }});
     }
   }, [userName])
+
+
+
+  
 
   const [queryUserName, {data, loading}] = useLazyQuery(FETCH_USER_BY_NAME, {
     onCompleted: async (data)=> {

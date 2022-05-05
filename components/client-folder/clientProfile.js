@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import axios from 'axios';
 import { MainContext } from '../context/mainContext'
 import ClientAbout from './clientAbout'
 import ClientDescription from './clientDescription'
@@ -11,6 +12,7 @@ const ClientProfile = () => {
     const [selectedTab, setSelectedTab] = useState("About");
     const [popReference, setPopReference] = useState(false);
     const [editAbout, setEditAbout] = useState(false);
+    const [profileImage, setProfileImage] = useState();
     
 
     const handleTab = (e) => {
@@ -18,7 +20,7 @@ const ClientProfile = () => {
         const {outerText} = e.target;
         setSelectedTab(outerText);
     }
-    const { userProfile, userData } = useContext(MainContext);
+    const { userProfile, userData, fetchUserProfile } = useContext(MainContext);
     const handlePop = (e) => {
         e.preventDefault();
         setPopReference(!popReference);
@@ -26,6 +28,28 @@ const ClientProfile = () => {
 
     const handleEditPop = () => {
         setEditAbout(!editAbout);
+    }
+
+    const uploadImage = (datum, data, headers) => {
+        for (let x = 0; x < data.length; x++){
+            const file = data[x];
+            const profileId = datum.id;
+            let formData = new FormData()
+            formData.append('file', file);
+            formData.append('profileId', profileId);
+            axios.post('http://localhost:4000/profile/imageUpload', 
+            formData, {headers}).then((dat)=>{ dat !== undefined && fetchUserProfile()}).catch((error)=> console.log(error));
+        }
+    }
+    console.log(userProfile);
+
+    const handleChange = async(e) => {
+        e.preventDefault();
+        const {files} = e.target;
+        setProfileImage(files);
+        const token = localStorage.getItem('token');
+        const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""}
+        userProfile.id !== undefined && await uploadImage(userProfile, files, headers);
     }
 
   return (
@@ -45,14 +69,14 @@ const ClientProfile = () => {
         <div className="client_wrapper">
             <div className="client_overview">
                 <div className="client_details">
-                    <input type="file" id="profileImage"/>
+                    <input type="file" onChange={handleChange} id="profileImage"/>
                     <div className="client_details_avatar">
                         <label htmlFor="profileImage">
                         <img src="svg/Upload_white.svg" alt=""/>
                             <p>Change image</p>
                         </label>
                         <label htmlFor="profileImage">
-                            <img src="img/category.png" alt=""/>
+                            <img src={userProfile?.file !== null? userProfile?.file?.image: "img/category.png"} alt=""/>
                         </label>
                     </div>
                     <div className="client_details_content">

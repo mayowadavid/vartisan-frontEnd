@@ -1,20 +1,59 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import {useRouter} from 'next/router';
 import { MainContext } from "../context/mainContext";
 
 const VartisanPage = ({sellerData}) => {
-
+    const router = useRouter();
+    const { userName } = router.query;
     const {
         setOpenSellerPage,
         openSellerPage,
         openOrderDetails, 
-        setOpenOrderDetails
+        setOpenOrderDetails,
+        fetchChatExistence,
+        openMessagePopUp, 
+        setOpenMessagePopUp,
+        setChatId,
     } = useContext(MainContext);
+
+    const chatData = {
+        chatExist: false,
+        createNew: false,
+    }
+
+    const [createChat, setCreateChat] = useState(chatData);
 
     const requestOrder = (e) => {
         e.preventDefault();
         setOpenSellerPage(!openSellerPage);
         setOpenOrderDetails(!openOrderDetails);
     }
+
+    const handleMessage = (e) => {
+        e.preventDefault();
+        setOpenMessagePopUp(!openMessagePopUp);
+    }
+
+    useEffect(async()=>{
+    try {
+        const { data, error } = await fetchChatExistence({
+            variables: {
+                userChatInput: {
+                    receiverId: sellerData.user.id,
+                }
+            }
+    });
+        await data !== undefined && setCreateChat({...chatData, chatExist: true, createNew: false});
+        await data !== undefined && setChatId(data.findChatByExistence.id);
+    }
+    catch(error) {
+        await error !== undefined && 
+        setCreateChat({...chatData, chatExist: false, createNew: true});
+    }
+
+        
+        
+    }, [])
     
     return (
         <div className="filtered_category_body">
@@ -94,7 +133,7 @@ const VartisanPage = ({sellerData}) => {
                             <div className="seller_order_section">
                                 <p onClick={requestOrder}>Request Order</p>
                                 <div className="seller_gig_contacts">
-                                    <p>Message</p>
+                                    <p onClick={handleMessage}>Message</p>
                                     <p>Terms</p>
                                 </div>
                             </div>

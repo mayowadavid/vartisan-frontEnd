@@ -168,7 +168,7 @@ const Dashboard = () => {
                                                         <img src="../../img/gig_avatar.png" alt=""/>
                                                     </div>
                                                     <div className="gig_order_content">
-                                                        <p>{data?.seller?.userName}</p>
+                                                        <p>{data?.client?.userName}</p>
                                                     </div>
                                                 </div>
                                                 <div className="gig_order_price">

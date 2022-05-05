@@ -12,10 +12,7 @@ const Sidebar = () => {
     const handleSideBar = (e) => {
         e.preventDefault();
         const {name, id} = e.target;
-        console.log(name, id);
     }
-
-    console.log(changeState.dashboaord);
 
   return (
     <div className="sidebar">
@@ -27,7 +24,7 @@ const Sidebar = () => {
                     <div id={changeState.dashboard == true ? "active": ' ' } onClick={handleSideBar} className="side_button">
                     <Link href={`/${userName}/vartisan/dashboard`}><a>
                         <div name="dashboard" className="side_image">
-                            <img src="../../svg/dashboard.svg" alt=""/>
+                            <img src={changeState.dashboard == true ? "../../svg/dashboard.svg" :"../../svg/black_dashboard.svg"} alt=""/>
                         </div>
                         <div className="side_content">
                             <p>Dashboard</p>
@@ -39,7 +36,7 @@ const Sidebar = () => {
                     <Link href={`/${userName}/vartisan/projects`}>
                         <a>
                         <div className="side_image">
-                            <img src="../../svg/gig.svg" alt=""/>
+                            <img src={changeState.projects == true ? "../../svg/white_gig.svg" :"../../svg/gig.svg"} alt=""/>
                         </div>
                         <div className="side_content">
                             <p>Projects</p>
@@ -48,10 +45,10 @@ const Sidebar = () => {
                     </Link>
                     </div>
                     <div id={changeState.message == true ? "active": ' ' } className="side_button">
-                    <Link href={`/${userName}/vartisan/inbox`}>
+                    <Link href={`/${userName}/inbox`}>
                         <a>
                         <div className="side_image">
-                            <img src="../../img/Message.png" alt=""/>
+                            <img src={changeState.message == true ? "../../svg/white_Message.png" :"../../svg/Message.svg"} alt=""/>
                         </div>
                         <div className="side_content">
                             <p>Message</p>
@@ -63,7 +60,7 @@ const Sidebar = () => {
                     <Link href={`/${userName}/vartisan/wallet`}>
                         <a>
                         <div className="side_image">
-                            <img src="../../svg/earnings.svg" alt=""/>
+                            <img src={changeState.earning == true ? "../../svg/white_earnings.svg" :"../../svg/earnings.svg"} alt=""/>
                         </div>
                         <div className="side_content">
                             <p>Earnings</p>
@@ -75,7 +72,7 @@ const Sidebar = () => {
                     <Link href={`/${userName}/vartisan/analytics`}>
                         <a>
                         <div className="side_image">
-                            <img src="../../svg/analytics.svg" alt=""/>
+                            <img src={changeState.analytic == true ? "../../svg/white_analytics.svg" : "../../svg/analytics.svg"} alt=""/>
                         </div>
                         <div className="side_content">
                             <p>analytics</p>
@@ -87,7 +84,7 @@ const Sidebar = () => {
                     <Link href={`/${userName}/vartisan/wallet`}>
                         <a>
                         <div className="side_image">
-                            <img src="../../svg/Wallet.svg" alt=""/>
+                            <img src={changeState.wallet == true ? "../../svg/white_Wallet.svg" : "../../svg/Wallet.svg"} alt=""/>
                         </div>
                         <div className="side_content">
                             <p>wallet</p>

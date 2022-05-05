@@ -12,6 +12,9 @@ import { GET_ALL_QUERY } from '../queries/gigs/gig';
 import { CREATE_ORDER, CREATE_ORDER_REQUIREMENT, UPDATE_ORDER } from '../mutations/order/order';
 import { FIND_ORDER_BY_ID, FIND_ORDER_BY_CLIENT, FIND_ORDER_BY_SELLER } from '../queries/orders/order';
 import { CREATE_MESSAGE } from '../mutations/messages/message';
+import { CHAT_BY_USER, CHAT_EXISTENCE } from '../queries/chats/chats';
+import { CREATE_CHAT } from '../mutations/chats/chats';
+import { FETCH_USER_PROFILE } from '../queries/profile/profile';
 
 export const MainContext = createContext();
 
@@ -31,6 +34,10 @@ const MainContextProvider = (props) => {
     const [openOrderRequirement, setOpenOrderRequirement] = useState(false);
     const [orderPayment, setOrderPayment] = useState(false);
     const [openPopUp, setOpenPopUp] = useState(false);
+    const [openMessagePopUp, setOpenMessagePopUp] = useState(false);
+    const [openApprovePop, setApprovePop] = useState(false);
+    const [openDisputePop, setDisputePop] = useState(false);
+    const [chatId, setChatId] = useState();
     const vartisanState = {
         dashboard: false,
         projects: false,
@@ -124,7 +131,6 @@ const MainContextProvider = (props) => {
         role: ''
     }
     const [userProfile, setUserProfile] = useState(profileState);
-
     const orderData = {
         id:'',
         userId: '',
@@ -313,6 +319,33 @@ const MainContextProvider = (props) => {
         }
     });
 
+    const [fetchUserProfile] = useLazyQuery(FETCH_USER_PROFILE, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
+    const [fetchChatExistence] = useLazyQuery(CHAT_EXISTENCE, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
+    const [fetchChatByUser] = useLazyQuery(CHAT_BY_USER, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
     const [createOrder] = useMutation(CREATE_ORDER, {
         onCompleted: (data) => {
             console.log(data);
@@ -348,8 +381,21 @@ const MainContextProvider = (props) => {
             console.log(error);
         }
     })
-    
 
+    const [createChat] = useMutation(CREATE_CHAT, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+    
+    useEffect(async ()=> {
+        const {data, error} = await fetchUserProfile();
+        const {findUserProfile} = data;
+        setUserProfile({...userProfile, ...findUserProfile})
+    }, []);
 
     return (
         <MainContext.Provider value={{ 
@@ -416,7 +462,19 @@ const MainContextProvider = (props) => {
         changeState, 
         setChangeState,
         vartisanState,
-        fetchClientOrders
+        fetchClientOrders,
+        fetchChatExistence,
+        openMessagePopUp, 
+        setOpenMessagePopUp,
+        chatId, 
+        setChatId,
+        createChat,
+        fetchChatByUser,
+        openApprovePop, 
+        setApprovePop,
+        openDisputePop, 
+        setDisputePop,
+        fetchUserProfile
         }}>
             {props.children}
         </MainContext.Provider>

@@ -41,7 +41,7 @@ export const UPDATE_ORDER = gql `
 mutation UPDATE_ORDER($orderUpdate: UpdateOrderInput!){
   updateOrder(updateOrderInput: $orderUpdate){
     id
-    userId
+    clientId
     gigId
     name
     quantity

@@ -11,8 +11,10 @@ import { MainContext } from '../../components/context/mainContext';
 import ClientGigOrderRequirement from '../../components/client-folder/clientGigOrderRequirement';
 import ClientGigPayment from '../../components/client-folder/clientGigPayment';
 import SuccessModal from '../../components/client-folder/success_modal';
+import ChatMessagePop from '../../components/client-folder/chatMessagePop';
+
 const ProjectFile = () => {
-    const router = useRouter()
+    const router = useRouter();
     const { name, userName } = router.query;
     const [sellerData, setSellerData] = useState();
     const [vartisanGallery, setVartisanGallery] = useState([]);
@@ -23,6 +25,8 @@ const ProjectFile = () => {
         orderPayment, 
         openPopUp, 
         order,
+        openMessagePopUp, 
+        setOpenMessagePopUp
     } = useContext(MainContext);
 
     
@@ -64,6 +68,12 @@ const ProjectFile = () => {
     
     return (
         <div className="Category_page_wrapper">
+        {
+            sellerData !== undefined && 
+            ( (openMessagePopUp == true)  && <ChatMessagePop
+            userName={userName}
+            sellerData={sellerData} /> )
+        }
         {
             sellerData !== undefined && 
             ( (openPopUp == true)  && <SuccessModal 

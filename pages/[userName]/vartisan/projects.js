@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import VartisanHeader from '../../../components/creator-folder/vartisanHeader'
 import VartisanMobileHeader from '../../../components/creator-folder/vartisanMobileHeader'
 import Sidebar from '../../../components/creator-folder/sidebar'
@@ -18,9 +18,13 @@ const Gig = () => {
       showDescription, 
       showRequirement, 
       showGallery, 
+      vartisanState,
+      setChangeState
     } = useContext(MainContext);
     
-   
+    useEffect(()=> {
+      setChangeState({...vartisanState, projects: true});
+  }, [])
 
   return (
     <div className="dashboard_wrapper">

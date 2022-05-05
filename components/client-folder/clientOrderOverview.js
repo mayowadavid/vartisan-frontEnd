@@ -1,17 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react'
 import {useRouter} from 'next/router';
 import { MainContext } from '../context/mainContext'
+// import { MESSSAGE_SUBSCRIPTION } from '../subscriptions/message';
+// import { useSubscription } from '@apollo/client';
 
 const ClientOrderOverview = () => {
     const router = useRouter()
     const { userName, activity } = router.query;
-    console.log(router.query);
     const {
         order, 
         setOrder, 
         fetchSingleOrder,
         updateOrder,
-        createMessage
+        createMessage,
+        openApprovePop, 
+        setApprovePop,
+        openDisputePop, 
+        setDisputePop,
+        openMessagePopUp, 
+        setOpenMessagePopUp,
+        setUserData,
+        userData
     } = useContext(MainContext);
     const initialState = {
         date: '',
@@ -30,19 +39,80 @@ const ClientOrderOverview = () => {
         await setOrder({...order, ...data.order});
     }
     }, [activity])
-    console.log(order);
+    
     const [message, setMessage] = useState(initialState);
-    const [temporaryImage, setTemporaryImage] = useState();
+    const [temporaryImage, setTemporaryImage] = useState([]);
+    const months = [
+        'January', 
+        'February', 
+        'March', 
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+    ];
 
     const handleChange = (e) => {
         e.preventDefault();
         const today = new Date();
-        const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        const months = [
+            'January', 
+            'February', 
+            'March', 
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+        ];
+        const monthIndex = today.getMonth();
+        const date = months[monthIndex] +'-'+today.getDate()+'-'+today.getFullYear();
         date.toString();
-        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        time.toString();
+        const time = today.getTime().toString();
         const { name, value } = e.target;
         setMessage({...message, date, time, [name]: value});
+    }
+    const sortArray = (data) => {
+        let newData = data !== undefined && [...data];
+        if(newData?.length > 0 ){newData?.sort((x, y) => x?.time - y?.time)
+        return newData;}
+    }
+
+    const uploadFiles = (datum, data, headers, orderId) => {
+        for (let x = 0; x < data.length; x++){
+            const file = data[x];
+            const time = datum.time;
+            const date = datum.date;
+            let formData = new FormData();
+            formData.append('file', file[0]);
+            formData.append('orderId', orderId);
+            formData.append('date', date);
+            formData.append('time', time);
+            formData.append('messageId', messageId);
+            axios.post('http://localhost:4000/messages/imageUpload', 
+            formData, {headers}).then((dat)=> console.log(dat))
+            .catch((error)=> console.log(error));
+        } 
+    }
+
+    const updateMessageFiles = (datum, data, headers) => {
+        for (let x = 0; x < data.length; x++){
+            const file = data[x];
+            const messageId = datum.id;
+            let formData = new FormData();
+            formData.append('file', file[0]);
+            formData.append('messageId', messageId);
+            axios.post('http://localhost:4000/messages/imageUpload', 
+            formData, {headers}).then((dat)=> console.log(dat))
+            .catch((error)=> console.log(error));
+        } 
     }
 
     const handleFile = (e) => {
@@ -50,45 +120,135 @@ const ClientOrderOverview = () => {
         const {files} = e.target;
         if(files){
             let selected = files[0];
-            let types = ['image/jpeg', 'image/png'];
-            let fileType = selected !== undefined ? types.includes(selected.type): setError("unsupported image type* accepted image jpg/png");
+            let types = [
+                'image/jpeg', 
+                'image/png',
+                'video/mpeg', 
+                'video/mp4',
+                'image/gif'
+        ];
+            let acceptedFile = selected !== undefined ? types.includes(selected.type): setError("unsupported image type* accepted image jpg/png");
             let FileSize = "5000000";
-            let filteredImageSize = fileType == true ? selected.size < FileSize : setError("file too large *5mb minimum"); 
+            let filteredImageSize = acceptedFile == true ? selected.size < FileSize : setError("file too large *5mb minimum"); 
             let hold = filteredImageSize == true && (URL.createObjectURL(selected)); 
             hold !== undefined && hold;
-            setTemporaryImage(hold);
-            //clone due to no direct manipulation
-            // const temp = [...gigGallery];
-            // temp[i] = {...temp[i], file: files};
-            // gigGallery = [...temp];
-            // setGig({...gig, gigGallery});
-            URL.revokeObjectURL(selected);   
+            console.log(files[[0]])
+            let fileType;
+            const imageType = [
+                'image/jpeg',
+                'image/png',
+                'image/tiff',
+                'image/svg+xml',
+              ];
+              const videoType = ['video/mpeg', 'video/mp4'];
+              const documentType = [
+                'application/msword',
+                'application/gzip',
+                'application/vnd.oasis.opendocument.text',
+                'application/pdf',
+                'application/vnd.ms-powerpoint',
+                'application/vnd.rar',
+                'video/mp2t',
+                'text/plain',
+                'application/zip',
+                '	application/x-7z-compressed',
+              ];
+              const gifType = ['image/gif'];
+              if (imageType.includes(files[0].type)) {
+                fileType = 'image';
+              } else if (videoType.includes(files[0].type)) {
+                fileType = 'video';
+              } else if (documentType.includes(files[0].type)) {
+                fileType = 'document';
+              } else if (gifType.includes(files[0].type)) {
+                fileType = 'gif';
+              }
             }
+        setTemporaryImage([...temporaryImage, {file: hold, fileType}]);
+        
         const {file} = message;
-        file = [...file, files[0]];
+        file = [...file, files];
         setMessage({...message, file});
+        URL.revokeObjectURL(selected);
     }
+
+    const removeFile = (e, d) => {
+        e.preventDefault();
+        const filtered = temporaryImage.filter((data, i)=> i !== d);
+        setTemporaryImage(filtered);
+    }
+
+    const handleApproveOrder = (e) => {
+        e.preventDefault(); 
+        setApprovePop(!openApprovePop);
+    }
+
+    const handleMessage = (e) => {
+        e.preventDefault(); 
+        const id = userName == order?.client?.userName ? order?.seller?.id : order?.client?.id
+        setUserData({...userData, id});
+        setOpenMessagePopUp(!openMessagePopUp);
+    }
+
+    const handleCancelOrder = (e) => {
+        e.preventDefault();
+        setDisputePop(!openDisputePop);
+    }
+
+    const handleRevision = (e) => {
+        e.preventDefault();
+        if(activity !== undefined){
+            const {data, error} = updateOrder({
+                variables: {
+                    orderUpdate: {
+                        id: activity,
+                        orderStatus: 'revision'
+                    }
+                }
+            })
+        }
+    }
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const {data, error} = await createMessage({
-            variables: {
-                messageInput: {
-                    orderId: activity,
-                    description: message.description,
-                    date: message.date,
-                    time: message.time
+        const orderId = order.id;
+        let userMessage;
+        if(message.description !== ''){
+            const {data, error} = await createMessage({
+                variables: {
+                    messageInput: {
+                        orderId: activity,
+                        description: message.description,
+                        date: message.date,
+                        time: message.time,
+                    }
                 }
-            }
-        })
-        await console.log(data);
-        const { data: newData, error: newErr } = await fetchSingleOrder({
-            variables: {
-                orderId: activity
-            }
-        })
+            });
+            userMessage = await data.createMessage;
+            const token = await localStorage.getItem('token');
+            const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""}
+            message.file.length > 0 && updateMessageFiles(userMessage, message.file, headers);
+            await setMessage(initialState); 
+         } else {
+            const token = await localStorage.getItem('token');
+            const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : "",}
+            await uploadFiles(message, message.file, headers, order.id);
+            await setMessage(initialState);
+            const { data: newData, error: newErr } = await fetchSingleOrder({
+                variables: {
+                    orderId: activity
+                }
+            })
+            await setOrder({...order, ...data.order});
+        }
+        
+
+        
         await setOrder({...order, ...newData.order});
         setMessage(initialState);
     }
+    const currentTime = parseInt(order?.date);
+    const deliveryDay = months[new Date(currentTime).getMonth()] + ' ' + new Date(currentTime).getDate() + ',' + ' ' + new Date(currentTime).getFullYear();
 
   return (
     <div className="client_order_body">
@@ -110,7 +270,7 @@ const ClientOrderOverview = () => {
                         <div className="order_creations flex_show_row">
                             <img src="/img/complete.png" alt=""/>
                             <p>Order created</p>
-                            <p>{order?.date}</p>
+                            <p>{deliveryDay}</p>
                         </div>
                         <div className="order_creations flex_show_row">
                             <img src="/img/complete.png" alt=""/>
@@ -122,85 +282,109 @@ const ClientOrderOverview = () => {
                             <p>Your order was accepted</p>
                         </div>
                         {
-                                order?.message?.map((data)=> {
-                                    console.log(data.user);
+                             order?.message !== undefined && sortArray(order?.message)?.map((data, i)=> {
+                                
+                            
                                     return(
-                                        <div className="client_creator_comment">
+                                        <div key={i} className="client_creator_comment">
                                         <div className="client_creator_header flex_show_row">
                                             <div className="client_creator_avatar">
                                                 <img src="/img/category.png" alt=""/>
                                             </div>
                                             <div className="client_creator_content remove_margin">
-                                                <p>{data?.user?.userName}, Delivered the order</p>
+                                                <p>{data?.user?.userName == order.seller.userName ? `${data?.user?.userName}, delivered the order`: `${data?.user?.userName}, requested revision`}</p>
                                                 <p>{data?.date}</p>
                                             </div>
                                         </div>
                                         <div className="client_creator_comment_body">
                                             <div className="delivery_chat_message">
                                                 <p>{data.description}</p>
-                                                <div className="chat_message_wrapper flex_show_row">
-                                                    <div className="chat_message_image">
-                                                        <img src="/img/category.png" alt=""/>
-                                                        <div className="chat_delivery_image_wrap remove_margin flex_show_row">
-                                                            <div className="chat_delivery_image chat_delivery_first flex_show_row">
-                                                                <img src="/img/image_alt.png" alt=""/>
-                                                                <p>Delivery design.jpg</p>
-                                                            </div>
-                                                            <div className="chat_delivery_image">
-                                                                <img src="/svg/download.svg" alt=""/>
+                                                {
+                                                    data.file.length > 0 && date.file.map(({image, video, document, gif, name})=>{
+                                                        <div className="chat_message_wrapper flex_show_row">
+                                                            {image !== null &&
+                                                            (<div className="chat_message_image">
+                                                                <img src="/img/category.png" alt=""/>
+                                                                <div className="chat_delivery_image_wrap remove_margin flex_show_row">
+                                                                    <div className="chat_delivery_image chat_delivery_first flex_show_row">
+                                                                        <img src={image} alt=""/>
+                                                                        <p>{name}</p>
+                                                                    </div>
+                                                                    <div className="chat_delivery_image">
+                                                                        <img src="/svg/download.svg" alt=""/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>)}
+                                                            <div className="chat_message_files">
+                                                                {document !== null &&
+                                                                (<div className="source_file remove_margin">
+                                                                    <p>Source files</p>
+                                                                    <div className="files_holder flex_show_row remove_margin">
+                                                                        <img src="/svg/file_blank_fill.svg" alt=""/>
+                                                                        <p>{name}</p>
+                                                                    </div>
+                                                                </div>)}
+                                                                <div className="other_file remove_margin">
+                                                                    <p>Other files</p>
+                                                                    {video !== null && 
+                                                                    (<div className="files_holder flex_show_row remove_margin">
+                                                                        <img src="/svg/file_png.svg" alt=""/>
+                                                                        <p>{name}</p>
+                                                                    </div>)}
+                                                                    {gif !== null &&
+                                                                    (<div className="files_holder flex_show_row remove_margin">
+                                                                        <img src="/svg/file_jpg.svg" alt=""/>
+                                                                        <p>{name}</p>
+                                                                    </div>)}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="chat_message_files">
-                                                        <div className="source_file remove_margin">
-                                                            <p>Source files</p>
-                                                            <div className="files_holder flex_show_row remove_margin">
-                                                                <img src="/svg/file_blank_fill.svg" alt=""/>
-                                                                <p>File name.rar</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="other_file remove_margin">
-                                                            <p>Other files</p>
-                                                            <div className="files_holder flex_show_row remove_margin">
-                                                                <img src="/svg/file_png.svg" alt=""/>
-                                                                <p>Delivery design.png</p>
-                                                            </div>
-                                                            <div className="files_holder flex_show_row remove_margin">
-                                                                <img src="/svg/file_jpg.svg" alt=""/>
-                                                                <p>Delivery design.jpg</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    })
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                     )
                                 })
                             }
-                        
-                        <form onSubmit={handleSubmit}>
+                    </div>
+                    <form className="chat_footer_form" onSubmit={handleSubmit}>
+                        {temporaryImage.length > 0 &&
+                            
+                            <div className="file_wrapper flex_show_row">
+                            {
+                            temporaryImage.map(({file, fileType}, i)=> {
+                            return (
+                            <div key={i} className="file_container">
+                                <div onClick={(e)=> removeFile(e, i)} className="delete_file"><img src="../../svg/close_small.svg" /></div>
+                            {fileType == 'image' && (<img src={file} />)}
+                            {fileType == 'video' && (<video width="750" height="500" controls >
+                                                            <source src={file} type="video/mp4"/>
+                                                    </video>)}
+                                </div>) })
+                                }
+                            </div>
+                        }
                         <div className="chat_submit_message remove_margin flex_show_row">
                             <input type="text" name="description" value={message.description} onChange={handleChange} placeholder="write your message here" id=""/>
                             <p onClick={handleSubmit}>Send</p>
                         </div>
-                        </form>
                         <div className="chat_add_file_icon flex_show_row">
-                            <div className="chat_file_icon">
-                                <img src="/svg/link.svg" alt=""/>
+                            <input type='file' onChange={handleFile} id="file"/>
+                            <div className="chat_link flex_show_row">
+                                <label htmlFor="file">
+                                <img src="../../svg/link_02.svg" alt=""/>
+                                </label>
                             </div>
-                            <div className="chat_file_icon">
+                            <div className="chat_link flex_show_row">
                                 <img src="/svg/emoji.svg" alt=""/>
-                            </div>
-                            <div className="chat_file_icon">
-                                <img src="/svg/Video.svg" alt=""/>
                             </div>
                             <div className="chat_extra_order remove_margin flex_show_row">
                                 <img src="/svg/plus_circle_outline.svg" alt=""/>
                                 <p>Add extra order</p>
                             </div>
                         </div>
-                    </div>
+                        </form>
                 </div>
                 <div className="client_order_right">
                     <div className="client_order_summary remove_margin">
@@ -235,18 +419,21 @@ const ClientOrderOverview = () => {
                                 <p>{order?.orderStatus}</p>
                             </div>
                             <div className="project_actions_button flex_show_column remove_margin">
-                                <div className="project_actions remove_margin">
-                                    <p>Contact Vartisan</p>
+                                <div onClick={handleMessage} className="project_actions remove_margin">
+                                    <p>{order?.client?.userName == userName ? 'Contact Vartisan': 'Contact Client'}</p>
                                 </div>
-                                <div className="project_actions remove_margin">
+                                {(order?.client?.userName == userName && order?.orderStatus !== 'completed') &&
+                                (<>
+                                <div onClick={handleApproveOrder} className="project_actions remove_margin">
                                     <p>Approve Delivery</p>
                                 </div>
-                                <div className="project_actions remove_margin">
+                                <div onClick={handleRevision} className="project_actions remove_margin">
                                     <p>Request Revision</p>
                                 </div>
-                                <div className="project_actions remove_margin">
+                                <div onClick={handleCancelOrder} className="project_actions remove_margin">
                                     <p>Cancel Order</p>
                                 </div>
+                                </>)}
                             </div>
                         </div>
                     </div>
