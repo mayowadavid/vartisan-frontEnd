@@ -16,10 +16,20 @@ query FIND_CHAT_BY_USER{
     sender {
       userName
         id
+        profile {
+          file {
+            image
+          }
+        }
     }
     receiver {
       userName
         id
+        profile {
+          file {
+            image
+          }
+        }
     }
     senderId
     receiverId

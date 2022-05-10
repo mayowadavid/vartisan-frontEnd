@@ -5,12 +5,12 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_PROFILE } from '../queries/user/user';
 import { MainContext } from '../context/mainContext';
 
-const ClientDescription = ({handleEditPop}) => {
+const ClientDescription = () => {
     const mdParser = new MarkdownIt(/* Markdown-it options */);
   // Finish!
     const [contentHtml, setContentHtml] = useState('');
     const [plainMarkDown, setPlainMarkDown] = useState('')
-    const { userProfile, setUserProfile } = useContext(MainContext);
+    const { userProfile, setUserProfile, handleEditPop } = useContext(MainContext);
 
     const handleEditorChange = ({ html, text }) => {
     setContentHtml(html);

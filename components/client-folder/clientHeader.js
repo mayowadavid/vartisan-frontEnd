@@ -24,7 +24,7 @@ const ClientHeader = () => {
                     <img src="svg/chat.svg" alt=""/>
                 </div>
                 <div className="category_header_avatar">
-                    <img src={userProfile?.file !== null? userProfile?.file?.image : "img/avatarpic.png"} alt=""/>
+                    <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
                 </div>
             </div>
         </div>

@@ -14,26 +14,7 @@ const Gallery = () => {
         getAllGig
     } = useContext(MainContext);
     
-    const uploadVideo = (datum, data) => {
-        for (let x = 0; x < data.length; x++){
-            const name = data[x].name;
-            const selected = data[x].selected;
-            const file = data[x].file;
-            const gigId = datum.id;
-            let formData = new FormData();
-            formData.append('name', name);
-            formData.append('selected', selected);
-            formData.append('file', file);
-            formData.append('gigId', gigId);
-
-            axios.post('http://localhost:4000/gig-video/imageUpload', 
-            formData).then((dat)=> console.log(dat))
-            .catch((error)=> console.log(error));
-        }
-    }
-
-    const uploadImages = (datum, data) => {
-        
+    const uploadVideo = (datum, data, headers) => {
         for (let x = 0; x < data.length; x++){
             const name = data[x].name;
             const selected = data[x].selected;
@@ -44,23 +25,63 @@ const Gallery = () => {
             formData.append('selected', selected);
             formData.append('file', file[0]);
             formData.append('gigId', gigId);
+
+            axios.post('http://localhost:4000/gig-video/imageUpload', 
+            formData, {headers}).then((dat)=> console.log(dat))
+            .catch((error)=> console.log(error));
+        }
+    }
+
+    const uploadImages = (datum, data, headers) => {
+        for (let x = 0; x < data.length; x++){
+            const name = data[x].name;
+            const selected = data[x].selected;
+            const file = data[x].file;
+            const gigId = datum.id;
+            console.log(file[0])
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('selected', selected);
+            formData.append('file', file[0]);
+            formData.append('gigId', gigId);
             axios.post('http://localhost:4000/gig-gallery/imageUpload', 
-            formData).then((dat)=> console.log(dat))
+            formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }
         
     }
 
-    console.log(gig);
+    const updateImages = (datum, data, headers) => {
+        for (let x = 0; x < data.length; x++){
+            const id = data[x].id;
+            const name = data[x].name;
+            const selected = data[x].selected;
+            const file = data[x].file;
+            const gigId = datum.id;
+            console.log(file[0])
+            let formData = new FormData();
+            formData.append('id', id);
+            formData.append('name', name);
+            formData.append('selected', selected);
+            formData.append('file', file[0]);
+            formData.append('gigId', gigId);
+            axios.post('http://localhost:4000/gig-gallery/imageUpload', 
+            formData, {headers}).then((dat)=> console.log(dat))
+            .catch((error)=> console.log(error));
+        }
+        
+    }
+
     const submitGig = async(e) => {
         e.preventDefault();
         const { gigGallery, gigVideo } = gig;
+        const token = await localStorage.getItem('token');
+        const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : "",}
         const gigImageWithId = gigGallery.filter((data)=> data.id !== undefined);
-        await gigImageWithId !== undefined && uploadImages(gig, gigImageWithId)
+        await gigImageWithId !== undefined && updateImages(gig, gigImageWithId, headers)
         const gigImageWithOutId = gigGallery.filter((data)=> data.id == undefined); 
-        await gigImageWithOutId !== undefined && uploadImages(gig, gigImageWithOutId)
-
-        await gigVideo.id !== undefined && uploadVideo(gig, [gigVideo]);
+        await gigImageWithOutId !== undefined && uploadImages(gig, gigImageWithOutId, headers);
+        await gigVideo.id == undefined && uploadVideo(gig, [gigVideo]);
         const {data: gigData, error: gigError} = await getAllGig();
         console.log(gigData);
         console.log(gigError);

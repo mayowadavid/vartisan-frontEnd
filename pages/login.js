@@ -41,6 +41,11 @@ export default function Login() {
         }});
     }
 
+    const handleJoin = (e) => {
+        e.preventDefault();
+        router.push('/users/signup');
+    }
+
   return (
     <div className="registration_page flex_show_row">
         <div className="login_left">
@@ -75,7 +80,7 @@ export default function Login() {
                     <div className="username_wrapper flex_show_row">
                         <label>Password</label>
                     </div>
-                    <input name="password" onChange={handleLogin} placeholder="input your email here" type="text"/> 
+                    <input name="password" onChange={handleLogin} placeholder="input your password here" type="text"/> 
                 </div>
                 <div className="login_form_row">
                     <div className="checkbox_holder flex_show_row">
@@ -91,7 +96,7 @@ export default function Login() {
                         <p onClick={submitLogin}>Sign in</p>
                     </div>
                     <div className="login_sign_up flex_show_row">
-                        <p>Don't have an account yet?</p><p>Join now</p>
+                        <p>Don't have an account yet?</p><p onClick={handleJoin}>Join now</p>
                     </div>
                 </div>
                 

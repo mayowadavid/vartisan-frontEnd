@@ -238,7 +238,7 @@ const Pricing = () => {
                                 <option defaultValue hidden>{gig.numberOfRevision !== "" ? gig.numberOfRevision: "Choose times"}</option>
                                         {revision !== undefined && 
                                         (revision.map((data, i)=> {
-                                            return (<option key={i}>{data + " " + "days"}</option>);
+                                            return (<option key={i}>{data + " " + "times"}</option>);
                                         }))}
                                 </select>
                                 </div>

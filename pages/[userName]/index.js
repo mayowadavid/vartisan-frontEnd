@@ -9,6 +9,8 @@ import Footer from '../../components/general-folder/footer';
 import ClientMobileHeader from '../../components/client-folder/clientMobileHeader';
 import ClientHeader from '../../components/client-folder/clientHeader';
 import { clean } from '../../components/functions/functions';
+import ClientDescription from '../../components/client-folder/clientDescription';
+import ClientReferencePop from '../../components/client-folder/client_reference_pop';
 
 
 const SingleSeller = () => {
@@ -16,7 +18,15 @@ const SingleSeller = () => {
   const router = useRouter()
   const [role, setRole] = useState();
   let {userName} = router.query;
-  const { setUserProfile, userProfile, setUserData } = useContext(MainContext);
+  const { 
+    setUserProfile, 
+    userProfile, 
+    setUserData, 
+    editAbout,
+    popReference, 
+    setPopReference,
+    handlePop
+   } = useContext(MainContext);
   console.log(userName);
   useEffect(()=> {
     if(userName !==  undefined){
@@ -48,6 +58,8 @@ const SingleSeller = () => {
 
   return (
     <>
+    { popReference == true && <ClientReferencePop handlePop={handlePop} /> }
+    { editAbout == true && <ClientDescription /> }
     <ClientHeader />
     <ClientMobileHeader />
       {role == "client" && <ClientProfile />}

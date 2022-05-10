@@ -1,4 +1,4 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation, useSubscription } from '@apollo/client';
 import React, { createContext, useState, useEffect } from 'react';
 import { CREATE_GIG_FAQ, CREATE_REQUIREMENT, UPDATE_GIG, UPDATE_GIG_FAQ, UPDATE_REQUIREMENT } from '../mutations/Gig/gig';
 import { UPDATE_GIG_FORMAT } from '../mutations/gigFormat/gigFormat';
@@ -15,11 +15,18 @@ import { CREATE_MESSAGE } from '../mutations/messages/message';
 import { CHAT_BY_USER, CHAT_EXISTENCE } from '../queries/chats/chats';
 import { CREATE_CHAT } from '../mutations/chats/chats';
 import { FETCH_USER_PROFILE } from '../queries/profile/profile';
+import { SignUp } from '../mutations/users/user';
+import { FIND_ALL_REFERENCE, FIND_USER_REFERENCE } from '../queries/reference/reference';
+import {Router, useRouter} from 'next/router';
+import { CREATE_CATEGORY, SUB_CATEGORY } from '../mutations/categories/category';
+import { MESSSAGE_SUBSCRIPTION } from '../subscriptions/message';
+import { FETCH_USERS } from '../queries/user/user';
+import { CREATE_BLOG } from '../mutations/blog/blog';
 
 export const MainContext = createContext();
 
 const MainContextProvider = (props) => {
-
+    const router = useRouter()
     const [profileId, setProfileId]= useState();
     const [closeDashboard, setCloseDashboard] = useState(true);
     const [overview, setOverview] = useState(false);
@@ -37,7 +44,11 @@ const MainContextProvider = (props) => {
     const [openMessagePopUp, setOpenMessagePopUp] = useState(false);
     const [openApprovePop, setApprovePop] = useState(false);
     const [openDisputePop, setDisputePop] = useState(false);
+    const [editAbout, setEditAbout] = useState(false);
+    const [popReference, setPopReference] = useState(false);
     const [chatId, setChatId] = useState();
+    const [allGig, setGetAllGig] = useState([]);
+    const [projectImage, setProjectImage] = useState([]);
     const vartisanState = {
         dashboard: false,
         projects: false,
@@ -52,11 +63,31 @@ const MainContextProvider = (props) => {
 
     const [changeState, setChangeState] = useState(vartisanState);
 
+    const adminCategoryState = {
+        displayCategory: true,
+        createCategory: false,
+        subCategory: false,
+        editCategory: false,
+        deleteCategory: false,
+    }
+
+    const [adminCategoryCreate, setAdminCategoryCreate] = useState(adminCategoryState);
+
+    const blogState = {
+        displayBlog: true,
+        createBlog: false,
+        editBlog: false,
+        deleteBlog: false
+    }
+
+    const [adminBlog, setAdminBlog] = useState(blogState);
+
     const initialUser = {
         id: '',
         userName: '',
         email: '',
     }
+
     const [userData, setUserData] = useState(initialUser);
     const initialState = {
         id: "",
@@ -130,7 +161,9 @@ const MainContextProvider = (props) => {
         reference: '',
         role: ''
     }
+
     const [userProfile, setUserProfile] = useState(profileState);
+
     const orderData = {
         id:'',
         userId: '',
@@ -191,6 +224,15 @@ const MainContextProvider = (props) => {
     const proceedRequirement = () => {
         setShowRequirement(false);
         setShowGallery(true);
+    }
+
+    const handleEditPop = () => {
+        setEditAbout(!editAbout);
+    }
+
+    const handlePop = (e) => {
+        e.preventDefault();
+        setPopReference(!popReference);
     }
 
     const [createPrivateCommission] = useMutation(CREATE_PRIVATE_COMMiSSION, {
@@ -292,6 +334,15 @@ const MainContextProvider = (props) => {
         }
     });
 
+    const [getUsers] = useLazyQuery(FETCH_USERS, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
     const [fetchSingleOrder] = useLazyQuery(FIND_ORDER_BY_ID, {
         onCompleted: (data) => {
             console.log(data);
@@ -346,6 +397,24 @@ const MainContextProvider = (props) => {
         }
     });
 
+    const [findAllReference] = useLazyQuery(FIND_ALL_REFERENCE, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
+    const [findUserReference] = useLazyQuery(FIND_USER_REFERENCE, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
     const [createOrder] = useMutation(CREATE_ORDER, {
         onCompleted: (data) => {
             console.log(data);
@@ -390,12 +459,84 @@ const MainContextProvider = (props) => {
             console.log(error);
         }
     })
+
+    const [createCategory] = useMutation(CREATE_CATEGORY, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createSubCategory] = useMutation(SUB_CATEGORY, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [userSignUp] = useMutation(SignUp, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [createBlog] = useMutation(CREATE_BLOG, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
     
     useEffect(async ()=> {
-        const {data, error} = await fetchUserProfile();
-        const {findUserProfile} = data;
-        setUserProfile({...userProfile, ...findUserProfile})
+        try{
+            const {data, error} = await fetchUserProfile();
+            const {findUserProfile} = data;
+            setUserProfile({...userProfile, ...findUserProfile})
+        }catch(error){
+            router.push('/login');
+        }
     }, []);
+
+    const {data: gigData, error} = useQuery(GET_ALL_QUERY, {
+        onCompleted: (data) => {
+            if(data){
+            const { getAllgig } = data;
+            setGetAllGig(getAllgig);
+            }
+        },
+        onError: (error) => {
+            console.log(error);
+        }
+    });
+
+    const {data: subData, error: subErr} = useSubscription(MESSSAGE_SUBSCRIPTION, {
+        onCompleted: (data) => {
+            if(data){
+            console.log(data)
+            }
+        },
+        onError: (error) => {
+            console.log(error);
+        }
+    });
+
+    const { gigGallery } = gig;
+
+    useEffect(()=>{
+        const newImage = gigGallery?.map(({file})=> {
+            return file[0]?.image
+        })
+        setProjectImage(newImage);
+    }, [])
 
     return (
         <MainContext.Provider value={{ 
@@ -474,7 +615,27 @@ const MainContextProvider = (props) => {
         setApprovePop,
         openDisputePop, 
         setDisputePop,
-        fetchUserProfile
+        fetchUserProfile,
+        userSignUp,
+        editAbout, 
+        setEditAbout,
+        handleEditPop,
+        popReference, 
+        setPopReference,
+        handlePop,
+        findAllReference,
+        findUserReference,
+        adminCategoryCreate,
+        setAdminCategoryCreate,
+        createCategory,
+        createSubCategory,
+        allGig, 
+        setGetAllGig,
+        projectImage,
+        getUsers,
+        adminBlog, 
+        setAdminBlog,
+        createBlog
         }}>
             {props.children}
         </MainContext.Provider>

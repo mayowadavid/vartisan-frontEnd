@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MainContext } from '../context/mainContext'
 import AdminHeader from './adminHeader'
 import AdminMobileHeader from './adminMobileHeader'
 
 const AdminBlog = () => {
+    const {adminBlog, setAdminBlog} = useContext(MainContext);
+    const handleCreateBlog = (e) => {
+        e.preventDefault();
+        setAdminBlog({
+            ...adminBlog, 
+            displayBlog: false, 
+            createBlog: true
+        });
+      }
   return (
     <div className="admin_blog">
         <AdminMobileHeader />
@@ -12,31 +22,31 @@ const AdminBlog = () => {
                 <div className="admin_category_top_container">
                     <div className="admin_category_top">
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Dashboard</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/commision.png" alt=""/>
+                            <img src="../../img/commision.png" alt=""/>
                             <p>Admin Commission</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/Document.png" alt=""/>
+                            <img src="../../img/Document.png" alt=""/>
                             <p>Projects</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/Message.png" alt=""/>
+                            <img src="../../img/Message.png" alt=""/>
                             <p>Messages</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Promotions</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Categories</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Blog</p>
                         </div>
                     </div>
@@ -45,31 +55,31 @@ const AdminBlog = () => {
                             <p>Settings</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Dashboard</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/commision.png" alt=""/>
+                            <img src="../../img/commision.png" alt=""/>
                             <p>Admin Commission</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/Document.png" alt=""/>
+                            <img src="../../img/Document.png" alt=""/>
                             <p>Projects</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/Message.png" alt=""/>
+                            <img src="../../img/Message.png" alt=""/>
                             <p>Messages</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Promotions</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Categories</p>
                         </div>
                         <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="img/menu.png" alt=""/>
+                            <img src="../../img/menu.png" alt=""/>
                             <p>Blog</p>
                         </div>
                     </div>
@@ -92,7 +102,7 @@ const AdminBlog = () => {
                             <p>Blog List</p>
                         </div>
                         <div className="admin_blog_header_button remove_margin">
-                            <p>Create new Blog</p>
+                            <p onClick={handleCreateBlog}>Create new Blog</p>
                         </div>
                     </div>
                     <div className="admin_body_wrapper flex_show_row">
@@ -100,7 +110,7 @@ const AdminBlog = () => {
                             <div className="admin_blog_card_header flex_show_row">
                                 <div className="blog_blog_hold flex_show_row">
                                     <div className="blog_card_image">
-                                        <img src="img/category6.png" alt=""/>
+                                        <img src="../../img/category6.png" alt=""/>
                                     </div>
                                     <div className="blog_card_name remove_margin">
                                         <p>Name of creator</p>
@@ -111,7 +121,7 @@ const AdminBlog = () => {
                                 </div>
                             </div>
                             <div className="display_blog_image">
-                                <img src="img/category1.png" alt=""/>
+                                <img src="../../img/category1.png" alt=""/>
                             </div>
                             <div className="blog_card_title">
                                 <p>How to build professional profile</p>
@@ -134,7 +144,7 @@ const AdminBlog = () => {
                             </div>
                             <div className="admin_blog_comments flex_show_row">
                                 <div className="admin_blog_icon flex_show_row remove_margin">
-                                    <img src="img/Chat.png" alt=""/>
+                                    <img src="../../img/Chat.png" alt=""/>
                                     <p>35 Comments</p>
                                 </div>
                                 <div className="admin_blog_preview remove_margin">
@@ -146,7 +156,7 @@ const AdminBlog = () => {
                             <div className="admin_blog_card_header flex_show_row">
                                 <div className="blog_blog_hold flex_show_row">
                                     <div className="blog_card_image">
-                                        <img src="img/category6.png" alt=""/>
+                                        <img src="../../img/category6.png" alt=""/>
                                     </div>
                                     <div className="blog_card_name remove_margin">
                                         <p>Name of creator</p>
@@ -157,7 +167,7 @@ const AdminBlog = () => {
                                 </div>
                             </div>
                             <div className="display_blog_image">
-                                <img src="img/category1.png" alt=""/>
+                                <img src="../../img/category1.png" alt=""/>
                             </div>
                             <div className="blog_card_title">
                                 <p>How to build professional profile</p>
@@ -180,7 +190,7 @@ const AdminBlog = () => {
                             </div>
                             <div className="admin_blog_comments flex_show_row">
                                 <div className="admin_blog_icon flex_show_row remove_margin">
-                                    <img src="img/Chat.png" alt=""/>
+                                    <img src="../../img/Chat.png" alt=""/>
                                     <p>35 Comments</p>
                                 </div>
                                 <div className="admin_blog_preview remove_margin">
@@ -192,7 +202,7 @@ const AdminBlog = () => {
                             <div className="admin_blog_card_header flex_show_row">
                                 <div className="blog_blog_hold flex_show_row">
                                     <div className="blog_card_image">
-                                        <img src="img/category6.png" alt=""/>
+                                        <img src="../../img/category6.png" alt=""/>
                                     </div>
                                     <div className="blog_card_name remove_margin">
                                         <p>Name of creator</p>
@@ -202,22 +212,22 @@ const AdminBlog = () => {
                                     <img src="svg/more_horizontal.svg" alt=""/>
                                     <div className="blog_card_option_drop">
                                         <div className="blog_card_edit flex_show_row remove_margin">
-                                            <img src="img/Edit Square.png" alt=""/>
+                                            <img src="../../img/Edit Square.png" alt=""/>
                                             <p>Edit blog</p>
                                         </div>
                                         <div className="blog_card_edit flex_show_row remove_margin">
-                                            <img src="img/update.png" alt=""/>
+                                            <img src="../../img/update.png" alt=""/>
                                             <p>Update blog</p>
                                         </div>
                                         <div className="blog_card_edit flex_show_row remove_margin">
-                                            <img src="img/redDelete.png" alt=""/>
+                                            <img src="../../img/redDelete.png" alt=""/>
                                             <p>Delete blog</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="display_blog_image">
-                                <img src="img/category1.png" alt=""/>
+                                <img src="../../img/category1.png" alt=""/>
                             </div>
                             <div className="blog_card_title">
                                 <p>How to build professional profile</p>
@@ -240,7 +250,7 @@ const AdminBlog = () => {
                             </div>
                             <div className="admin_blog_comments flex_show_row">
                                 <div className="admin_blog_icon flex_show_row remove_margin">
-                                    <img src="img/Chat.png" alt=""/>
+                                    <img src="../../img/Chat.png" alt=""/>
                                     <p>35 Comments</p>
                                 </div>
                                 <div className="admin_blog_preview remove_margin">

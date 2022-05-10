@@ -13,6 +13,8 @@ const ClientGigPayment = ({sellerData}) => {
         setOpenOrderRequirement,
         createOrder,
         updateOrder,
+        setOpenPopUp,
+        openPopUp
         
     } = useContext(MainContext);
     console.log(order);

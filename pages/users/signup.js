@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {useMutation, useQuery} from '@apollo/client';
 import { CREATE_USER } from '../../components/queries/user/user';
+import { MainContext } from '../../components/context/mainContext';
+import {Router, useRouter} from 'next/router';
 
 export default function Signup() {
+    const router = useRouter()
     const initialState = {
         userName: "",
         email: "",
         password: "",
+        createdAt: "",
     }
     const [signUp, setSignUp] = useState(initialState);
 
@@ -15,6 +19,8 @@ export default function Signup() {
         const { name, value } = e.target;
         setSignUp({...signUp, [name]: value});
     }
+
+    const {userSignUp} =useContext(MainContext);
 
     const [create, { data }] = useMutation(CREATE_USER, {
         variables: {
@@ -31,9 +37,24 @@ export default function Signup() {
         }
     });
 
-    const submitSignUp = (e) => {
+    const submitSignUp = async (e) => {
         e.preventDefault();
-        create();
+        const {userName, email, password, createdAt} = signUp;
+        const date = Date.now();
+        createdAt
+        const {data, error} = await userSignUp({
+            variables: {
+                userSignUp: {
+                    userName, 
+                    email, 
+                    password, 
+                    createdAt: date.toString(),
+                }
+            }
+        })
+        if(data){
+            router.replace('/login');
+        }
     }
 
     

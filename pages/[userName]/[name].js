@@ -43,7 +43,7 @@ const ProjectFile = () => {
             }
             const galleryFormat = findGigByUser.gigGallery.map((data)=>{
                 const {file} = data;
-                return {image: file[0].image}
+                return {image: file[0]?.image}
             })
             const copy = {...findGigByUser.gigFormat}
             const gigFormat = clean({...copy});

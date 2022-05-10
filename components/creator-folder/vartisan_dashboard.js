@@ -2,11 +2,17 @@ import { useQuery } from '@apollo/client';
 import React, { useContext, useEffect, useState } from 'react';
 import { MainContext } from '../context/mainContext';
 import { clean } from '../functions/functions';
-import { GET_ALL_QUERY } from '../queries/gigs/gig';
+
 
 const VartisanDashboard = () => {
-    const { createHandler, gig, setGig } = useContext(MainContext);
-    const [allGig, setGetAllGig] = useState([]);
+    const { 
+        createHandler, 
+        gig, 
+        setGig, 
+        allGig, 
+        setGetAllGig
+     } = useContext(MainContext);
+    
     
 
     const handleSingleGig = async(e, id) => {
@@ -17,17 +23,7 @@ const VartisanDashboard = () => {
        createHandler();
     }
 
-    const {data, error} = useQuery(GET_ALL_QUERY, {
-        onCompleted: (data) => {
-            if(data){
-            const { getAllgig } = data;
-            setGetAllGig(getAllgig);
-            }
-        },
-        onError: (data) => {
-            console.log(data);
-        }
-    });
+    
     return (
         <div className="gig_mobile_scroll">
                 <div className="creator_gig_wrapper">
@@ -70,7 +66,7 @@ const VartisanDashboard = () => {
                     </div>
                     <div className="creator_gig_body">
                         {allGig.length !== 0 && allGig.map((data, i) => {
-                            const {category, name, id, gig, gigGallery} = data;
+                            const {category, name, id, gig, gigGallery, order} = data;
                             return (
                             <div key={i} onClick={(e)=> handleSingleGig(e, id)} className="creator_gig_row">
                                 <div className="creator_checkbox">
@@ -78,7 +74,7 @@ const VartisanDashboard = () => {
                                 </div>
                                 <div className="creator_project_content">
                                     <div className="creator_project_content_image">
-                                    <img src={gigGallery?.length !== 0 ? gigGallery[0]?.file[0].image : "../../img/category.png"} alt=""/>
+                                    <img src={gigGallery?.length > 0 ? gigGallery[0]?.file[0].image : "../../svg/no_caption.svg"} alt=""/>
                                     </div>
                                     <div className="creator_project_content_details">
                                         <p>{name}</p>
@@ -92,7 +88,7 @@ const VartisanDashboard = () => {
                                     <p>50</p>
                                 </div>
                                 <div className="creator_project_order">
-                                    <p>12</p>
+                                    <p>{order.length > 0 ? order.length : 0}</p>
                                 </div>
                                 <div className="creator_cancelled_order">
                                     <p>2</p>

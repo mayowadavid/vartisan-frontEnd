@@ -109,18 +109,18 @@ const Category = () => {
                         const { name, user, gigGallery, amount } = data;
                        return (<div className="filtered_card" key={i}>
                         <Link href={`/${user?.userName}/${name}`}><a>
-                        <img src={gigGallery[0]?.file[0] !== undefined ? gigGallery[0]?.file[0]?.image : "img/featured.png"} alt=""/>
+                        <img src={gigGallery[0]?.file[0] !== undefined ? gigGallery[0]?.file[0]?.image : "../../svg/no_caption.svg"} alt=""/>
                         </a>
                         </Link>
                         <div className="filtered_content">
                             <div className="filtered_image">
-                                <img src={"img/featured.png"} alt=""/>
+                                <img src={user?.profile?.file?.image !== undefined ? user?.profile?.file?.image :"svg/avatar.svg"} alt=""/>
                             </div>
                             <div className="filtered_title">
                                 <p>{ name }</p>
                                 <p>{user?.userName}</p>
                                 <div className="gig_creator_detail flex_show_row">
-                                    <img src="img/featured.png" alt=""/>
+                                    <img src="svg/avatar.svg" alt=""/>
                                     <p>{user?.userName}</p>
                                 </div>
                             </div>

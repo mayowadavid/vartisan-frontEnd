@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MainContext } from '../context/mainContext';
 
 const ProjectImage = ({data, i}) => {
@@ -6,8 +6,12 @@ const ProjectImage = ({data, i}) => {
     const [temporaryImage, setTemporaryImage] = useState();
     const [projectName, setProjectName] = useState({name: ''});
     const [selected, setSelected] = useState(false);
-    const {gig, setGig}= useContext(MainContext);
+    const {gig, setGig, projectImage}= useContext(MainContext);
     const { gigGallery, gigGalleryId } = gig;
+    
+
+    
+    console.log(projectImage);
     const handleFile = (e, i) => {
         const {files} = e.target;
         if(files){
@@ -21,7 +25,7 @@ const ProjectImage = ({data, i}) => {
         setTemporaryImage(hold);
         //clone due to no direct manipulation
         const temp = [...gigGallery];
-        temp[i] = {...temp[i], file: files};
+        temp[i] = temp.length <= 3 && {...temp[i], file: files};
         gigGallery = [...temp];
         setGig({...gig, gigGallery});
         URL.revokeObjectURL(selected);   
@@ -52,10 +56,11 @@ const ProjectImage = ({data, i}) => {
     await setGig({...gig, gigGallery});
     await setSelected(!selected);
   }
+  
 
     return (
         <div className="gallery_display">
-            {temporaryImage === undefined && (
+            {(temporaryImage === undefined && gigGallery[i]?.file[0]?.image == undefined) && (
             <div className="image_wrapper remove_margin flex_show_column">
             <input onChange={(e)=>handleFile(e, i)} name="file" type="file" id={i}/>
             <label htmlFor={i}>
@@ -64,18 +69,18 @@ const ProjectImage = ({data, i}) => {
             <p>browse</p>
             </label>
             </div>)}
-            {temporaryImage !== undefined &&
+            {( temporaryImage !== undefined || gigGallery[i]?.file[0]?.image !== undefined )&&
                 (<>
                 <input onChange={(e)=>handleFile(e, i)} name="file" type="file" id="file"/><label htmlFor="file">
-                <img onChange={(e)=>handleFile(e, i)} src={gigGalleryId !== "" ? gigGallery[i].image : temporaryImage} alt=""/>
+                <img onChange={(e)=>handleFile(e, i)} src={gigGallery[i]?.file[0]?.image !== undefined ? gigGallery[i]?.file[0]?.image : temporaryImage} alt=""/>
                 </label>
                 </>)
             }
             <div className="gallery_name">
-                <input type="text" id={i} value={gigGalleryId !== "" ? gigGallery[i].name : projectName.name} name="name" onChange={(e)=>handleNameChange(e, i)} placeholder="Project description" name="" id="" />
+                <input type="text" id={i} value={gigGallery[i]?.name !== 'undefined' ? gigGallery[i]?.name : projectName?.name} name="name" onChange={(e)=>handleNameChange(e, i)} placeholder="Project description" name="" id="" />
             </div>
             <div className="gallery_selector flex_show_row">
-                <input name="selected" id={i} checked={gigGalleryId !== "" ? gigGallery[i].default : selected } onChange={(e)=>handleCheck(e, i) } type="radio"/> <p>Set as project cover</p>
+                <input name="selected" id={i} checked={gigGallery[i]?.selected !== "" ? gigGallery[i]?.selected : selected } onChange={(e)=>handleCheck(e, i) } type="radio"/> <p>Set as project cover</p>
             </div>
         </div>
     );

@@ -17,7 +17,7 @@ const VartisanHeader = () => {
                     <img src="../svg/chat.svg" alt=""/>
                 </div>
                 <div className="header_avatar">
-                    <img src="../img/avatarpic.png" alt=""/>
+                    <img src="../svg/avatar.svg" alt=""/>
                 </div>
             </div>
   )

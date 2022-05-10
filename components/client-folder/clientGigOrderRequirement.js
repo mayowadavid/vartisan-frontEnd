@@ -105,12 +105,18 @@ const ClientGigOrderRequirement = ({sellerData}) => {
     }
     const submitRequirement = async (e) => {
         e.preventDefault();
+        const date = await Date.now();
         const {description, reference, color} = requirementData
         const token = await localStorage.getItem('token');
         const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : "",}
         const {data: requirements, error} = await createOrderRequirements({
             variables: {
-                orderRequirement: { description, reference, color },
+                orderRequirement: { 
+                    description, 
+                    reference, 
+                    color,
+                    date: date.toString()
+                 },
             }
         })
         const {createOrderRequirement} = await requirements;

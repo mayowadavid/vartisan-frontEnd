@@ -140,26 +140,7 @@ const AdminEditUpdate = () => {
                             <div className="subCategory">
                                 <p>Sub Category</p>
                                 <div className="subCategory_wrapper flex_show_row">
-                                    <div className="subcategory_container flex_show_row remove_margin">
-                                        <p>Logo Design</p>
-                                        <img src="svg/pen-edit.svg" alt=""/>
-                                    </div>
-                                    <div className="subcategory_container flex_show_row remove_margin">
-                                        <p>Logo Design</p>
-                                        <img src="svg/pen-edit.svg" alt=""/>
-                                    </div>
-                                    <div className="subcategory_container flex_show_row remove_margin">
-                                        <p>Logo Design</p>
-                                        <img src="svg/pen-edit.svg" alt=""/>
-                                    </div>
-                                    <div className="subcategory_container flex_show_row remove_margin">
-                                        <p>Logo Design</p>
-                                        <img src="svg/pen-edit.svg" alt=""/>
-                                    </div>
-                                    <div className="subcategory_container flex_show_row remove_margin">
-                                        <p>Logo Design</p>
-                                        <img src="svg/pen-edit.svg" alt=""/>
-                                    </div>
+                                    
                                     <div className="subcategory_container flex_show_row remove_margin">
                                         <p>Logo Design</p>
                                         <img src="svg/pen-edit.svg" alt=""/>

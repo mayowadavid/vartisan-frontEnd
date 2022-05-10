@@ -40,7 +40,6 @@ const Overview = () => {
    }, [category, categoryIndex]);
 
 useEffect(()=> {
-    console.log(gig);
     if(gig.id !== ""){
         const { gigTag } = gig;
             gigTag.length !== 0 && setTagHolder(gigTag);
@@ -212,7 +211,7 @@ const overviewSubmit = async (e) => {
     const {data: gigHolder, error} = await createGig({
         variables: {
             createGig: { 
-            name: gigName,
+            name,
             categoryId,
             subCategoryId,
             gigFormatId: createGigformat.id,
@@ -341,7 +340,7 @@ const nextPage = (e) => {
                                 <div className="project_category_selector flex_show_row form_border">
                                     <div className={rotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
                                     <select name="categoryOption" defaultValue="Select Category" onClick={handleArrow} onChange={handleCategory}>
-                                    <option defaultValue hidden>{gig.categoryId !== "" ? gig?.category.name: "Select Category"}</option>
+                                    <option defaultValue hidden>{(gig?.categoryId !== "" && gig?.category !== undefined) ? gig?.category.name: "Select Category"}</option>
                                         {
                                            allCategory !== undefined && 
                                            allCategory.map(({name, id}, i)=> {
@@ -362,7 +361,7 @@ const nextPage = (e) => {
                                 <div className={secondRotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
                                 
                                 <select name="subCategoryOption" defaultValue="Select Sub-Category" onClick={handleSecondArrow} onChange={handleSubCategory}>
-                                    <option defaultValue hidden>{gig?.subCategoryId !== "" ? gig?.subCategory.name: "select subCategory"}</option>
+                                    <option defaultValue hidden>{(gig?.subCategoryId !== "" && gig?.subCategory?.name !== undefined) ? gig?.subCategory?.name: "select subCategory"}</option>
                                 {subCategory.map(({name}, i)=> { 
                                      return (<option key={i}>{name}</option> )
                                 })}

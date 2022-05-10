@@ -11,6 +11,12 @@ export const FETCH_CATEGORIES = gql`
         gig {
         user {
         userName
+        profile {
+            id
+            file {
+                image
+            }
+          }
         }
         name
         amount

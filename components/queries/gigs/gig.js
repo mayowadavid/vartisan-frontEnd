@@ -90,9 +90,16 @@ query {
       id
       name
     }
+    order {
+      id
+    }
     subCategory {
       id
       name
+    }
+    user {
+      id
+      userName
     }
   }
 }`;
@@ -110,6 +117,7 @@ query Find_Gig_By_User($userData: UserGigInput!){
     aiFiles
     customIllustration
     sourceFile
+    createdAt
     gigFormat {
       id
       ai
@@ -146,6 +154,11 @@ query Find_Gig_By_User($userData: UserGigInput!){
     user {
       userName
       id
+      profile {
+        file {
+          image
+        }
+      }
     }
     gigGallery {
       file {

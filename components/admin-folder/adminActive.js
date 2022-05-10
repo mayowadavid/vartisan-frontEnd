@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MainContext } from '../context/mainContext'
 import AdminHeader from './adminHeader'
 import AdminMobileHeader from './adminMobileHeader'
 import AdminSidebar from './adminSidebar'
 
 const AdminActive = () => {
+    const {allGig} = useContext(MainContext);
   return (
     <div className="admin_category">
         <AdminHeader/>
@@ -18,7 +20,7 @@ const AdminActive = () => {
                         </div>
                         <div className="category_push flex_show_row">
                             <div className="sales_reports flex_show_row">
-                                <img src="img/Downlaod.png" alt=""/>
+                                <img src="../../img/Downlaod.png" alt=""/>
                                 <p>Sales Reports</p>
                             </div>
                             <div className="sales_reports">
@@ -53,296 +55,42 @@ const AdminActive = () => {
                             <p>Action</p>
                         </div>
                     </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>1</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>2</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>3</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>4</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>5</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>6</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>7</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>8</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>9</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
-                    <div className="category_table_header flex_show_row">
-                        <div className="project_number">
-                            <p>10</p>
-                        </div>
-                        <div className="project_name flex_show_row">
-                            <div className="table_image">
-                                <img src="img/Seller_image.jpg" alt=""/>
-                            </div>
-                            <div className="table_content remove_margin">
-                                <p>Title of the project</p>
-                                <p>categories Name</p>
-                            </div>
-                        </div>
-                        <div className="vartisan">
-                            <p>Esther Howard</p>
-                        </div>
-                        <div className="impression">
-                            <p>1266</p>
-                        </div>
-                        <div className="clicks">
-                            <p>1256</p>
-                        </div>
-                        <div className="orders">
-                            <p>56</p>
-                        </div>
-                        <div className="project_action">
-                            <p>view project</p>
-                        </div>
-                    </div>
+                    {
+                        allGig.length > 0 && allGig?.map((data, i)=>{
+                            const {name, category, user, order, gigGallery} = data;
+                            return (
+                                <div key={i} className="category_table_header flex_show_row">
+                                    <div className="project_number">
+                                        <p>{ i + 1 }</p>
+                                    </div>
+                                    <div className="project_name flex_show_row">
+                                        <div className="table_image">
+                                            <img src={gigGallery?.length > 0 ? gigGallery[0]?.file[0].image : "../../svg/no_caption.svg"} alt=""/>
+                                        </div>
+                                        <div className="table_content remove_margin">
+                                            <p>{name}</p>
+                                            <p>{category.name}</p>
+                                        </div>
+                                    </div>
+                                    <div className="vartisan">
+                                        <p>{user.userName}</p>
+                                    </div>
+                                    <div className="impression">
+                                        <p>1266</p>
+                                    </div>
+                                    <div className="clicks">
+                                        <p>1256</p>
+                                    </div>
+                                    <div className="orders">
+                                        <p>{order.length > 0? order.length : 0}</p>
+                                    </div>
+                                    <div className="project_action">
+                                        <p>view project</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                     <div className="category_table_footer flex_show_row">
                         <div className="page_count">
                             <p>Showing 1 - 10 of 70 Gigs</p>

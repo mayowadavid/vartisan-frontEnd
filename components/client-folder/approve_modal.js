@@ -9,12 +9,14 @@ const ApproveModal = () => {
 
     const submitOrder = async (e) => {
         e.preventDefault();
+        const date = await Date.now();
         if(activity !== undefined){
             const {data, error} = await updateOrder({
             variables: {
                 orderUpdate: {
                     id: activity,
-                    orderStatus: 'completed'
+                    orderStatus: 'completed',
+                    approvalDate: date.toString(),
                 }
             }
         })

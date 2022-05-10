@@ -47,7 +47,7 @@ const ProjectVideo = () => {
   }
 
     return(<div className="gallery_display">
-                {temporaryVideo === undefined && (
+                {(temporaryVideo === undefined && gigVideo.length == 0) && (
                 <div className="image_wrapper remove_margin flex_show_column">
                 <input onChange={handleFile} name="file" type="file" id="video"/>
                 <label htmlFor="video">
@@ -56,18 +56,18 @@ const ProjectVideo = () => {
                 <p>browse</p> 
                 </label>
                 </div>)}
-                {temporaryVideo !== undefined &&
+                {(temporaryVideo !== undefined || gigVideo.length > 0 ) &&
                     (<>
                     <input onChange={handleFile} name="video" type="file" id="video"/>
                     <label htmlFor="video">
                     <video width="750" height="500" controls >
-                        <source src={temporaryVideo} type="video/mp4"/>
+                        <source src={gigVideo !== null ? gigVideo[0]?.file[0]?.video : temporaryVideo} type="video/mp4"/>
                     </video>
                     </label>
                     </>)
                 }
                 <div className="gallery_name">
-                    <input type="text" value={videoName.name} onChange={handleChange} placeholder="Project description" name="name"/>
+                    <input type="text" value={gigVideo !== null ? gigVideo[0]?.name : videoName.name} onChange={handleChange} placeholder="Project description" name="name"/>
                 </div>
                 <div className="gallery_selector flex_show_row">
                     <input name="selected" value={videoName.default} onChange={handleCheck} id="video" type="radio"/> <p>Set as video cover</p>

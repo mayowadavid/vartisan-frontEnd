@@ -1,11 +1,18 @@
 import React, { useContext } from 'react';
 import { MainContext } from '../context/mainContext';
-const SuccessModal = ({order, name, userName, router, sellerData}) => {
+import {useRouter} from 'next/router';
+const SuccessModal = ({order, name, userName, sellerData}) => {
     const {openPop, setOpenPopUp} = useContext(MainContext);
+    const router = useRouter()
     const handleSubmit = (e) => {
         e.preventDefault();
         setOpenPopUp(!openPop);
         router.push(`/${userName}/manage_orders/${order.id}`);
+    }
+    const contactSeller = (e) => {
+        e.preventDefault();
+        setOpenPopUp(!openPop);
+        router.push(`/${userName}/inbox`);
     }
     return (<div className="references_pop_up flex_show_row">
     <div className="success_modal flex_show_column">
@@ -23,10 +30,10 @@ const SuccessModal = ({order, name, userName, router, sellerData}) => {
             <p>The Vartisan has 24 hours to accept or reject your request. If your request is rejected, you will receive an instant refund.</p>
         </div>
         <div className="modal_button remove_margin">
-            <p>Project Activity</p>
+            <p onClick={handleSubmit}>Project Activity</p>
         </div>
         <div className="modal_footer">
-            <p onSubmit={handleSubmit}>Contact Vartisan</p>
+            <p onClick={contactSeller}>Contact Vartisan</p>
         </div>
     </div>
 </div>)

@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MainContext } from '../context/mainContext';
 
 const ClientMobileHeader = () => {
+    const { userProfile } =useContext(MainContext);
   return (
     <div className="mobile_drop_header flex_show_row">
             <div className="menu_left_side">
@@ -19,7 +21,7 @@ const ClientMobileHeader = () => {
                     <img src="svg/Chat.svg" alt=""/>
                 </div>
                 <div className="menu_avatar">
-                    <img src="img/category.png" alt=""/>
+                    <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
                 </div>
             </div>
         </div>

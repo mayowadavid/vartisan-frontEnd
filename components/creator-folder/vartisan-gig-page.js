@@ -15,7 +15,7 @@ const VartisanPage = ({sellerData}) => {
         setOpenMessagePopUp,
         setChatId,
     } = useContext(MainContext);
-
+    console.log(sellerData);
     const chatData = {
         chatExist: false,
         createNew: false,
@@ -91,11 +91,11 @@ const VartisanPage = ({sellerData}) => {
                                     <div>
                                         <span className="seller online"></span>
                                     </div>
-                                    <img src="../img/category.png" alt=""/>
+                                    <img src={sellerData.user.profile.image !== undefined ? sellerData.user.profile.image :"../svg/avatar.svg"} alt=""/>
                                 </div>
                                 <div className="seller_gig_name">
                                     <p>{sellerData.user.userName}</p>
-                                    <p>Logo Designer</p>
+                                    <p>{sellerData?.category?.name}</p>
                                 </div>
                                 <div className="seller_gig_more">
                                     <img src="../img/more_vertical.png" alt=""/>

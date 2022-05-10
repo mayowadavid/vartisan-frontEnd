@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MainContext } from '../context/mainContext'
 
 export default function PrimaryHeader() {
+    const { userProfile } = useContext(MainContext);
   return (
     <div className="category_container">
             <div className="admin_header">
@@ -21,7 +23,7 @@ export default function PrimaryHeader() {
                     <img src="../../svg/chat.svg" alt=""/>
                 </div>
                 <div className="category_header_avatar">
-                    <img src="../../img/avatarpic.png" alt=""/>
+                    <img src={userProfile?.file !== null? userProfile?.file?.image :"../../svg/avatar.svg"} alt=""/>
                 </div>
             </div>
             <div className="category_container_header">

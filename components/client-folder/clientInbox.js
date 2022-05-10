@@ -237,7 +237,11 @@ useEffect(()=>{
                 <div className="individual_contact">
                     <div className="individual_contact_row">
                         <div className="individual_avatar_holder flex_show_row">
-                            <img src="../../img/featured3.png" alt=""/>
+                            <img src={sender?.userName == userName ?
+                             receiver?.profile.file.image:
+                              sender?.profile.file.image !== 'undefined'?
+                              sender?.profile.file.image :
+                              "../../svg/avatar.svg"} alt=""/>
                         </div>
                         <div className="individual_contact_title">
                             <p>{ sender?.userName == userName ? receiver?.userName : sender?.userName }</p>
@@ -298,7 +302,7 @@ useEffect(()=>{
                                         <div className="individual_message">
                                             <div className="individual_message_row">
                                                 <div className="message_avatar">
-                                                    <img src="../../img/category.png" alt=""/>
+                                                    <img src={user?.profile?.file?.image !== undefined ? user?.profile?.file?.image :"../../svg/avatar.svg"} alt="../../svg/avatar.svg" />
                                                 </div>
                                                 <div className="message_details">
                                                     <p>{user?.userName == userName ? "Me": user?.userName}</p>

@@ -1,9 +1,11 @@
 import { gql } from "@apollo/client"
 
-export const LOGIN = gql` query LOGIN($userInput: CreateUserInput!){
+export const LOGIN = gql` 
+query LOGIN($userInput: CreateUserInput!){
   loginUser(userData: $userInput){
     userName
     email
+    createdAt
     password
     refreshToken
     refreshTokenExp
@@ -25,10 +27,12 @@ export const FETCH_USERS = gql `
       getAllUsers {
       email
       userName
-      password
       profileId
+      createdAt
       profile {
         id
+        firstName
+        lastName
       }
     }
   }

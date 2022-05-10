@@ -5,14 +5,12 @@ import ClientAbout from './clientAbout'
 import ClientDescription from './clientDescription'
 import ClientReference from './clientReferences'
 import ClientRecentOrder from './client_recent_order'
-import ClientReferencePop from './client_reference_pop'
 
 const ClientProfile = () => {
 
     const [selectedTab, setSelectedTab] = useState("About");
-    const [popReference, setPopReference] = useState(false);
-    const [editAbout, setEditAbout] = useState(false);
     const [profileImage, setProfileImage] = useState();
+    const [clientReference, setClientReference] = useState([]);
     
 
     const handleTab = (e) => {
@@ -20,15 +18,23 @@ const ClientProfile = () => {
         const {outerText} = e.target;
         setSelectedTab(outerText);
     }
-    const { userProfile, userData, fetchUserProfile } = useContext(MainContext);
-    const handlePop = (e) => {
-        e.preventDefault();
-        setPopReference(!popReference);
-    }
-
-    const handleEditPop = () => {
-        setEditAbout(!editAbout);
-    }
+    const { 
+        userProfile, 
+        userData, 
+        fetchUserProfile, 
+        handleEditPop, 
+        handlePop,
+        findUserReference,
+        findAllReference,
+     } = useContext(MainContext);
+    
+     useEffect(async()=>{
+        const {data, error} = await findUserReference();
+        if(data !== undefined){
+            const {findReferenceByUser} = data;
+            setClientReference(findReferenceByUser);
+        }
+     }, [])
 
     const uploadImage = (datum, data, headers) => {
         for (let x = 0; x < data.length; x++){
@@ -51,11 +57,8 @@ const ClientProfile = () => {
         const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""}
         userProfile.id !== undefined && await uploadImage(userProfile, files, headers);
     }
-
   return (
       <>
-        { editAbout == true && <ClientDescription handleEditPop={handleEditPop} /> }
-        { popReference == true && <ClientReferencePop handlePop={handlePop} /> }
         <div className="filtered_category_body">
         <div className="category_row">
                 <div className="seller_slug">
@@ -76,7 +79,7 @@ const ClientProfile = () => {
                             <p>Change image</p>
                         </label>
                         <label htmlFor="profileImage">
-                            <img src={userProfile?.file !== null? userProfile?.file?.image: "img/category.png"} alt=""/>
+                            <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
                         </label>
                     </div>
                     <div className="client_details_content">
@@ -142,7 +145,7 @@ const ClientProfile = () => {
                 </div>
                 {selectedTab == "About" && <ClientAbout description={ userProfile.description } />}
                 {selectedTab == "Recent Orders" && <ClientRecentOrder />}
-                {selectedTab == "References" && <ClientReference handlePop={handlePop} />}
+                {selectedTab == "References" && <ClientReference clientReference={clientReference} handlePop={handlePop} />}
             </div>
         </div>
         </div>

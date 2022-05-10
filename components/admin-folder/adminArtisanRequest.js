@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MainContext } from '../context/mainContext'
 import AdminHeader from './adminHeader'
 import AdminMobileHeader from './adminMobileHeader'
 import AdminSidebar from './adminSidebar'
 
 const AdminArtisanRequest = () => {
+    const {allGig} = useContext(MainContext);
+    console.log(allGig);
   return (
     <div className="admin_category">
         <AdminHeader />
@@ -22,308 +25,65 @@ const AdminArtisanRequest = () => {
                         </div>
                     </div>
                     <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
+                        <div className="vartisan_number vart remove_margin">
                             <p>No</p>
                         </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>last Name</p>
+                        <div className="vartisan_name vart remove_margin">
+                            <p>ProjectName</p>
                         </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>First Name</p>
+                        <div className="vartisan_creator vart remove_margin">
+                            <p>Creator</p>
                         </div>
-                        <div className="artisan_username remove_margin">
-                            <p>UserName</p>
+                        <div className="vartisan_date vart remove_margin">
+                            <p>Date Created</p>
                         </div>
-                        <div className="artisan_email remove_margin">
-                            <p>Email</p>
+                        <div className="vartisan_category vart remove_margin">
+                            <p>Category</p>
                         </div>
-                        <div className="artisan_register remove_margin">
-                            <p>Registered</p>
-                        </div>
-                        <div className="artisan_approve remove_margin">
+                        <div className="vartisan_approve vart remove_margin">
                             <p>Approve/Reject</p>
                         </div>
                     </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>1</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
+                    {
+                        allGig.length > 0 && allGig?.map((data, i)=>{
+                            const {gigGallery, createdAt, name, category, user} =data;
+                            return (
+                            <div key={i} className="artisan_table_container flex_show_row">
+                                <div className="vartisan_number vart remove_margin">
+                                    <p>{ i + 1 }</p>
+                                </div>
+                                <div className="vartisan_name flex_show_row">
+                                    <div className="table_image vart">
+                                        <img src={gigGallery?.length > 0 ? gigGallery[0]?.file[0].image : "../../svg/no_caption.svg"} alt=""/>
+                                    </div>
+                                    <div className="vart_content vart remove_margin">
+                                        <p>{name}</p>
+                                    </div>
+                                </div>
+                                <div className="vartisan_creator vart">
+                                    <p>{user.userName}</p>
+                                </div>
+                                <div className="vartisan_date vart remove_margin">
+                                    <p>{createdAt}</p>
+                                </div>
+                                <div className="vartisan_category vart remove_margin">
+                                    <p>{category?.name}</p>
+                                </div>
+                                <div className="vartisan_approve flex_show_row remove_margin flex_show_row">
+                                    <div className="vartisan_button vart remove_margin">
+                                        <p>Preview</p>
+                                    </div>
+                                    <div className="vartisan_button vart remove_margin">
+                                        <p>Reject</p>
+                                    </div>
+                                    <div className="vartisan_button vart remove_margin">
+                                        <p>Approve</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>2</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>3</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>4</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>5</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>6</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>7</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>8</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>9</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="artisan_table_container flex_show_row">
-                        <div className="artisan_number remove_margin">
-                            <p>10</p>
-                        </div>
-                        <div className="artisan_lastname remove_margin">
-                            <p>EstherHow</p>
-                        </div>
-                        <div className="artisan_firstname remove_margin">
-                            <p>Esther</p>
-                        </div>
-                        <div className="artisan_username remove_margin">
-                            <p>Howard</p>
-                        </div>
-                        <div className="artisan_email remove_margin">
-                            <p>esther@gmail.com</p>
-                        </div>
-                        <div className="artisan_register remove_margin">
-                            <p>2022-01-02 10:42:01</p>
-                        </div>
-                        <div className="artisan_approve remove_margin flex_show_row">
-                            <div className="approve_button remove_margin">
-                                <p>Reject</p>
-                            </div>
-                            <div className="approve_button remove_margin">
-                                <p>Approve</p>
-                            </div>
-                        </div>
-                    </div>
+                            )
+                        })
+                    }
                     <div className="category_table_footer flex_show_row">
                         <div className="page_count">
                             <p>Showing 1 - 10 of 70 Sellers</p>
