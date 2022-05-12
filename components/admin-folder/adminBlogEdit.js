@@ -252,7 +252,7 @@ const uploadImage = (datum, data, headers) => {
                                         }
                                         
                                         <div className="flex_show_row blog_category">
-                                            <select name="selected" onChange={handleCategory} className="select_category flex_show_row">
+                                        <select name="selected" onChange={handleCategory} className="select_category flex_show_row">
                                             {
                                                 category?.categories?.length > 0 && 
                                                 category?.categories?.map((d, i)=>{
@@ -270,7 +270,7 @@ const uploadImage = (datum, data, headers) => {
                                 </div>
                                 <div className="admin_blog_title">
                                     <p>Slug</p>
-                                    <input type="text" name="slug" value={createBlogState.slug} placeholder="Enter the title here" id=""/>
+                                    <input type="text" disabled="true" name="slug" value={createBlogState.slug} placeholder="Enter the title here" id=""/>
                                 </div>
                                 <div className="admin_blog_category">
                                 <div>

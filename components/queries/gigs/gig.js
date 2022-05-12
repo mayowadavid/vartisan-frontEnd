@@ -167,3 +167,27 @@ query Find_Gig_By_User($userData: UserGigInput!){
     }
   }
 }`
+
+export const FIND_ALL_USER_GIG = gql `
+query FIND_ALL_USER_GIG{
+  findAllUserGig{
+    name
+    amount
+    category {
+      name
+    }
+    user {
+      userName
+      profile {
+        file {
+          image
+        }
+      }
+    }
+    gigGallery {
+      file {
+        image
+      }
+    }
+  }
+}`

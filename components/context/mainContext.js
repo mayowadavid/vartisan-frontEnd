@@ -8,7 +8,7 @@ import { CREATE_RUSH_ORDER } from '../mutations/RushOrder/rushOrder';
 import { CREATE_COMMERCIAL_USE } from '../mutations/commercialUse/commercialUse';
 import { useQuery } from '@apollo/client'
 import { FETCH_CATEGORIES } from '../queries/category/category';
-import { GET_ALL_QUERY } from '../queries/gigs/gig';
+import { FIND_ALL_USER_GIG, GET_ALL_QUERY } from '../queries/gigs/gig';
 import { CREATE_ORDER, CREATE_ORDER_REQUIREMENT, UPDATE_ORDER } from '../mutations/order/order';
 import { FIND_ORDER_BY_ID, FIND_ORDER_BY_CLIENT, FIND_ORDER_BY_SELLER } from '../queries/orders/order';
 import { CREATE_MESSAGE } from '../mutations/messages/message';
@@ -22,6 +22,7 @@ import { CREATE_CATEGORY, SUB_CATEGORY } from '../mutations/categories/category'
 import { MESSSAGE_SUBSCRIPTION } from '../subscriptions/message';
 import { FETCH_USERS } from '../queries/user/user';
 import { CREATE_BLOG } from '../mutations/blog/blog';
+import { UPDATE_PROFILE } from '../mutations/profile/profile';
 
 export const MainContext = createContext();
 
@@ -415,6 +416,15 @@ const MainContextProvider = (props) => {
         }
     });
 
+    const [findAllUserGig] = useLazyQuery(FIND_ALL_USER_GIG, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
     const [createOrder] = useMutation(CREATE_ORDER, {
         onCompleted: (data) => {
             console.log(data);
@@ -488,6 +498,15 @@ const MainContextProvider = (props) => {
     })
 
     const [createBlog] = useMutation(CREATE_BLOG, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [updateProfile] = useMutation(UPDATE_PROFILE, {
         onCompleted: (data) => {
             console.log(data);
         },
@@ -635,7 +654,9 @@ const MainContextProvider = (props) => {
         getUsers,
         adminBlog, 
         setAdminBlog,
-        createBlog
+        createBlog,
+        updateProfile,
+        findAllUserGig
         }}>
             {props.children}
         </MainContext.Provider>

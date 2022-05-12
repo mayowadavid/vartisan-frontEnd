@@ -69,13 +69,3 @@ query FETCH_USER_BY_NAME($userName: String!){
         }
       }
 }`
-
-export const UPDATE_PROFILE = gql `
- mutation UPDATE_PROFILE($updateProfileInput: UpdateProfileInput!) {
-        updateProfile(updateProfileInput: $updateProfileInput) {
-    			id
-        	description
-          descriptionMarkDown
-    			language
-  }
-}`

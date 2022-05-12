@@ -238,9 +238,9 @@ useEffect(()=>{
                     <div className="individual_contact_row">
                         <div className="individual_avatar_holder flex_show_row">
                             <img src={sender?.userName == userName ?
-                             receiver?.profile.file.image:
-                              sender?.profile.file.image !== 'undefined'?
-                              sender?.profile.file.image :
+                             receiver?.profile?.file?.image:
+                              sender?.profile?.file?.image !== 'undefined'?
+                              sender?.profile?.file?.image :
                               "../../svg/avatar.svg"} alt=""/>
                         </div>
                         <div className="individual_contact_title">

@@ -5,6 +5,7 @@ query FETCH_USER_PROFILE{
     id
     user {
       userName
+      email
       id
     }
     description

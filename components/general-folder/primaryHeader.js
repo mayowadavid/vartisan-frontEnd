@@ -1,8 +1,16 @@
 import React, { useContext } from 'react'
 import { MainContext } from '../context/mainContext'
+import {useRouter} from 'next/router';
 
 export default function PrimaryHeader() {
     const { userProfile } = useContext(MainContext);
+    const router = useRouter();
+   const { userName } = router.query;
+
+   const handleRoute = (e) => {
+        e.preventDefault();
+        router.push(`/${userName}/vartisan/dashboard`);
+   }
   return (
     <div className="category_container">
             <div className="admin_header">
@@ -16,7 +24,7 @@ export default function PrimaryHeader() {
                 <div className="category_header_content">
                     <p>How it works</p>
                     <p>Supports</p>
-                    <p>Dashboard</p>
+                    <p onClick={handleRoute}>Dashboard</p>
                 </div>
                 <div className="category_header_icon">
                     <img src="../../svg/Notification.svg" alt=""/>

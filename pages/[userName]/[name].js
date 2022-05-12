@@ -18,6 +18,7 @@ const ProjectFile = () => {
     const { name, userName } = router.query;
     const [sellerData, setSellerData] = useState();
     const [vartisanGallery, setVartisanGallery] = useState([]);
+    
     const {
         openOrderDetails,  
         openOrderRequirement,
@@ -26,7 +27,7 @@ const ProjectFile = () => {
         openPopUp, 
         order,
         openMessagePopUp, 
-        setOpenMessagePopUp
+        setOpenMessagePopUp,
     } = useContext(MainContext);
 
     
@@ -62,7 +63,7 @@ const ProjectFile = () => {
                     name, 
                     userName
                 }
-               }})
+               }});
         }
     }, [name, userName])
     

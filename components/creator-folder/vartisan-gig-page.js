@@ -14,15 +14,23 @@ const VartisanPage = ({sellerData}) => {
         openMessagePopUp, 
         setOpenMessagePopUp,
         setChatId,
+        findAllUserGig
     } = useContext(MainContext);
-    console.log(sellerData);
+
     const chatData = {
         chatExist: false,
         createNew: false,
     }
-
+    console.log(sellerData?.user?.profile?.file?.image);
     const [createChat, setCreateChat] = useState(chatData);
+    const [otherGig, setOtherGig] = useState();
 
+    useEffect(async ()=>{
+        const {data: userGig, error: userError} = await findAllUserGig();
+        setOtherGig(userGig.findAllUserGig);
+    }, [])
+
+    console.log(otherGig);
     const requestOrder = (e) => {
         e.preventDefault();
         setOpenSellerPage(!openSellerPage);
@@ -69,7 +77,7 @@ const VartisanPage = ({sellerData}) => {
                 <div className="seller_gig_wrapper">
                     <div className="seller_gig_media">
                             <div className="seller_showcase">
-                                <img src={sellerData.galleryFormat[0]?.image !== undefined ? sellerData.galleryFormat[0]?.image :"../img/Seller_image.jpg"} alt=""/>
+                                <img src={sellerData?.galleryFormat[0]?.image !== undefined ? sellerData.galleryFormat[0]?.image :"../img/Seller_image.jpg"} alt=""/>
                             </div>
                             <div className="seller_thumbnail">
                                 {sellerData.galleryFormat.length !== 0 ?
@@ -91,7 +99,8 @@ const VartisanPage = ({sellerData}) => {
                                     <div>
                                         <span className="seller online"></span>
                                     </div>
-                                    <img src={sellerData.user.profile.image !== undefined ? sellerData.user.profile.image :"../svg/avatar.svg"} alt=""/>
+                                    <img src={sellerData?.user?.profile?.file?.image !== undefined ?
+                                     sellerData?.user?.profile?.file?.image : "../svg/avatar.svg"} alt=""/>
                                 </div>
                                 <div className="seller_gig_name">
                                     <p>{sellerData.user.userName}</p>
@@ -336,70 +345,28 @@ const VartisanPage = ({sellerData}) => {
                             <p>More Projects</p>
                         </div>
                         <div className="seller_card_row">
-                            <div className="seller_card">
-                                <img src="../img/featured.png" alt=""/>
-                                <div className="seller_content">
-                                    <div className="seller_gig_image">
-                                        <img src="../img/featured.png" alt=""/>
-                                    </div>
-                                    <div className="seller_gig_title">
-                                        <p>Micheal John</p>
-                                        <p>logo editing</p>
-                                    </div>
-                                    <div className="seller_gig_price">
-                                        <p>from</p>
-                                        <p>$40</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="seller_card">
-                                <img src="../img/featured.png" alt=""/>
-                                <div className="seller_content">
-                                    <div className="seller_gig_image">
-                                        <img src="../img/featured.png" alt=""/>
-                                    </div>
-                                    <div className="seller_gig_title">
-                                        <p>Micheal John</p>
-                                        <p>logo editing</p>
-                                    </div>
-                                    <div className="seller_gig_price">
-                                        <p>from</p>
-                                        <p>$40</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="seller_card">
-                                <img src="../img/featured.png" alt=""/>
-                                <div className="seller_content">
-                                    <div className="seller_gig_image">
-                                        <img src="../img/featured.png" alt=""/>
-                                    </div>
-                                    <div className="seller_gig_title">
-                                        <p>Micheal John</p>
-                                        <p>logo editing</p>
-                                    </div>
-                                    <div className="seller_gig_price">
-                                        <p>from</p>
-                                        <p>$40</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="seller_card">
-                                <img src="../img/featured.png" alt=""/>
-                                <div className="seller_content">
-                                    <div className="seller_gig_image">
-                                        <img src="../img/featured.png" alt=""/>
-                                    </div>
-                                    <div className="seller_gig_title">
-                                        <p>Micheal John</p>
-                                        <p>logo editing</p>
-                                    </div>
-                                    <div className="seller_gig_price">
-                                        <p>from</p>
-                                        <p>$40</p>
-                                    </div>
-                                </div>
-                            </div>
+                        {
+                            otherGig !== undefined && otherGig.map((d)=>{
+                                return (
+                                        <div className="seller_card">
+                                            <img src={d?.gigGallery[0]?.file[0]?.image !== undefined ? d?.gigGallery[0]?.file[0]?.image : "../../svg/no_caption.svg"} alt=""/>
+                                            <div className="seller_content">
+                                                <div className="seller_gig_image">
+                                                    <img src={d?.user?.profile?.file?.image !== undefined ? d?.user?.profile?.file?.image : "../../svg/no_caption.svg"} alt=""/>
+                                                </div>
+                                                <div className="seller_gig_title">
+                                                    <p>{d?.user?.userName}</p>
+                                                    <p>{d?.category?.name}</p>
+                                                </div>
+                                                <div className="seller_gig_price">
+                                                    <p>from</p>
+                                                    <p>{`$${d?.amount}`}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                )
+                            })
+                        }
                         </div>
                     </div>
                 </div>

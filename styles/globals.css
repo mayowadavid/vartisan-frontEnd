@@ -1562,7 +1562,7 @@ width: 60%;
 
 .sidebar {
   display: block;
-  width: 16%;
+  width: 20%;
   background-color: #fff;
 }
 
@@ -1597,7 +1597,8 @@ width: 60%;
 #active {
   background-color: #555BFF;
   border-radius: 50px;
-  width: 85%;
+  width: 75%;
+  margin: 0 auto;
 }
 
 #active p {
@@ -1637,6 +1638,8 @@ width: 60%;
 
 .side_footer {
   display: flex;
+  width: 90%;
+  margin: 0 auto;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -1644,7 +1647,7 @@ width: 60%;
 
 
 .admin_content {
-  width: 84%;
+  width: 80%;
   background-color: #F9FAFF;
 }
 
@@ -1736,7 +1739,6 @@ width: 60%;
 
 .admin_container {
   width: 100%;
-  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -1790,8 +1792,8 @@ width: 60%;
 }
 
 .avatar_image > img {
-  width: 91px;
-  height: 91px;
+  width: 71px;
+  height: 71px;
 }
 
 .avatar_content {
@@ -1829,6 +1831,7 @@ width: 60%;
   flex-wrap: wrap;
   flex-direction: row;
   width: 100%;
+  margin-bottom: 10px;
   padding: 4% 0;
   align-items: center;
 }
@@ -1845,7 +1848,7 @@ width: 60%;
 
 .creator_award {
   position: relative;
-  width: 15%;
+  width: 25%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1858,7 +1861,7 @@ width: 60%;
 }
 
 .creator_content {
-  width: 85%;
+  width: 75%;
   padding-left: 3%;
 }
 
@@ -1893,7 +1896,7 @@ width: 60%;
 
 .achievement_image {
   position: absolute;
-  width: 90%;
+  width: 45px;
   margin: 0 auto;
   z-index: 0;
 }
@@ -1978,7 +1981,6 @@ width: 60%;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: 60px;
   align-items: center;
   border-width: 0 0 2px 0;
   border-style: solid;
@@ -2018,7 +2020,7 @@ width: 60%;
 
 
 .project_name_header {
-  width: 38%;
+  width: 40%;
 }
 
 .order_by {
@@ -2047,7 +2049,7 @@ width: 60%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  width: 38%;
+  width: 40%;
 }
 
 .gig_card_image {
@@ -2181,7 +2183,7 @@ width: 10%;
 }
 
 .active_card {
-  width: 20%;
+  width: 22%;
   height: 150px;
   text-align: center;
   background-color: #fff;
@@ -3699,7 +3701,7 @@ width: 50%;
   flex-wrap: wrap;
   height: fit-content;
   color: #090A2E;
-  justify-content: space-between;
+  gap: 2%;
 }
 
 .seller_card {
@@ -4972,7 +4974,7 @@ border-top: 10px solid #55FFFF;
 }
 
 .creator_gig_wrapper {
-  width: 91%;
+  width: 95%;
   padding: 1.5% 2%;
   padding-bottom: 1.5%;
   margin: 0 auto;
@@ -4992,13 +4994,13 @@ border-top: 10px solid #55FFFF;
 }
 
 .creator_gig_holder {
-  width: 86%;
+  width: 83%;
   display: flex;
   flex-wrap: wrap;
 }
 
 .creator_gig_holder > p {
-  padding-bottom: 2%;
+  padding-bottom: 3%;
   margin: 0;
   font-size: 18px;
   font-weight: 300;
@@ -5012,7 +5014,7 @@ border-top: 10px solid #55FFFF;
 }
 
 .creator_gig_button {
-  width: 14%;
+  width: 17%;
   padding-bottom: 1%;
 }
 
@@ -5060,7 +5062,7 @@ border-top: 10px solid #55FFFF;
 }
 
 .creator_project_content {
-  width: 45%;
+  width: 40%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -5099,7 +5101,7 @@ border-top: 10px solid #55FFFF;
 }
 
 .creator_project_impression {
-  width: 10%;
+  width: 15%;
 }
 
 .creator_project_impression > p {
@@ -5735,6 +5737,18 @@ border-top: 10px solid #55FFFF;
   width: 45%;
 }
 
+.settings_submit {
+  width: 15%;
+  border-radius: 10px;
+  background-color: #555BFF;
+}
+
+.settings_submit > p {
+  padding: 6% 5%;
+  margin: 0 auto;
+  color: #fff;
+}
+
 .settings_form_column {
   position: relative;
   margin: 0;
@@ -5747,6 +5761,14 @@ border-top: 10px solid #55FFFF;
   border-width: 1px;
   border-color: #80819445;
   border-style: solid;
+}
+
+.select_form {
+  width: 84%;
+  background-color: #fff;
+  outline: 0;
+  border: 0;
+  appearance: none;
 }
 
 .settings_form_column > img {
