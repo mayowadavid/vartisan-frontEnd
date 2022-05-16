@@ -11,7 +11,8 @@ const AdminBlog = () => {
         findUseBlog, 
         setSelectedBlog, 
         deleteBlog,
-        setAdminPage
+        setAdminPage,
+        adminPage
     } = useContext(MainContext);
     const [allBlog, setAllBlog] = useState([]);
 

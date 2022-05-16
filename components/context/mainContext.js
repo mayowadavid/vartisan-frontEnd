@@ -53,6 +53,7 @@ const MainContextProvider = (props) => {
     const [allGig, setGetAllGig] = useState([]);
     const [projectImage, setProjectImage] = useState([]);
     const [selectedBlog, setSelectedBlog] = useState();
+    const [newNotification, setNewNotification] = useState(false);
     const vartisanState = {
         dashboard: false,
         projects: false,
@@ -742,7 +743,9 @@ const MainContextProvider = (props) => {
         deleteBlog,
         deleteGigRequirement,
         adminPage, 
-        setAdminPage
+        setAdminPage,
+        newNotification, 
+        setNewNotification,
         }}>
             {props.children}
         </MainContext.Provider>

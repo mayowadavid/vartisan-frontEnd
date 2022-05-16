@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { MainContext } from '../context/mainContext'
 
 const AdminHeader = () => {
-    const {userProfile} = useContext(MainContext);
+    const {userProfile, newNotification} = useContext(MainContext);
   return (
     <div className="admin_header_dashboard flex_show_row">
            <div className="admin_logo flex_show_row">
@@ -15,7 +15,7 @@ const AdminHeader = () => {
                         <input type="text" name="search" placeholder="Search"/>
                 </div>
                 <div className="admin_notification">
-                        <div className='active_notification'><p>1</p></div>
+                        {newNotification == true && <div className='active_notification'><p>1</p></div>}
                         <img src="../../img/Notification.svg" alt="" className="src"/>
                 </div>
                 <div className="admin_avatar">

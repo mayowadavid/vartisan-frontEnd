@@ -3,7 +3,7 @@ import { MainContext } from '../context/mainContext';
 import {useRouter} from 'next/router';
 
 const ClientHeader = () => {
-   const { userProfile } =useContext(MainContext);
+   const { userProfile, newNotification } =useContext(MainContext);
    const router = useRouter();
    const { userName } = router.query;
 
@@ -40,7 +40,7 @@ const ClientHeader = () => {
                 </div>
                 <div className="category_header_icon flex_show_row">
                     <div onClick={handleNotification} className='icon flex_show_row'>
-                        <div className='client_active_notification'><p>1</p></div>
+                       {newNotification == true && <div className='client_active_notification'><p>1</p></div>}
                     <img src="../../svg/Notification.svg" alt=""/>
                     </div>
                     <div onClick={handleInbox} className='icon flex_show_row'>
