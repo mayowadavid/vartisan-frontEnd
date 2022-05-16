@@ -5,22 +5,40 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { MainContext } from '../context/mainContext';
 import axios from 'axios';
+import AdminSidebar from './adminSidebar';
 
 const AdminBlogEdit = () => {
 
-    const {createBlog, category, userProfile} = useContext(MainContext);
+    const {
+        createBlog, 
+        categories, 
+        userProfile, 
+        updateCategory, 
+        selectedBlog,
+        updateBlogData,
+        setAdminBlog,
+        adminBlog,
+        adminPage,
+        setAdminPage
+    } = useContext(MainContext);
+
+    useEffect(()=>{
+        setAdminPage({...adminPage, blog: true});
+    }, [])
+
     const status = ['draft', 'active', 'paused'];
 
     const blogState = {
         name: '',
-        selectedCategory: [],
+        category: [],
         slug: '',
-        status: '',
+        status: 'draft',
         description: '',
         descriptionMarkDown: '',
-        blogImage: ''
+        createdAt: '',
+        file: []
     }
-
+    
     const [temporaryImage, setTemporaryImage] = useState();
     const [createBlogState, setCreateBlogState] = useState(blogState);
 
@@ -29,6 +47,8 @@ const AdminBlogEdit = () => {
     const [contentHtml, setContentHtml] = useState('');
     const [plainMarkDown, setPlainMarkDown] = useState('');
 
+    
+    
     useEffect(()=>{
         const slug = createBlogState.name.
             toLowerCase().replace(/ /g,'-').
@@ -36,24 +56,61 @@ const AdminBlogEdit = () => {
             setCreateBlogState({...createBlogState, slug});
     }, [createBlogState.name])
 
+    useEffect(()=> {
+        const { descriptionMarkDown } = createBlogState;
+        if( descriptionMarkDown !== null ){
+            setPlainMarkDown(descriptionMarkDown);
+        }
+    }, [createBlogState.descriptionMarkDown])
+
+    useEffect(()=>{
+        if(selectedBlog?.name !== undefined){
+            setCreateBlogState({...createBlogState, ...selectedBlog});
+        }
+   }, [selectedBlog])
+
     const handleEditorChange = ({ html, text }) => {
         setContentHtml(html);
+        const today = new Date();
+        const createdAt = today.getTime().toString();
         const newValue = text.replace(/\d/g, "");
         setPlainMarkDown(newValue);
-        setCreateBlogState({...createBlogState, description: html, descriptionMarkDown: newValue})
+        setCreateBlogState({...createBlogState, createdAt, description: html, descriptionMarkDown: newValue})
     }
 
     const handleChange = (e) => {
         e.preventDefault();
         const {name, value} = e.target;
-        setCreateBlogState({...createBlogState, [name]: value});
+        const today = new Date();
+        const createdAt = today.getTime().toString();
+        setCreateBlogState({...createBlogState, [name]: value, createdAt});
     }
-
-    const handleCategory = (e) => {
+    selectedBlog?.name !== undefined && console.log(createBlogState);
+    const handleCategory = (e, id) => {
         e.preventDefault();
         const {value} = e.target;
-        const blogCategory = [...createBlogState.selectedCategory, {value}];
-        setCreateBlogState({...createBlogState, selectedCategory: [...blogCategory]});
+        const today = new Date();
+        const createdAt = today.getTime().toString();
+        if(categories?.length > 0){
+        const { id } = categories.find((data)=> data.name === value);
+        const blogCategory = [...createBlogState.category, {id, value}];
+        setCreateBlogState({...createBlogState, createdAt, category: [...blogCategory]});
+        }
+    }
+
+    const updateBlog = async (datum, data)=>{
+        for (let x = 0; x <  data.length; x++){ 
+            const blogId = datum.id;
+            const id = data[x].id;
+            const {data: blogData, error: blogError} = await updateCategory({
+                variables: {
+                    categoryInput: {
+                        id,
+                        blogId
+                    }
+                }
+            })
+         }
     }
 
     const handleFile = (e, i) => {
@@ -71,7 +128,7 @@ const AdminBlogEdit = () => {
         img.onload = function(){
            const imageWidth = this.width;
         }
-        setCreateBlogState({...createBlogState, blogImage: files});
+        setCreateBlogState({...createBlogState, file: files});
         img.src = hold;
         setTemporaryImage(hold);
         //clone due to no direct manipulation
@@ -83,6 +140,7 @@ const uploadImage = (datum, data, headers) => {
     for (let x = 0; x < data.length; x++){
         const file = data[x];
         const blogId = datum.id;
+        console.log(file, blogId);
         let formData = new FormData();
         formData.append('file', file);
         formData.append('blogId', blogId);
@@ -94,8 +152,8 @@ const uploadImage = (datum, data, headers) => {
 
     const filterCategory = (e, index) => {
         e.preventDefault();
-        const blogCategory = createBlogState.selectedCategory.filter((data, i)=> i !== index);
-        setCreateBlogState({...createBlogState, selectedCategory: [...blogCategory]});
+        const blogCategory = createBlogState.category.filter((data, i)=> i !== index);
+        setCreateBlogState({...createBlogState, category: [...blogCategory]});
     }
 
     const submit = async (e) => {
@@ -106,111 +164,69 @@ const uploadImage = (datum, data, headers) => {
             status,
             description,
             descriptionMarkDown,
-            blogImage
+            file,
+            category,
+            createdAt
         } = createBlogState;
-
-        const {data, error} = await createBlog({
-            variables: {
-            blogInput: {
-                name,
-                slug,
-                status,
-                description,
-                descriptionMarkDown
-            }}
-        })
-        console.log(data);
+        if(createBlogState.id !== undefined){
+            const {data, error} = await updateBlogData({
+                variables: {
+                    updateBlog: {
+                        id: createBlogState.id,
+                        name,
+                        slug,
+                        status,
+                        createdAt,
+                        description,
+                        descriptionMarkDown
+                    }
+                }
+            })
+                console.log(file);
+                data !== undefined && updateBlog(data.updateBlog, category);
+                const token = await localStorage.getItem('token');
+                const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""};
+                (file !== null && file?.image == undefined && data.updateBlog !== undefined) && await uploadImage(data.updateBlog, file, headers);
+                setAdminBlog({
+                    ...adminBlog, 
+                    displayBlog: true, 
+                    createBlog: false
+                });
+                
+        } else {
+            const {data, error} = await createBlog({
+                variables: {
+                blogInput: {
+                    name,
+                    slug,
+                    status,
+                    createdAt,
+                    description,
+                    descriptionMarkDown
+                }}
+            });
+            console.log(file);
+            data !== undefined && updateBlog(data.createBlog, category);
+            const token = await localStorage.getItem('token');
+            const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""};
+            (file.length > 0 && data !== undefined) && await uploadImage(data.createBlog, file, headers);
+            data !== undefined && setAdminBlog({
+                ...adminBlog, 
+                displayBlog: true, 
+                createBlog: false
+            });
+        }
         
-        const token = await localStorage.getItem('token');
-        const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""}
-        data?.createBlog !== undefined && uploadImage(data.createBlog, blogImage, headers);
     }
 
-    console.log(userProfile);
-    const {selectedCategory} = createBlogState;
+    const {category} = createBlogState;
 
   return (
     <div className="admin_category">
         <AdminHeader />
         <AdminMobileHeader />
         <div className="admin_container_body">
-            <div className="admin_category_sidebar">
-                <div className="admin_category_top_container">
-                    <div className="admin_category_top">
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Dashboard</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/commision.png" alt=""/>
-                            <p>Admin Commission</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/Document.png" alt=""/>
-                            <p>Projects</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/Message.png" alt=""/>
-                            <p>Messages</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Promotions</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Categories</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Blog</p>
-                        </div>
-                    </div>
-                    <div className="admin_category_top">
-                        <div className="admin_category_top_header">
-                            <p>Settings</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Dashboard</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/commision.png" alt=""/>
-                            <p>Admin Commission</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/Document.png" alt=""/>
-                            <p>Projects</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/Message.png" alt=""/>
-                            <p>Messages</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Promotions</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Categories</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="../../img/menu.png" alt=""/>
-                            <p>Blog</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="admin_category_bottom">
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="svg/Setting.svg" alt=""/>
-                            <p>General settings</p>
-                        </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
-                            <img src="svg/Logout.svg" alt=""/>
-                            <p>Log Out</p>
-                        </div>
-                </div>
-            </div>
+        <AdminSidebar />
             <div className="admin_category_right">
                 <div className="admin_blog_body">
                     <div className="admin_blog_header_row flex_show_row">
@@ -235,13 +251,13 @@ const uploadImage = (datum, data, headers) => {
                             <form action="">
                                 <div className="admin_blog_title">
                                     <p>Title</p>
-                                    <input type="text" name="name" onChange={handleChange} placeholder="Enter the title here" id=""/>
+                                    <input type="text" name="name" value={createBlogState.name} onChange={handleChange} placeholder="Enter the title here" id=""/>
                                 </div>
                                 <div className="admin_blog_category">
                                     <p>Category</p>
                                     <div className="blog_wrapper flex_show_row">
                                         {
-                                            selectedCategory?.length > 0 && selectedCategory?.map(({value}, i)=>{
+                                            category?.length > 0 && category?.map(({value}, i)=>{
                                                 return (
                                                     <div key={i} onClick={(e)=> filterCategory(e, i)} className="admin_blog_category_wrap flex_show_row remove_margin">
                                                         <p>{value}</p>
@@ -254,8 +270,8 @@ const uploadImage = (datum, data, headers) => {
                                         <div className="flex_show_row blog_category">
                                         <select name="selected" onChange={handleCategory} className="select_category flex_show_row">
                                             {
-                                                category?.categories?.length > 0 && 
-                                                category?.categories?.map((d, i)=>{
+                                                categories?.length > 0 && 
+                                                categories?.map((d, i)=>{
                                                     return (
                                                         <option key={i}>{d.name}</option>
                                                     )
@@ -270,7 +286,7 @@ const uploadImage = (datum, data, headers) => {
                                 </div>
                                 <div className="admin_blog_title">
                                     <p>Slug</p>
-                                    <input type="text" disabled="true" name="slug" value={createBlogState.slug} placeholder="Enter the title here" id=""/>
+                                    <input type="text" disabled={true} name="slug" value={createBlogState.slug} placeholder="Enter the title here" id=""/>
                                 </div>
                                 <div className="admin_blog_category">
                                 <div>

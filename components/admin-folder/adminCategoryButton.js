@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { MainContext } from '../context/mainContext'
 import AdminMobileHeader from './adminMobileHeader'
 import AdminSidebar from './adminSidebar'
 
 const AdminCategoryButton = () => {
+    const {adminPage, setAdminPage} = useContext(MainContext);
+    useEffect(()=>{
+        setAdminPage({...adminPage, categories: true});
+    }, [])
+
   return (
     <div>
         <AdminHeader />

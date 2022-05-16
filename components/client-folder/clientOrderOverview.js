@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import {useRouter} from 'next/router';
 import { MainContext } from '../context/mainContext'
-// import { MESSSAGE_SUBSCRIPTION } from '../subscriptions/message';
-// import { useSubscription } from '@apollo/client';
+import Pusher from 'pusher-js'
 
 const ClientOrderOverview = () => {
     const router = useRouter()
@@ -39,6 +38,30 @@ const ClientOrderOverview = () => {
         await setOrder({...order, ...data.order});
     }
     }, [activity])
+
+    useEffect(async()=>{
+        let mounted = true;
+
+        if(mounted == true && order?.id !== '')
+        {
+        const pusher = new Pusher('7a5d084ba01736c92a64', {
+        cluster: 'mt1'
+        });
+        const orderId = activity;
+        const channel = pusher.subscribe(`${orderId}`);
+        await channel.bind('message', function(data) {
+            console.log(data);
+            const copy = {...order};
+            console.log(copy);
+            copy.message = [...copy.message, data];
+            setOrder(copy);
+          });
+        }
+        return (()=>{
+            pusher.unsubscribe(`${selectedChat.id}`);
+            mounted = false;
+        })
+    }, [order])
     
     const [message, setMessage] = useState(initialState);
     const [temporaryImage, setTemporaryImage] = useState([]);
@@ -180,7 +203,19 @@ const ClientOrderOverview = () => {
 
     const handleApproveOrder = (e) => {
         e.preventDefault(); 
-        setApprovePop(!openApprovePop);
+        const date = Date.now();
+        if(activity !== undefined){
+            const {data, error} = updateOrder({
+                variables: {
+                    orderUpdate: {
+                        id: activity,
+                        approveDate: date.toString(),
+                        orderStatus: 'completed'
+                    }
+                }
+            })
+        data !== undefined && setApprovePop(!openApprovePop);
+        }
     }
 
     const handleMessage = (e) => {
@@ -192,7 +227,19 @@ const ClientOrderOverview = () => {
 
     const handleCancelOrder = (e) => {
         e.preventDefault();
-        setDisputePop(!openDisputePop);
+        const date = Date.now();
+        if(activity !== undefined){
+            const {data, error} = updateOrder({
+                variables: {
+                    orderUpdate: {
+                        id: activity,
+                        approveDate: date.toString(),
+                        orderStatus: 'cancelled'
+                    }
+                }
+            })
+        data !== undefined && setDisputePop(!openDisputePop);
+        }
     }
 
     const handleRevision = (e) => {
@@ -234,22 +281,12 @@ const ClientOrderOverview = () => {
             const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : "",}
             await uploadFiles(message, message.file, headers, order.id);
             await setMessage(initialState);
-            const { data: newData, error: newErr } = await fetchSingleOrder({
-                variables: {
-                    orderId: activity
-                }
-            })
-            await setOrder({...order, ...data.order});
         }
-        
-
-        
-        await setOrder({...order, ...newData.order});
-        setMessage(initialState);
     }
     const currentTime = parseInt(order?.date);
     const deliveryDay = months[new Date(currentTime).getMonth()] + ' ' + new Date(currentTime).getDate() + ',' + ' ' + new Date(currentTime).getFullYear();
-
+    const requirementDate = parseInt(order?.orderRequirement?.date);
+    const deliveryFormat = months[new Date(requirementDate).getMonth()] + ' ' + new Date(requirementDate).getDate() + ',' + ' ' + new Date(requirementDate).getFullYear();
   return (
     <div className="client_order_body">
             <div className="client_body_wrapper order_submited_row  flex_show_row">
@@ -275,7 +312,7 @@ const ClientOrderOverview = () => {
                         <div className="order_creations flex_show_row">
                             <img src="/img/complete.png" alt=""/>
                             <p>You submitted the requirements</p>
-                            <p>October 2, 2021</p>
+                            <p>{deliveryFormat}</p>
                         </div>
                         <div className="order_accepted flex_show_row">
                             <img src="/img/complete.png" alt=""/>

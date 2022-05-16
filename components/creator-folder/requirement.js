@@ -19,7 +19,8 @@ const Requirement = () => {
         setGig, 
         proceedRequirement, 
         createRequirement,
-        updateRequirement
+        updateRequirement,
+        deleteGigRequirement
     }= useContext(MainContext);
     const handleRequirement = (e) => {
         e.preventDefault();
@@ -35,10 +36,16 @@ const Requirement = () => {
         setRequirement(initialState);
         // handleOpenFaq();
     }
-    const deleteAction = (e, id) => {
+    const deleteAction = async(e, id) => {
         e.preventDefault();
         let {gigRequirement} = gig;
         gigRequirement = gigRequirement.filter((data, i)=>  i !== id);
+        const prop = gigRequirement[id].id;
+        await deleteGigRequirement({
+            variables: {
+                deleteReq: prop,
+            }
+        })
        return setGig({...gig, gigRequirement});
     }
 

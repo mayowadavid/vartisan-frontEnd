@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { MainContext } from '../context/mainContext';
 import {useRouter} from 'next/router';
-const SuccessModal = ({order, name, userName, sellerData}) => {
-    const {openPop, setOpenPopUp} = useContext(MainContext);
+const SuccessModal = ({order}) => {
+    const {openPop, setOpenPopUp, userProfile} = useContext(MainContext);
     const router = useRouter()
     const handleSubmit = (e) => {
         e.preventDefault();
         setOpenPopUp(!openPop);
-        router.push(`/${userName}/manage_orders/${order.id}`);
+        router.push(`/${userProfile?.user?.userName}/manage_orders/${order.id}`);
     }
     const contactSeller = (e) => {
         e.preventDefault();
         setOpenPopUp(!openPop);
-        router.push(`/${userName}/inbox`);
+        router.push(`/${userProfile?.user?.userName}/inbox`);
     }
     return (<div className="references_pop_up flex_show_row">
     <div className="success_modal flex_show_column">

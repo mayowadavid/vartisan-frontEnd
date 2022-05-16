@@ -15,6 +15,7 @@ const AdminHeader = () => {
                         <input type="text" name="search" placeholder="Search"/>
                 </div>
                 <div className="admin_notification">
+                        <div className='active_notification'><p>1</p></div>
                         <img src="../../img/Notification.svg" alt="" className="src"/>
                 </div>
                 <div className="admin_avatar">

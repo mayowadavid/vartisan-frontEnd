@@ -57,7 +57,6 @@ const ClientGigOrder = ({sellerData}) => {
         name: sellerData.name,
         date: date.toString(),
         gigImage,
-        vartisan: sellerData.user.userName,
         sellerId: sellerData.user.id,
         amount: total.toString(),
         commercial: secondaryOrder.commercial,

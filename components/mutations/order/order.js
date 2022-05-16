@@ -3,7 +3,6 @@ export const CREATE_ORDER = gql `
 mutation CREATE_ORDER($orderInput: CreateOrderInput!){
   createOrder(createOrderInput: $orderInput){
       id
-    userId
     gigId
     date
     gigImage

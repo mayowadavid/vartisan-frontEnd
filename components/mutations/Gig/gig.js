@@ -148,3 +148,15 @@ mutation UPDATE_FAQ($updateFaq: UpdateGigFaqInput!){
     gigId
     }
   }`
+
+  export const DELETE_GIG_REQUIREMENT = gql `
+  mutation DELETE_GIG_REQUIREMENT($deleteReq: String!){
+    removeGigRequirement(id: $deleteReq){
+      id
+      requirementName
+    	date
+    	required
+    	text
+    	link
+    }
+}`

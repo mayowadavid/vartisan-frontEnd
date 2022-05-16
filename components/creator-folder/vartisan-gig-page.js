@@ -14,14 +14,14 @@ const VartisanPage = ({sellerData}) => {
         openMessagePopUp, 
         setOpenMessagePopUp,
         setChatId,
-        findAllUserGig
+        findAllUserGig,
     } = useContext(MainContext);
 
     const chatData = {
         chatExist: false,
         createNew: false,
     }
-    console.log(sellerData?.user?.profile?.file?.image);
+   
     const [createChat, setCreateChat] = useState(chatData);
     const [otherGig, setOtherGig] = useState();
 
@@ -30,7 +30,6 @@ const VartisanPage = ({sellerData}) => {
         setOtherGig(userGig.findAllUserGig);
     }, [])
 
-    console.log(otherGig);
     const requestOrder = (e) => {
         e.preventDefault();
         setOpenSellerPage(!openSellerPage);

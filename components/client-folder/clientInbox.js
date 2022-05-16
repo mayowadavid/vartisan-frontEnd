@@ -5,7 +5,7 @@ import ClientHeader from './clientHeader'
 import ClientMobileHeader from './clientMobileHeader'
 import {useRouter} from 'next/router'
 import axios from 'axios'
-
+import Pusher from 'pusher-js';
 
 const ClientInbox = () => {
     const { fetchChatByUser, createMessage } = useContext(MainContext);
@@ -35,6 +35,35 @@ const ClientInbox = () => {
     const [message, setMessage] = useState(initialState);
     const [temporaryImage, setTemporaryImage] = useState([]);
 
+    const selector = {
+        contact: true,
+        inbox: false
+    }
+
+    useEffect(async()=>{
+        let mounted = true;
+
+        if(selectedChat !== undefined && mounted == true)
+        {
+        const pusher = new Pusher('7a5d084ba01736c92a64', {
+        cluster: 'mt1'
+        });
+        const chatId = selectedChat.id;
+        const channel = pusher.subscribe(`${chatId}`);
+        await channel.bind('message', function(data) {
+            const copy = {...selectedChat};
+            copy.message = [...copy.message, data];
+            setSelectedChat(copy);
+          });
+        }
+        return (()=>{
+            pusher.unsubscribe(`${selectedChat.id}`);
+            mounted = false;
+        })
+    }, [selectedChat])
+    
+    const [hide, setHide] = useState(selector);
+
 useEffect(async()=>{
     const {data, error} = await fetchChatByUser();
     if(data){
@@ -49,14 +78,13 @@ useEffect(()=>{
         setSelectedChat({...selectedChat, ...currentUser});
     }
 }, [allChat, index])
-
 useEffect(()=>{
     if(selectedChat !== undefined){
         const currentIndex = selectedChat?.message?.length - 1;
         setMessageIndex(currentIndex);
     }
 }, [selectedChat])
-
+console.log(selectedChat);
    const handleFile = (e) => {
     e.preventDefault();
     const {files} = e.target;
@@ -202,6 +230,11 @@ useEffect(()=>{
                 }
             }
         });
+        // axios.post('http://localhost:4000/messages/message', {
+        //     userName,
+        //     message: message.description,
+        // }).then((dat)=> console.log(dat))
+        // .catch((error)=> console.log(error));
         userMessage = await data.createMessage;
         const token = await localStorage.getItem('token');
         const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""}
@@ -216,6 +249,12 @@ useEffect(()=>{
         const {chatsByUser} = await chatData;
         await setAllChat(chatsByUser);
     }
+    }
+
+    const handleMobile = (e) => {
+        e.preventDefault();
+        const {contact, inbox} = hide;
+        setHide({contact: !contact, inbox: !inbox});
     }
 
     const changeChat = (e, i) => {
@@ -233,13 +272,13 @@ useEffect(()=>{
     const ClientContact = ({d, userName, i})=> {
         const {sender, receiver, message, id} = d;
         return (
-            <div onClick={(e)=> changeChat(e, i)} className="client_contact_list">
-                <div className="individual_contact">
+            <div key ={i} onClick={(e)=> changeChat(e, i)} className="client_contact_list">
+                <div className="individual_contact" onClick={handleMobile}>
                     <div className="individual_contact_row">
                         <div className="individual_avatar_holder flex_show_row">
                             <img src={sender?.userName == userName ?
                              receiver?.profile?.file?.image:
-                              sender?.profile?.file?.image !== 'undefined'?
+                              sender?.profile?.file !== null?
                               sender?.profile?.file?.image :
                               "../../svg/avatar.svg"} alt=""/>
                         </div>
@@ -262,7 +301,7 @@ useEffect(()=>{
     <ClientMobileHeader />
     <div className="client_inbox_wrapper">
             <div className="client_inbox_body">
-                <div className="client_contacts">
+                <div className={`client_contacts ${hide.contact !== true && "hidden_contact"}`}>
                     <div className="client_contact_header">
                         <div className="conversation_filter">
                             <div className="conversation_filter_by">
@@ -277,8 +316,11 @@ useEffect(()=>{
                         allChat?.length >= 0 && allChat?.map((d, i)=> <ClientContact key={i} d={d} userName={userName} i={i} />)
                     }
                 </div>
-                <div className="client_inbox">
+                <div className={`client_inbox ${hide.inbox !== true && "hidden_inbox"}`}>
                     <div className="client_inbox_header">
+                        <div onClick={handleMobile} className='back_arrow'>
+                            <img src="../../img/arrow_left.jpg" />
+                        </div>
                         <div className="client_inbox_header_details">
                             <p>{selectedChat?.sender.userName == userName ? selectedChat?.receiver?.userName : selectedChat?.sender?.userName}</p>
                             <p>{`Local time ${months[new Date().getMonth()]+ ' ' + new Date().getDate() + ', ' +  new Date().getHours() + ':' + new Date().getMinutes()}`}</p>

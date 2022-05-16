@@ -47,6 +47,7 @@ const Settings = () => {
         email: '',
         languageOption: ['english', 'french', 'german']
     }
+    
     const [profile, setProfile] = useState(profileState);
 
     const handleProfile = (e) => {

@@ -1,6 +1,6 @@
 import { useLazyQuery, useMutation, useSubscription } from '@apollo/client';
 import React, { createContext, useState, useEffect } from 'react';
-import { CREATE_GIG_FAQ, CREATE_REQUIREMENT, UPDATE_GIG, UPDATE_GIG_FAQ, UPDATE_REQUIREMENT } from '../mutations/Gig/gig';
+import { CREATE_GIG_FAQ, CREATE_REQUIREMENT, DELETE_GIG_REQUIREMENT, UPDATE_GIG, UPDATE_GIG_FAQ, UPDATE_REQUIREMENT } from '../mutations/Gig/gig';
 import { UPDATE_GIG_FORMAT } from '../mutations/gigFormat/gigFormat';
 import { UPDATE_TAG } from '../mutations/gigTag/gigTag';
 import { CREATE_PRIVATE_COMMiSSION } from '../mutations/PrivateCommission/privateCommission';
@@ -18,11 +18,13 @@ import { FETCH_USER_PROFILE } from '../queries/profile/profile';
 import { SignUp } from '../mutations/users/user';
 import { FIND_ALL_REFERENCE, FIND_USER_REFERENCE } from '../queries/reference/reference';
 import {Router, useRouter} from 'next/router';
-import { CREATE_CATEGORY, SUB_CATEGORY } from '../mutations/categories/category';
+import { CREATE_CATEGORY, SUB_CATEGORY, UPDATE_CATEGORY } from '../mutations/categories/category';
 import { MESSSAGE_SUBSCRIPTION } from '../subscriptions/message';
 import { FETCH_USERS } from '../queries/user/user';
-import { CREATE_BLOG } from '../mutations/blog/blog';
+import { CREATE_BLOG, DELETE_BLOG, UPDATE_BLOG } from '../mutations/blog/blog';
 import { UPDATE_PROFILE } from '../mutations/profile/profile';
+import { FIND_USER_NOTIFICATION } from '../queries/notification/notification';
+import { FIND_USER_BLOG } from '../queries/blog/blog';
 
 export const MainContext = createContext();
 
@@ -50,6 +52,7 @@ const MainContextProvider = (props) => {
     const [chatId, setChatId] = useState();
     const [allGig, setGetAllGig] = useState([]);
     const [projectImage, setProjectImage] = useState([]);
+    const [selectedBlog, setSelectedBlog] = useState();
     const vartisanState = {
         dashboard: false,
         projects: false,
@@ -82,6 +85,23 @@ const MainContextProvider = (props) => {
     }
 
     const [adminBlog, setAdminBlog] = useState(blogState);
+
+    const adminRoute = {
+        dashboard: true,
+        commission: false,
+        projects: false,
+        message: false,
+        promotions: false,
+        categories: false,
+        blog: false,
+        homePage: false,
+        payment: false,
+        vartisan: false,
+        user_client: false,
+        general_settings: false,
+    }
+
+    const [adminPage, setAdminPage] = useState(adminRoute);
 
     const initialUser = {
         id: '',
@@ -326,6 +346,15 @@ const MainContextProvider = (props) => {
         }
     })
 
+    const [updateBlogData] = useMutation(UPDATE_BLOG, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
     const [getAllGig] = useLazyQuery(GET_ALL_QUERY, {
         onCompleted: (data) => {
             console.log(data);
@@ -425,6 +454,24 @@ const MainContextProvider = (props) => {
         }
     });
 
+    const [findUserNotification] = useLazyQuery(FIND_USER_NOTIFICATION, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [findUseBlog] = useLazyQuery(FIND_USER_BLOG, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
     const [createOrder] = useMutation(CREATE_ORDER, {
         onCompleted: (data) => {
             console.log(data);
@@ -514,6 +561,34 @@ const MainContextProvider = (props) => {
             console.log(error);
         }
     })
+
+    const [updateCategory] = useMutation(UPDATE_CATEGORY, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [deleteBlog] = useMutation(DELETE_BLOG, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+
+    const [deleteGigRequirement] = useMutation(DELETE_GIG_REQUIREMENT, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    })
+    
     
     useEffect(async ()=> {
         try{
@@ -557,10 +632,10 @@ const MainContextProvider = (props) => {
         setProjectImage(newImage);
     }, [])
 
+    const { categories } = category !== undefined && category;
+
     return (
         <MainContext.Provider value={{ 
-        userData,
-        setUserData,
         userProfile,
         setUserProfile,
         profileId,
@@ -656,7 +731,18 @@ const MainContextProvider = (props) => {
         setAdminBlog,
         createBlog,
         updateProfile,
-        findAllUserGig
+        findAllUserGig,
+        findUserNotification,
+        findUseBlog,
+        updateCategory,
+        selectedBlog, 
+        setSelectedBlog,
+        categories,
+        updateBlogData,
+        deleteBlog,
+        deleteGigRequirement,
+        adminPage, 
+        setAdminPage
         }}>
             {props.children}
         </MainContext.Provider>

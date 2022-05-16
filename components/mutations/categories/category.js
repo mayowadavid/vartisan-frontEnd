@@ -19,3 +19,11 @@ mutation CREATE_CATEGORY($categoryParams: CreateCategoryInput!){
       name
     }
   }`
+
+  export const UPDATE_CATEGORY = gql`
+  mutation UPDATE_CATEGORY($categoryInput: UpdateCategoryInput!){
+    updateCategory(updateCategoryInput: $categoryInput){
+      id
+      blogId
+    }
+  }`

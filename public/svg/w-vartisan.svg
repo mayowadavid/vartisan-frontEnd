@@ -1,0 +1,13 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="path-1-inside-1_2159_5995" fill="white">
+<rect x="2" y="5" width="16" height="15" rx="1"/>
+</mask>
+<rect x="2" y="5" width="16" height="15" rx="1" fill="white" stroke="white" stroke-width="3" mask="url(#path-1-inside-1_2159_5995)"/>
+<path d="M13.25 17V19.25H6.75V17C6.75 15.2051 8.20507 13.75 10 13.75C11.7949 13.75 13.25 15.2051 13.25 17Z" stroke="white" stroke-width="1.5"/>
+<path d="M1 4.75H3.25V8C3.25 8.69036 2.69036 9.25 2 9.25C1.30964 9.25 0.75 8.69036 0.75 8V5C0.75 4.86193 0.861929 4.75 1 4.75Z" fill="white" stroke="white" stroke-width="1.5"/>
+<path d="M4.75 4.75H7.25V8C7.25 8.69036 6.69036 9.25 6 9.25C5.30964 9.25 4.75 8.69036 4.75 8V4.75Z" fill="white" stroke="white" stroke-width="1.5"/>
+<path d="M8.75 4.75H11.25V8C11.25 8.69036 10.6904 9.25 10 9.25C9.30964 9.25 8.75 8.69036 8.75 8V4.75Z" fill="white" stroke="white" stroke-width="1.5"/>
+<path d="M12.75 4.75H15.25V8C15.25 8.69036 14.6904 9.25 14 9.25C13.3096 9.25 12.75 8.69036 12.75 8V4.75Z" fill="white" stroke="white" stroke-width="1.5"/>
+<path d="M16.75 4.75H19C19.1381 4.75 19.25 4.86193 19.25 5V8C19.25 8.69036 18.6904 9.25 18 9.25C17.3096 9.25 16.75 8.69036 16.75 8V4.75Z" fill="white" stroke="white" stroke-width="1.5"/>
+<path d="M3 0.25C2.58579 0.25 2.25 0.585786 2.25 1C2.25 1.41421 2.58579 1.75 3 1.75V0.25ZM18 1.75C18.4142 1.75 18.75 1.41421 18.75 1C18.75 0.585786 18.4142 0.25 18 0.25V1.75ZM3 1.75H18V0.25H3V1.75Z" fill="white"/>
+</svg>

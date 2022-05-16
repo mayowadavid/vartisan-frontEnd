@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { MainContext } from "../context/mainContext";
 import {useRouter} from 'next/router';
 
+
 const ChatMessagePop = ({sellerData}) => {
     const router = useRouter();
     const {userName} = router;
@@ -24,8 +25,10 @@ const ChatMessagePop = ({sellerData}) => {
         file: []
     }
 
+    console.log(userData);
+
     useEffect(async()=>{
-        
+     if(userData.id !== '' ) { 
         try {
             const { data, error } = await fetchChatExistence({
                 variables: {
@@ -34,12 +37,13 @@ const ChatMessagePop = ({sellerData}) => {
                     }
                 }
         });
+        console.log(data);
             await data !== undefined && setChatId(data.findChatByExistence.id);
         }
         catch(error) {
             await error !== undefined && console.log(error);
-        }
-    }, [])
+        }}
+    }, [userData])
 
     console.log(chatId);
     const [message, setMessage] = useState(initialState);

@@ -12,7 +12,6 @@ query Find_Order_By_Id($orderId: String!){
       id
       userName
     }
-    userId
     name
     date
     revision
@@ -28,6 +27,11 @@ query Find_Order_By_Id($orderId: String!){
     rushOrderAmount
     commercialOrderAmount
     privateOrderAmount
+    orderRequirementId
+    orderRequirement {
+      date
+      id
+    }
     message {
       date
       time

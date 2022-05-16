@@ -5,8 +5,12 @@ import AdminMobileHeader from './adminMobileHeader'
 import AdminSidebar from './adminSidebar'
 
 const AdminUserRequest = () => {
-    const {getUsers} = useContext(MainContext);
+    const {getUsers, adminPage, setAdminPage} = useContext(MainContext);
     const [user, setUser] = useState([]);
+
+    useEffect(()=>{
+        setAdminPage({...adminPage, user_client: true});
+    }, [])
 
     useEffect(async ()=>{
         const {data, error} = await getUsers();

@@ -1,12 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { MainContext } from '../context/mainContext'
 import AdminHeader from './adminHeader'
 import AdminMobileHeader from './adminMobileHeader'
 import AdminSidebar from './adminSidebar'
 
 const AdminArtisanRequest = () => {
-    const {allGig} = useContext(MainContext);
-    console.log(allGig);
+    const {allGig, setAdminPage, adminPage} = useContext(MainContext);
+
+    useEffect(()=>{
+        setAdminPage({...adminPage, vartisan: true});
+    }, [])
+
   return (
     <div className="admin_category">
         <AdminHeader />

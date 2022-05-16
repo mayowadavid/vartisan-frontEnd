@@ -12,11 +12,10 @@ const Category = () => {
 
     }, [])
    const [singleCategory, setSingleCategory] = useState();
-   const {category, setCategory} = useContext(MainContext);
+   const {category, setCategory,} = useContext(MainContext);
     const{data, loading} = useQuery(FETCH_CATEGORIES,
         {onCompleted: (data) => {
             if(data){
-            console.log(data);
             setCategory(data);
             const {categories} = data;
             setSingleCategory({...categories[0]});}
@@ -24,7 +23,7 @@ const Category = () => {
         onError: (error) => {
             console.log(error);
     }});
-    singleCategory !== undefined && console.log(singleCategory);
+    
   return (
     <div>
         <ClientHeader />
