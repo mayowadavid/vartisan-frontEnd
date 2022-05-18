@@ -34,15 +34,13 @@ export default function Login() {
     });
     
 
-    const submitLogin = (e) => {
-        e.preventDefault();
+    const submitLogin = () => {
         queryUser({variables: {
             userInput: loginUser,
         }});
     }
 
-    const handleJoin = (e) => {
-        e.preventDefault();
+    const handleJoin = () => {
         router.push('/users/signup');
     }
 
