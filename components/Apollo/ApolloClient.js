@@ -2,7 +2,7 @@ import { ApolloClient, split, InMemoryCache, createHttpLink } from "@apollo/clie
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-	uri: 'http://localhost:4000/graphql',
+	uri: 'https://vartisan-back.herokuapp.com/graphql',
   });
   const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists
