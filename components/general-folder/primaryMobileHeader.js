@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PrimaryMobileHeader (){
+const PrimaryMobileHeader = () => {
   return (
     <div className="mobile_drop_header flex_show_row">
             <div className="menu_left_side">
@@ -25,3 +25,5 @@ export default function PrimaryMobileHeader (){
         </div>
   )
 }
+
+export default PrimaryMobileHeader;

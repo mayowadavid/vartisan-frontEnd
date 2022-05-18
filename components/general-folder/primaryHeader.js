@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { MainContext } from '../context/mainContext'
 import {useRouter} from 'next/router';
 
-export default function PrimaryHeader() {
+const PrimaryHeader = () => {
     const { userProfile } = useContext(MainContext);
     const router = useRouter();
    const { userName } = router.query;
@@ -44,3 +44,5 @@ export default function PrimaryHeader() {
         </div>
   )
 }
+
+export default PrimaryHeader;

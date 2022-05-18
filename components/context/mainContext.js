@@ -1,11 +1,10 @@
-import { useLazyQuery, useMutation, useSubscription } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { createContext, useState, useEffect } from 'react';
 import { CREATE_GIG_FAQ, CREATE_REQUIREMENT, DELETE_GIG_REQUIREMENT, UPDATE_GIG, UPDATE_GIG_FAQ, UPDATE_REQUIREMENT } from '../mutations/Gig/gig';
 import { UPDATE_GIG_FORMAT } from '../mutations/gigFormat/gigFormat';
 import { UPDATE_TAG } from '../mutations/gigTag/gigTag';
 import { CREATE_PRIVATE_COMMiSSION } from '../mutations/PrivateCommission/privateCommission';
 import { CREATE_RUSH_ORDER } from '../mutations/RushOrder/rushOrder';
-import { CREATE_COMMERCIAL_USE } from '../mutations/commercialUse/commercialUse';
 import { useQuery } from '@apollo/client'
 import { FETCH_CATEGORIES } from '../queries/category/category';
 import { FIND_ALL_USER_GIG, GET_ALL_QUERY } from '../queries/gigs/gig';
@@ -19,12 +18,12 @@ import { SignUp } from '../mutations/users/user';
 import { FIND_ALL_REFERENCE, FIND_USER_REFERENCE } from '../queries/reference/reference';
 import {Router, useRouter} from 'next/router';
 import { CREATE_CATEGORY, SUB_CATEGORY, UPDATE_CATEGORY } from '../mutations/categories/category';
-import { MESSSAGE_SUBSCRIPTION } from '../subscriptions/message';
 import { FETCH_USERS } from '../queries/user/user';
 import { CREATE_BLOG, DELETE_BLOG, UPDATE_BLOG } from '../mutations/blog/blog';
 import { UPDATE_PROFILE } from '../mutations/profile/profile';
 import { FIND_USER_NOTIFICATION } from '../queries/notification/notification';
 import { FIND_USER_BLOG } from '../queries/blog/blog';
+import { CREATE_COMMERCIAL_USE } from '../mutations/commercialUse/commercialUse';
 
 export const MainContext = createContext();
 
@@ -606,17 +605,6 @@ const MainContextProvider = (props) => {
             if(data){
             const { getAllgig } = data;
             setGetAllGig(getAllgig);
-            }
-        },
-        onError: (error) => {
-            console.log(error);
-        }
-    });
-
-    const {data: subData, error: subErr} = useSubscription(MESSSAGE_SUBSCRIPTION, {
-        onCompleted: (data) => {
-            if(data){
-            console.log(data)
             }
         },
         onError: (error) => {

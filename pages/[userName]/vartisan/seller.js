@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../../components/general-folder/footer';
+import Footer from '../../../components/general-folder/footer';
 import PrimaryHeader from '../../components/general-folder/primaryHeader'
 import PrimaryMobileHeader from '../../components/general-folder/primaryMobileHeader';
 
