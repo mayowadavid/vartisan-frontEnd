@@ -23,7 +23,7 @@ import { CREATE_BLOG, DELETE_BLOG, UPDATE_BLOG } from '../mutations/blog/blog';
 import { UPDATE_PROFILE } from '../mutations/profile/profile';
 import { FIND_USER_NOTIFICATION } from '../queries/notification/notification';
 import { FIND_USER_BLOG } from '../queries/blog/blog';
-import { CREATE_COMMERCIAL_USE } from '../mutations/commercialUse/commercialUse';
+import { CREATE_COMMERCIAL_USE } from '../mutations/Commercial/commercialUse';
 
 export const MainContext = createContext();
 
