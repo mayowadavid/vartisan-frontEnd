@@ -3,6 +3,7 @@ import { gql } from "@apollo/client"
 export const LOGIN = gql` 
 query LOGIN($userInput: CreateUserInput!){
   loginUser(userData: $userInput){
+    id
     userName
     email
     createdAt

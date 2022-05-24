@@ -36,6 +36,7 @@ const ClientGigOrderRequirement = ({sellerData}) => {
     }
 
     const [requirementData, setRequirementData] = useState(requirementState);
+    const [progress, setProgress] = useState(false);
 
     const uploadDescription = (datum, data, headers) => {
         
@@ -105,6 +106,7 @@ const ClientGigOrderRequirement = ({sellerData}) => {
     }
     const submitRequirement = async (e) => {
         e.preventDefault();
+        await setProgress(!progress);
         const date = await Date.now();
         const {description, reference, color} = requirementData
         const token = await localStorage.getItem('token');
@@ -134,6 +136,7 @@ const ClientGigOrderRequirement = ({sellerData}) => {
             }
         }
         })
+        await setProgress(!progress);
         await setOpenSellerPage(false);
         await setOpenOrderRequirement(false);
         await setOpenOrderDetails(false);
@@ -201,7 +204,10 @@ const ClientGigOrderRequirement = ({sellerData}) => {
                         <div className="client_requirement_button remove_margin flex_show_row">
                             <p>Your request will not begun until the Vartisan has
                                 accepted your order request.</p>
-                                <p onClick={submitRequirement}>Continue</p>
+                                {
+                                    progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                    <p onClick={submitRequirement}>Continue</p>
+                                }
                         </div>
                     </form>
                 </div>

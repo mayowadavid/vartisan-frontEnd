@@ -13,7 +13,7 @@ const Gallery = () => {
         setShowGallery,
         getAllGig
     } = useContext(MainContext);
-    
+    const [progress, setProgress] = useState(false);
     const uploadVideo = (datum, data, headers) => {
         for (let x = 0; x < data.length; x++){
             const name = data[x].name;
@@ -74,6 +74,7 @@ const Gallery = () => {
 
     const submitGig = async(e) => {
         e.preventDefault();
+        await setProgress(!progress); 
         const { gigGallery, gigVideo } = gig;
         const token = await localStorage.getItem('token');
         const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : "",}
@@ -83,8 +84,7 @@ const Gallery = () => {
         await gigImageWithOutId !== undefined && uploadImages(gig, gigImageWithOutId, headers);
         await gigVideo.id == undefined && uploadVideo(gig, [gigVideo]);
         const {data: gigData, error: gigError} = await getAllGig();
-        console.log(gigData);
-        console.log(gigError);
+        await setProgress(!progress); 
         setShowGallery(false);
         setCloseDashboard(true);
     }
@@ -120,7 +120,10 @@ const Gallery = () => {
         </div>
         <div className="project_submit project_submit_header flex_show_row">
             <p>Save as Draft</p>
-            <p onClick={submitGig}>Publish</p>
+            {
+                progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                <p onClick={submitGig}>Publish</p>
+            }
         </div>
     </div>
     <div className="creator_wrap_holder flex_show_row">
@@ -153,7 +156,10 @@ const Gallery = () => {
                 </div>
                 <div className="project_submit flex_show_row">
                     <p>Save as Draft</p>
-                    <p onClick={submitGig}>Publish</p>
+                    {
+                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        <p onClick={submitGig}>Publish</p>
+                    }
                 </div>
             </div>
         </div>

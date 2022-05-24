@@ -13,6 +13,7 @@ export default function Signup() {
         createdAt: "",
     }
     const [signUp, setSignUp] = useState(initialState);
+    const [progress, setProgress] = useState(false);
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -39,6 +40,7 @@ export default function Signup() {
 
     const submitSignUp = async (e) => {
         e.preventDefault();
+        await setProgress(!progress); 
         const {userName, email, password, createdAt} = signUp;
         const date = Date.now();
         createdAt
@@ -53,8 +55,9 @@ export default function Signup() {
             }
         })
         if(data){
+            await setProgress(!progress); 
             router.replace('/login');
-        }
+        } 
     }
 
     
@@ -75,7 +78,7 @@ export default function Signup() {
         <div className="registration_right">
             <p>Registration</p>
             <p>Commission talented creatives the right way.</p>
-            <p>Sign up to find, hire and track the progress of oil services more easily.</p>
+            <p>Sign up to find, hire and track the progress of all services more easily.</p>
             <form>
                 <div className="form_row">
                     <div className="username_wrapper flex_show_row">
@@ -100,7 +103,10 @@ export default function Signup() {
                         <input type="checkbox"/>
                         <label>I agree to the Terms and policies.</label>  
                     </div>
-                    <p onClick={submitSignUp}>Create Account</p>
+                    {
+                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        <p onClick={submitSignUp}>Create Account</p>
+                    }
                 </div>
                 
             </form>

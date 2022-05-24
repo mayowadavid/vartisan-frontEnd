@@ -22,8 +22,6 @@ const ClientReferencePop = ({handlePop}) => {
         allReference = referenceCopy
         setAllReference([...allReference]);
     }
-
-   
     
     const handleFile = (e, i) => {
         e.preventDefault();
@@ -51,7 +49,6 @@ const ClientReferencePop = ({handlePop}) => {
         setAllReference([...allReference]);
         setSelected(!selected);
       }
-    console.log(allReference);
 
     const uploadReference = (data, headers) => {
         

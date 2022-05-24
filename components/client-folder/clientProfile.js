@@ -47,7 +47,6 @@ const ClientProfile = () => {
             formData, {headers}).then((dat)=>{ dat !== undefined && fetchUserProfile()}).catch((error)=> console.log(error));
         }
     }
-    console.log(userProfile);
 
     const handleChange = async(e) => {
         e.preventDefault();

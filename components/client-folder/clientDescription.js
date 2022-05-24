@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-import { useMutation } from '@apollo/client';
 import { MainContext } from '../context/mainContext';
 
 const ClientDescription = () => {
@@ -9,6 +8,7 @@ const ClientDescription = () => {
   // Finish!
     const [contentHtml, setContentHtml] = useState('');
     const [plainMarkDown, setPlainMarkDown] = useState('')
+    const [progress, setProgress] = useState(false);
     const { userProfile, setUserProfile, handleEditPop, updateProfile } = useContext(MainContext);
 
     const handleEditorChange = ({ html, text }) => {
@@ -25,13 +25,11 @@ const ClientDescription = () => {
         }
     }, [userProfile])
 
-    console.log(userProfile);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+        await setProgress(!progress);
         const { id, description, descriptionMarkDown } = userProfile;
-        
-        let { data, error } = await updateProfile({
+        const { data, error } = await updateProfile({
             variables: {
                 profileInput: {
                     id,
@@ -39,7 +37,12 @@ const ClientDescription = () => {
                 descriptionMarkDown
             }
         }});
+        
+        await data?.updateProfile?.id !== undefined && setProgress(!progress);
+        await data?.updateProfile?.id !== undefined && handleEditPop();
+        await error !== undefined && setProgress(!progress);
     }
+    console.log(progress);
     return (
         <div className="references_pop_up flex_show_row">
             <div className="reference_pop_wrapper">
@@ -59,7 +62,11 @@ const ClientDescription = () => {
                     <MdEditor style={{ height: '300px' }} renderHTML={text => mdParser.render(text)} value={plainMarkDown} onChange={handleEditorChange} />
                 </div>
                 <div className="reference_submit_button flex_show_row remove_margin border">
-                    <p>Discard</p> <p onClick={handleSubmit}>Save</p>
+                    <p onClick={handleEditPop}>Discard</p>
+                    {
+                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        <p onClick={handleSubmit}>Save</p>
+                    }
                 </div>
             </div>
         </div>

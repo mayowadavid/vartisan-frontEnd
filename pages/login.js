@@ -9,7 +9,7 @@ export default function Login() {
         email: '',
         password: '',
     }
-
+    const [progress, setProgress] = useState(false);
     const[ loginUser, setLogin ] = useState(initialState);
 
     const handleLogin = (e)=> {
@@ -34,11 +34,14 @@ export default function Login() {
     });
     
 
-    const submitLogin = (e) => {
+    const submitLogin = async (e) => {
         e.preventDefault();
-        queryUser({variables: {
+        c
+        const { data, error } = await queryUser({variables: {
             userInput: loginUser,
         }});
+        await data.loginUser.userName !== undefined && setProgress(!progress);
+        await error !== undefined && setProgress(!progress);
     }
 
     const handleJoin = (e) => {
@@ -93,10 +96,14 @@ export default function Login() {
                         </div>
                     </div>
                     <div className="login_submit">
-                        <p onClick={submitLogin}>Sign in</p>
+                        {
+                            progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                            <p onClick={submitLogin}>Sign in</p>
+                        }
                     </div>
                     <div className="login_sign_up flex_show_row">
-                        <p>Don't have an account yet?</p><p onClick={handleJoin}>Join now</p>
+                        <p>Don't have an account yet?</p>
+                        <p onClick={handleJoin}>Join now</p>
                     </div>
                 </div>
                 

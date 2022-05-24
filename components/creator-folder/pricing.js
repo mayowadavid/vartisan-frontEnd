@@ -6,6 +6,7 @@ const Pricing = () => {
   const [revision, setRevision] = useState();
   const [rotate, setRotate] = useState(false);
   const [secondRotate, setSecondRotate] = useState(false);
+  const [progress, setProgress] = useState(false);
   const {
       setShowDescription,
        setPricing, 
@@ -55,6 +56,7 @@ const Pricing = () => {
 
     const submitPricing = async (e) => {
         e.preventDefault();
+        await setProgress(!progress); 
         const {
             amount,
              deliveryPeriod,
@@ -122,6 +124,7 @@ const Pricing = () => {
             }
             }
         })
+        await setProgress(!progress); 
         setPricing(false);
         setShowDescription(true);
     }
@@ -208,7 +211,10 @@ const Pricing = () => {
                     </div>
                     <div className="project_submit project_submit_header flex_show_row">
                         <p>Save as Draft</p>
-                        <p onClick={submitPricing}>Continue</p>
+                        {
+                            progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                            <p onClick={submitPricing}>Continue</p>
+                        }
                     </div>
                 </div>
                 <div className="creator_wrap_holder flex_show_row">
@@ -363,7 +369,10 @@ const Pricing = () => {
                             </div>
                             <div className="project_submit flex_show_row">
                                 <p>Save as Draft</p>
-                                <p onClick={submitPricing}>Continue</p>
+                                {
+                                    progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                    <p onClick={submitPricing}>Continue</p>
+                                }
                             </div>
                         </div>
                     </div>

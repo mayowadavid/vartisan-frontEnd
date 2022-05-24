@@ -9,7 +9,8 @@ const Requirement = () => {
         text: false,
         link: false,
     }
-
+    
+    const [progress, setProgress] = useState(false);
     const [requirement, setRequirement] = useState(initialState);
     const {requirementName, required, text, link} = requirement;
     const [openRequirement, setOpenRequirement] = useState(false);
@@ -34,7 +35,7 @@ const Requirement = () => {
         gigRequirement = [...gigRequirement, requirement];
         setGig({...gig, gigRequirement});
         setRequirement(initialState);
-        // handleOpenFaq();
+        handleOpenFaq();
     }
     const deleteAction = async(e, id) => {
         e.preventDefault();
@@ -103,11 +104,13 @@ const Requirement = () => {
 
     const submitRequirement = async (e) => {
         e.preventDefault();
+        await setProgress(!progress); 
         const {gigRequirement} = gig;
         const requirementWithId = await gigRequirement.filter((details)=> details.id !== undefined);
         await requirementWithId !== undefined && updateRequirements(gig, requirementWithId);
         const requirementWithoutId = await gigRequirement.filter((details) => details.id == undefined);
         await requirementWithoutId !== undefined && createRequirements(gig, requirementWithoutId);
+        await setProgress(!progress); 
         proceedRequirement()
         
     }
@@ -143,7 +146,10 @@ const Requirement = () => {
                     </div>
                     <div className="project_submit project_submit_header flex_show_row">
                         <p>Save as Draft</p>
-                        <p onClick={submitRequirement}>Continue</p>
+                        {
+                            progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                            <p onClick={submitRequirement}>Continue</p>
+                        }
                     </div>
                 </div>
                 <div className="creator_wrap_holder flex_show_row">
@@ -192,7 +198,10 @@ const Requirement = () => {
                             </div>)}
                             <div className="project_submit flex_show_row">
                                 <p>Save as Draft</p>
-                                <p onClick={submitRequirement}>Continue</p>
+                                {
+                                    progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                    <p onClick={submitRequirement}>Continue</p>
+                                }
                             </div>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ const {
     createGigFaq
 }= useContext(MainContext);
 const {gigFaq} = gig;
-
+const [progress, setProgress] = useState(false);
 const handleDecription = (e) => {
     e.preventDefault();
     const {name, value} = e.target;
@@ -65,6 +65,7 @@ const updateGigFaqs = (dataholder, gigsFaq) => {
 
 const submitDescription = async (e) => {
     e.preventDefault();
+    await setProgress(!progress);
     const { gigFaq } = gig;
     if(gig.id !== ""){
         const {data: gigData, error: gigError} = await updateGig({
@@ -81,6 +82,7 @@ const submitDescription = async (e) => {
     const gigFaqWithoutId = await gigFaq.filter((details) => details.id == undefined);
     await gigFaqWithId !== undefined && createGigFaqs(gigData.updateGig, gigFaqWithoutId);
     }
+    await setProgress(!progress);
     handleDescription();
 }
 
@@ -115,7 +117,10 @@ const submitDescription = async (e) => {
                 </div>
                 <div className="project_submit project_submit_header flex_show_row">
                     <p>Save as Draft</p>
-                    <p onClick={submitDescription}>Continue</p>
+                    {
+                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        <p onClick={submitDescription}>Continue</p>
+                    }
                 </div>
             </div>
             <div className="creator_wrap_holder flex_show_row">
@@ -139,7 +144,10 @@ const submitDescription = async (e) => {
                         </div>
                         <div className="project_submit flex_show_row">
                             <p>Save as Draft</p>
-                            <p onClick={submitDescription}>Continue</p>
+                            {
+                                progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                <p onClick={submitDescription}>Continue</p>
+                            }
                         </div>
                     </div>
                 </div>

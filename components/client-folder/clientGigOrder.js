@@ -5,6 +5,7 @@ import {useMutation, useQuery} from '@apollo/client';
 const ClientGigOrder = ({sellerData}) => {
     const [quantity, setQuantity] = useState(1);
     const [total, setTotal] = useState();
+    const [progress, setProgress] = useState(false);
     const {
         order, 
         setOrder, 
@@ -49,6 +50,7 @@ const ClientGigOrder = ({sellerData}) => {
 
     const submitOrder = async(e) => {
     e.preventDefault();
+    await setProgress(!progress); 
     const date = await Date.now();
     const orderData = { 
         gigId: sellerData.id,
@@ -77,6 +79,7 @@ const ClientGigOrder = ({sellerData}) => {
         }
     })
     await setOrder({ ...order,  ...dataValue.createOrder });
+    await dataValue?.orderData !== undefined && setProgress(!progress); 
     await setOpenOrderRequirement(!openOrderRequirement);
 
     }
@@ -187,7 +190,10 @@ const ClientGigOrder = ({sellerData}) => {
                                 </div>
                             </div>
                             <div className="client_submit remove_margin">
-                                <p onClick={submitOrder}>Continue</p>
+                                {
+                                    progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                    <p onClick={submitOrder}>Continue</p>
+                                }
                             </div>
                             <div className="order_message">
                                 <p>You won't be charged yet</p>

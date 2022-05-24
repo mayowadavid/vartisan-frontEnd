@@ -11,7 +11,7 @@ const ClientReference = ({handlePop, clientReference}) => {
                     <div className="reference_card_change hide">
                         <img src="svg/Setting.svg" alt=""/>
                     </div>
-                    <img src={file!== null ? file.image :"img/category.png"} alt=""/>
+                    <img src={file!== null ? file.image :"../../svg/no_caption.svg"} alt=""/>
                     <div className="reference_card_content remove_margin">
                         <p>{name}</p>
                         <p>{description}</p>

@@ -19,6 +19,7 @@ const Overview = () => {
        updateGigTag,
        updateGig
     } = useContext(MainContext);
+   const [progress, setProgress] = useState(false);
    const [tag, setTag] = useState({name: ""});
    const [rotate, setRotate] = useState(false);
    const [secondRotate, setSecondRotate] = useState(false);
@@ -194,6 +195,7 @@ const updateTags = async (dataholder, tag) => {
 
 const overviewSubmit = async (e) => {
     e.preventDefault();
+    await setProgress(!progress); 
     const { 
         name, 
         categoryId, 
@@ -222,9 +224,11 @@ const overviewSubmit = async (e) => {
     error !== undefined && console.log(error.message);
     const { creategig } = await gigHolder;
     await gigTag.length !== 0 && submitTags(creategig, gigTag);
+    await setProgress(!progress); 
     setPricing(true);
     setOverview(false);
     } else if(gigFormat.id == undefined && gig.id !== undefined ){
+        await setProgress(!progress); 
         let {data: formatHolder} = await createGigFormat({
             variables: {
                 createFormat: { ...gigFormat }
@@ -246,9 +250,11 @@ const overviewSubmit = async (e) => {
     await tagsWithoutId !== undefined && submitTags(gig, tagsWithoutId);
     const tagsWithId = await gigTag.filter((noId)=> noId.id !== undefined); 
     await tagsWithId !== undefined && updateTags(gig, tagsWithId);
+    await setProgress(!progress); 
     setPricing(true);
     setOverview(false);
     } else{
+        await setProgress(!progress); 
         let cleanObj = {...gigFormat};
         delete cleanObj['__typename'];
         let {data: formatHolder, error} = await updateGigFormat({
@@ -274,6 +280,7 @@ const overviewSubmit = async (e) => {
     await tagsWithoutId !== undefined && submitTags(gigHolder.updateGig, tagsWithoutId);
     const tagsWithId = await gigTag.filter((noId)=> noId.id !== undefined); 
     await tagsWithId !== undefined && updateTags(gigHolder.updateGig, tagsWithId);
+    await setProgress(!progress); 
     setPricing(true);
     setOverview(false);
     }
@@ -316,7 +323,10 @@ const nextPage = (e) => {
                     </div>
                     <div className="project_submit project_submit_header flex_show_row">
                         <p>Save as Draft</p>
-                        <p onClick={ gig.id !== "" ? nextPage : overviewSubmit }>Save & Review</p>
+                        {
+                            progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                            <p onClick={ gig.id !== "" ? nextPage : overviewSubmit }>Save & Review</p>
+                        }
                     </div>
                 </div>
                 <div className="creator_wrap_holder flex_show_row">
@@ -436,7 +446,10 @@ const nextPage = (e) => {
                             </div>
                             <div className="project_submit flex_show_row">
                                 <p>Save as Draft</p>
-                                <p onClick={overviewSubmit}>Continue</p>
+                                {
+                                    progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                    <p onClick={overviewSubmit}>Continue</p>
+                                }
                             </div>
                         </div>
                     </div>

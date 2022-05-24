@@ -9,18 +9,21 @@ const DescriptionUpdate = (props) => {
     const [faq, setFaq] = useState(initialState);
     
     const {gig, setGig, handleOpenFaq, openFaq}= useContext(MainContext);
+    const [progress, setProgress] = useState(false);
     const handleDecription = (e) => {
         e.preventDefault();
         const {name, value} = e.target;
         setFaq({...faq, [name]: value});
     }
 
-    const handleSubmitFaq = (e) => {
+    const handleSubmitFaq = async(e) => {
         e.preventDefault();
+        await setProgress(!progress);
         const {gigFaq} = gig;
         gigFaq = [...gigFaq, faq];
         setGig({...gig, gigFaq});
         setFaq(initialState);
+        await setProgress(!progress);
         handleOpenFaq();
     }
 
@@ -43,7 +46,10 @@ const DescriptionUpdate = (props) => {
                 </div>
                 <div className="faq_submit_button remove_margin flex_show_row">
                     <p>Cancel</p>
-                    <p onClick={handleSubmitFaq}>Save</p>
+                    {
+                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        <p onClick={handleSubmitFaq}>Save</p>
+                    }
                 </div>
             </div>)}
         </div>
