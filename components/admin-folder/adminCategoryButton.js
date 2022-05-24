@@ -5,6 +5,7 @@ import AdminSidebar from './adminSidebar'
 
 const AdminCategoryButton = () => {
     const {adminPage, setAdminPage} = useContext(MainContext);
+    
     useEffect(()=>{
         setAdminPage({...adminPage, categories: true});
     }, [])
