@@ -48,7 +48,7 @@ const ClientGigOrderRequirement = ({sellerData}) => {
             formData.append('descriptionFile', name);
             formData.append('file', file[0]);
             formData.append('id', id);
-            axios.post('http://localhost:4000/order-requirement/imageUpload', 
+            axios.post('https://backend-393j.onrender.com/order-requirement/imageUpload', 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }
@@ -65,7 +65,7 @@ const ClientGigOrderRequirement = ({sellerData}) => {
             formData.append('referenceFile', name);
             formData.append('file', file[0]);
             formData.append('id', id);
-            axios.post('http://localhost:4000/order-requirement/imageUpload', 
+            axios.post('https://backend-393j.onrender.com/order-requirement/imageUpload', 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }
@@ -82,7 +82,7 @@ const ClientGigOrderRequirement = ({sellerData}) => {
             formData.append('colorFile', name);
             formData.append('file', file[0]);
             formData.append('id', id);
-            axios.post('http://localhost:4000/order-requirement/imageUpload', 
+            axios.post('https://backend-393j.onrender.com/order-requirement/imageUpload', 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }

@@ -144,7 +144,7 @@ const uploadImage = (datum, data, headers) => {
         let formData = new FormData();
         formData.append('file', file);
         formData.append('blogId', blogId);
-        axios.post('http://localhost:4000/blog/imageUpload', 
+        axios.post('https://backend-393j.onrender.com/blog/imageUpload', 
         formData, {headers}).then((dat)=> console.log(dat))
         .catch((error)=> console.log(error));
     }

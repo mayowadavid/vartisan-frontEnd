@@ -43,7 +43,7 @@ const ClientProfile = () => {
             let formData = new FormData()
             formData.append('file', file);
             formData.append('profileId', profileId);
-            axios.post('http://localhost:4000/profile/imageUpload', 
+            axios.post('https://backend-393j.onrender.com/profile/imageUpload', 
             formData, {headers}).then((dat)=>{ dat !== undefined && fetchUserProfile()}).catch((error)=> console.log(error));
         }
     }
