@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { useMutation } from '@apollo/client';
-import { UPDATE_PROFILE } from '../queries/user/user';
 import { MainContext } from '../context/mainContext';
 
 const ClientDescription = () => {
@@ -10,7 +9,7 @@ const ClientDescription = () => {
   // Finish!
     const [contentHtml, setContentHtml] = useState('');
     const [plainMarkDown, setPlainMarkDown] = useState('')
-    const { userProfile, setUserProfile, handleEditPop } = useContext(MainContext);
+    const { userProfile, setUserProfile, handleEditPop, updateProfile } = useContext(MainContext);
 
     const handleEditorChange = ({ html, text }) => {
     setContentHtml(html);
@@ -27,24 +26,14 @@ const ClientDescription = () => {
     }, [userProfile])
 
     console.log(userProfile);
-    const [updateProfile, { data, loading, error }] = useMutation(UPDATE_PROFILE, {
-        onCompleted: (data) => {
-            data && handleEditPop();
-            console.log(data);
-        },
-        onError: (error) => {
-            if(error){
-                console.log(error);
-            }
-        }
-    });
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { id, description, descriptionMarkDown } = userProfile;
         
         let { data, error } = await updateProfile({
             variables: {
-                updateProfileInput: {
+                profileInput: {
                     id,
                 description, 
                 descriptionMarkDown

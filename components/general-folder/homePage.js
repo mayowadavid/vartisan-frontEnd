@@ -3,7 +3,7 @@ import HomeMobileHeader from './homeMobileHeader';
 import Link from 'next/link';
 import Footer from './footer';
 import client from '../Apollo/ApolloClient';
-import gql from 'graphql-tag';
+import { gql } from "@apollo/client"
 
 export default function HomePage() {
     const ALL_PROJECT = gql`query{

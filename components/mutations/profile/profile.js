@@ -7,5 +7,7 @@ mutation UPDATE_PROFILE($profileInput: UpdateProfileInput!){
       firstName
       lastName
       language
+      description, 
+      descriptionMarkDown
     }
   }`

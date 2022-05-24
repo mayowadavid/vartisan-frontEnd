@@ -3,7 +3,7 @@ import ClientHeader from './clientHeader';
 import ClientMobileHeader from './clientMobileHeader';
 import Footer from './../general-folder/footer';
 import client from '../Apollo/ApolloClient';
-import gql from 'graphql-tag';
+import { gql } from "@apollo/client"
 import {useMutation, useQuery} from '@apollo/client';
 
 const Favorite = () => {

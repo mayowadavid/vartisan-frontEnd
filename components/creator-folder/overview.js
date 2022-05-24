@@ -35,7 +35,7 @@ const Overview = () => {
    useEffect(()=>{
     if(category !== undefined){const { categories } = category;
     setAllCategory(categories);
-    const {subCategory} = categories[categoryIndex];
+    const subCategory = categories?.subCategory !== undefined && categories?.subCategory[categoryIndex];
     setSubCategory(subCategory);}
    }, [category, categoryIndex]);
 
@@ -350,7 +350,7 @@ const nextPage = (e) => {
                                     </select>
                                 </div>
                             </div>
-                            {subCategory !== undefined && 
+                            {subCategory !== undefined || null && 
                             (<div className="project_form">
                                 <div className="hint_display_header flex_show_row">
                                     <p>Main Type</p> <img src="/svg/info_circle.svg" alt=""/>
@@ -362,7 +362,7 @@ const nextPage = (e) => {
                                 
                                 <select name="subCategoryOption" defaultValue="Select Sub-Category" onClick={handleSecondArrow} onChange={handleSubCategory}>
                                     <option defaultValue hidden>{(gig?.subCategoryId !== "" && gig?.subCategory?.name !== undefined) ? gig?.subCategory?.name: "select subCategory"}</option>
-                                {subCategory.map(({name}, i)=> { 
+                                {subCategory?.map(({name}, i)=> { 
                                      return (<option key={i}>{name}</option> )
                                 })}
                                 </select>
