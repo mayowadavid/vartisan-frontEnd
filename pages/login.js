@@ -36,6 +36,7 @@ export default function Login() {
 
     const submitLogin = async (e) => {
         e.preventDefault();
+        setProgress(!progress);
         const { data, error } = await queryUser({variables: {
             userInput: loginUser,
         }});

@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { MainContext } from '../context/mainContext';
 import AdminSidebar from './adminSidebar';
 
 const AdminCreateCategory = () => {
     const {
+        adminCategoryCreate,
+        setAdminCategoryCreate,
         createCategory,
         createSubCategory,
         adminPage,
@@ -11,7 +13,7 @@ const AdminCreateCategory = () => {
     } = useContext(MainContext);
 
     useEffect(()=>{
-        setAdminPage({...adminPage, categories: true});
+        setAdminPage({categories: true});
     }, [])
 
     const initialState = {
@@ -28,6 +30,7 @@ const AdminCreateCategory = () => {
     }
     
     const [subCategories, setSubCategories] = useState(subState);
+    const [open, setOpen] = useState(false);
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -76,10 +79,29 @@ const AdminCreateCategory = () => {
         }
     }
 
+    const handleCloseCategory = (e) => {
+        e.preventDefault();
+        setAdminCategoryCreate({
+            ...adminCategoryCreate, 
+            displayCategory: true, 
+            createCategory: false
+        })
+    }
+
+    const handleSwitch = (e) => {
+        e.preventDefault();
+        setOpen(!open);
+        if(category.status == 'active'){
+            setCategory({...category, status: 'draft'});
+        }else {
+            setCategory({...category, status: 'active'});
+        }
+        
+    }
+
     const submit = async (e) => {
         e.preventDefault();
         const { name, description, status, subCategory } = category;
-        console.log(name, description, status, subCategory);
         const { data, error } = await createCategory({
             variables: {
                 categoryParams: {
@@ -91,6 +113,12 @@ const AdminCreateCategory = () => {
         });
         if(data){
             await createSubCategoryTag(data.createCategory, subCategory);
+            await setCategory(initialState);
+            await setAdminCategoryCreate({
+                ...adminCategoryCreate, 
+                displayCategory: true, 
+                createCategory: false
+            })
         }
         
     }
@@ -104,7 +132,7 @@ const AdminCreateCategory = () => {
                 <p>Categories</p>
             </div>
             <div className="create_category_header_button flex_show_row">
-                <p>Cancle</p> <p>Save</p>
+                <p onClick={handleCloseCategory}>Cancle</p> <p onClick={submit}>Save</p>
             </div>
         </div>
         <div className="create_category_body">
@@ -135,8 +163,8 @@ const AdminCreateCategory = () => {
                     <p>Create New Categories</p>
                 </div>
                 <div className="admin_category_active_container flex_show_row">
-                    <div className="active_category">
-                        <div className="active_category_switch"></div>
+                    <div onClick={handleSwitch} className={open? "active_category": "non_active"}>
+                        <div className={open? "active_category_switch": "close_switch" }></div>
                     </div>
                     <p>Active Category</p>
                 </div>
@@ -173,7 +201,7 @@ const AdminCreateCategory = () => {
                             <img src="../../img/plus_circle.png" alt=""/> <p onClick={submitSubCategory}>Add other</p>
                         </div>
                         <div className="submit_category">
-                            <p>Cancel</p> <p onClick={submit}>Save</p>
+                            <p onClick={handleCloseCategory}>Cancel</p> <p onClick={submit}>Save</p>
                         </div>
                 </div>
             </div>

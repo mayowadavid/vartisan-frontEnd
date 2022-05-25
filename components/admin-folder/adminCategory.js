@@ -12,7 +12,7 @@ const AdminCategory = () => {
     } = useContext(MainContext);
 
     useEffect(()=>{
-        setAdminPage({...adminPage, categories: true});
+        setAdminPage({categories: true});
     }, [])
 
     const handleCreateCategory = (e) => {

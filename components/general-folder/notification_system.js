@@ -38,7 +38,7 @@ const NotificationSystem = () => {
 
     console.log(allNotification.length);
   return (
-      <div className='overall_notification'>
+    <div className='overall_notification'>
       <ClientHeader />
       <ClientMobileHeader />
         <div className='notificationWrap'>
@@ -97,6 +97,11 @@ const NotificationSystem = () => {
                             </div>
                         </div>)
                 })
+            }
+            {allNotification.length == 0 && 
+               <div className='notification_empty flex_show_row'>
+               <p>There are no notification at the moment</p> 
+               </div>
             }
             </div> 
         </div>

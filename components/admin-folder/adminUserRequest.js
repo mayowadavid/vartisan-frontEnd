@@ -9,7 +9,7 @@ const AdminUserRequest = () => {
     const [user, setUser] = useState([]);
 
     useEffect(()=>{
-        setAdminPage({...adminPage, user_client: true});
+        setAdminPage({user_client: true});
     }, [])
 
     useEffect(async ()=>{
@@ -65,8 +65,13 @@ const AdminUserRequest = () => {
                             email, 
                             profile,  
                             userName, 
-                            status
                             } = d;
+                            const year = new Date(parseInt(createdAt)).getFullYear();
+                            const month = new Date(parseInt(createdAt)).getMonth();
+                            const day = new Date(parseInt(createdAt)).getDate();
+                            const hours = new Date(parseInt(createdAt)).getHours();
+                            const time = new Date(parseInt(createdAt)).getMinutes();
+                            const seconds = new Date(parseInt(createdAt)).getSeconds();
                         return (
                             <div className="artisan_table_container flex_show_row">
                     <div className="artisan_number remove_margin">
@@ -85,7 +90,7 @@ const AdminUserRequest = () => {
                         <p>{email}</p>
                     </div>
                     <div className="artisan_register remove_margin">
-                        <p>{createdAt}</p>
+                        <p>{ year + '-' + month + '-' + day + ' ' + hours + ':' + time + ':' + seconds }</p>
                     </div>
                     <div className="artisan_approve remove_margin flex_show_row">
                         <div className="approve_button remove_margin">

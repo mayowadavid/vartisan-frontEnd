@@ -11,6 +11,7 @@ import ClientHeader from '../../components/client-folder/clientHeader';
 import { clean } from '../../components/functions/functions';
 import ClientDescription from '../../components/client-folder/clientDescription';
 import ClientReferencePop from '../../components/client-folder/client_reference_pop';
+import { ClientProfileSkeletal } from '../../components/client-folder/clientProfileSkeletal';
 
 
 const SingleSeller = () => {
@@ -62,9 +63,10 @@ const SingleSeller = () => {
     { editAbout == true && <ClientDescription /> }
     <ClientHeader />
     <ClientMobileHeader />
+      {!role && <ClientProfileSkeletal />}
       {role == "client" && <ClientProfile />}
       {role == "vartisan" && <VartisanProfile />}
-      <Footer />
+        <Footer />
     </>
   )
 }

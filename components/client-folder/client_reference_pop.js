@@ -119,7 +119,7 @@ const ClientReferencePop = ({handlePop}) => {
                 </div>
                 
                 <div className="reference_submit_button flex_show_row remove_margin border">
-                    <p>Discard</p> <p onClick={handleSubmit}>Save</p>
+                    <p onClick={handlePop}>Discard</p> <p onClick={handleSubmit}>Save</p>
                 </div>
                 </div>
             </div>

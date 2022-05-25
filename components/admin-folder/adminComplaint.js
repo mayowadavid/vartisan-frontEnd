@@ -8,7 +8,7 @@ const AdminComplaint = () => {
     const {adminPage, setAdminPage} = useContext(MainContext);
     
     useEffect(()=>{
-        setAdminPage({...adminPage, message: true});
+        setAdminPage({message: true});
     }, [])
 
   return (

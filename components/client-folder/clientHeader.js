@@ -26,8 +26,9 @@ const ClientHeader = () => {
     <div className="Category_page_wrapper">
         <div className="category_container">
             <div className="admin_header">
-                <div className="category_logo">
-                    <p>Logo</p>
+                <div className="category_logo flex_show_row">
+                    <img src="../../img/v_small 3.png" alt=""/>
+                    <p>Vartisan</p>
                 </div>
                 <div className="category_search_bar">
                     <img src="../../img/Search.png" alt=""/>

@@ -13,21 +13,25 @@ const AdminSidebar = () => {
     }
     
     const handleBlog = (e) => {
+        setAdminPage({blog: true});
         router.replace(`/${userName}/admin_section/blog`);
     }
     
     const handleCategory = (e) => {
         e.preventDefault();
+        setAdminPage({categories: true});
         router.replace(`/${userName}/admin_section/category`)
     }
     
     const handleProject = (e) => {
         e.preventDefault();
+        setAdminPage({projects: true});
         router.replace(`/${userName}/admin_section/project`)
     }
     
     const handleUsers = (e) => {
         e.preventDefault();
+        setAdminPage({user_client: true});
         router.replace(`/${userName}/admin_section/users`)
     }
     
@@ -53,7 +57,7 @@ const AdminSidebar = () => {
                             <img src="../../img/commision.png" alt=""/>
                             <p>Admin Commission</p>
                         </div>
-                        <div onClick={handleProject} className="admin_category_top_row flex_show_row remove_margin">
+                        <div onClick={handleProject} className={`admin_category_top_row ${adminPage.projects == true ? 'active_side_bar': ''} flex_show_row remove_margin`}>
                             <img src="../../img/Document.png" alt=""/>
                             <p>Projects</p>
                         </div>
@@ -65,29 +69,29 @@ const AdminSidebar = () => {
                             <img src="../../img/menu.png" alt=""/>
                             <p>Promotions</p>
                         </div>
-                        <div onClick={handleCategory} className="admin_category_top_row flex_show_row remove_margin">
+                        <div onClick={handleCategory} className={`admin_category_top_row ${adminPage.categories == true ? 'active_side_bar': ''} flex_show_row remove_margin`}>
                             <img src="../../img/menu.png" alt=""/>
                             <p>Categories</p>
                         </div>
-                        <div onClick={handleBlog} className="admin_category_top_row flex_show_row remove_margin">
+                        <div onClick={handleBlog} className={`admin_category_top_row ${adminPage.blog == true ? 'active_side_bar': ''} flex_show_row remove_margin`}>
                             <img src="../../img/menu.png" alt=""/>
                             <p>Blog</p>
                         </div>
                     </div>
                     <div className="admin_category_top">
-                        <div className="admin_category_top_row flex_show_row remove_margin">
+                        <div className={`admin_category_top_row ${adminPage.homePage == true ? 'active_side_bar': ''} flex_show_row remove_margin`}>
                             <img src={adminPage.homePage == true ? '../svg/w-home.svg' :"../../svg/home.svg"} alt=""/>
                             <p>Home Page Settings</p>
                         </div>
-                        <div className="admin_category_top_row flex_show_row remove_margin">
+                        <div className={`admin_category_top_row ${adminPage.payment == true ? 'active_side_bar': ''} flex_show_row remove_margin`}>
                             <img src={adminPage.payment? '../../svg/w-payment.svg' :"../../svg/payment.svg"} alt=""/>
                             <p>Payment Settings</p>
                         </div>
-                        <div onClick={handleVartisan} className="admin_category_top_row flex_show_row remove_margin">
+                        <div onClick={handleVartisan} className={`admin_category_top_row ${adminPage.vartisan == true ? 'active_side_bar': ''} flex_show_row remove_margin`}>
                             <img src={adminPage.vartisan == true ? '../../svg/w-vartisan.svg' :"../../svg/vartisan.svg"} alt=""/>
                             <p>Vartisan</p>
                         </div>
-                        <div onClick={handleUsers} className="admin_category_top_row flex_show_row remove_margin">
+                        <div onClick={handleUsers} className={`admin_category_top_row ${adminPage.user_client == true ? 'active_side_bar': ''} flex_show_row remove_margin`}>
                             <img src={adminPage.user_client == true ? '../../svg/w-client-user.svg' :"../../svg/client-user.svg"} alt=""/>
                             <p>Users/Clients</p>
                         </div>

@@ -17,7 +17,7 @@ const AdminBlog = () => {
     const [allBlog, setAllBlog] = useState([]);
 
     useEffect(()=>{
-        setAdminPage({...adminPage, blog: true});
+        setAdminPage({blog: true});
     }, [])
     
     useEffect(async()=> {

@@ -8,7 +8,7 @@ const AdminArtisanRequest = () => {
     const {allGig, setAdminPage, adminPage} = useContext(MainContext);
 
     useEffect(()=>{
-        setAdminPage({...adminPage, vartisan: true});
+        setAdminPage({vartisan: true});
     }, [])
 
   return (
