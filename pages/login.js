@@ -36,7 +36,6 @@ export default function Login() {
 
     const submitLogin = async (e) => {
         e.preventDefault();
-        c
         const { data, error } = await queryUser({variables: {
             userInput: loginUser,
         }});
