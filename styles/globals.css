@@ -12260,6 +12260,11 @@ margin-top: 9%;
 }
 
 @media (max-width: 450px) and (min-width: 60px) {
+  .client_album_holder {
+    width: 50%;
+    height: 170px;
+  }
+
   .tab_controller > p {
     font-size: 14px;
     margin-right: 20px;
