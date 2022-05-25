@@ -15,6 +15,11 @@ a {
   text-decoration: none;
 }
 
+p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -6859,7 +6864,7 @@ border-top: 10px solid #55FFFF;
 }
 
 .login_header {
-  width: 39%;
+  width: 50%;
   text-align: center;
   margin: 0 auto;
 }
@@ -6869,9 +6874,15 @@ border-top: 10px solid #55FFFF;
   font-size: 24px;
 }
 
+.login_header > p {
+  font-size: 18px;
+  font-weight: 400;
+}
+
 .login_image {
-  width: 40%;
+  width: 50%;
   margin: 0 auto;
+  justify-content: center;
 }
 
 .login_image > img{
@@ -6928,6 +6939,10 @@ border-top: 10px solid #55FFFF;
   border: 2px solid #fff;
 }
 
+.login_submit {
+  margin: 43px 0;
+}
+
 .login_submit > p {
   width: 100%;
   text-align: center;
@@ -6945,6 +6960,10 @@ border-top: 10px solid #55FFFF;
   width: 100%;
   align-items: center;
   justify-content: center;
+}
+
+.login_sign_up > p {
+  font-size: 14px;
 }
 
 .login_sign_up > p:last-child{
@@ -10984,7 +11003,7 @@ margin-top: 9%;
   }
 
   .login_image > img {
-      width: 35%;
+      width: 50%;
   }
 
   .login_right {
@@ -11000,6 +11019,10 @@ margin-top: 9%;
   .checkbox_holder {
     width: 100%;
     margin: unset;
+  }
+
+  .login_submit {
+    margin: 43px 0;
   }
 
   .login_submit > p {
@@ -11364,8 +11387,17 @@ margin-top: 9%;
       font-size: 9px;
   }
   /*Client Profile */
+  .tab_controller {
+    width: 100%;
+  }
+
+  .edit_button {
+    display: none;
+  }
+
   .client_overview {
       width: 100%;
+      margin-bottom: 36px;
   }
   .client_tab {
       width: 100%;
@@ -12228,6 +12260,16 @@ margin-top: 9%;
 }
 
 @media (max-width: 450px) and (min-width: 60px) {
+  .tab_controller > p {
+    font-size: 14px;
+    margin-right: 20px;
+    padding-bottom: 8px;
+  }
+
+  #selected_tab {
+    border-bottom-width: 3px;
+  }
+
   .back_arrow {
     display: flex;
     align-items: center;

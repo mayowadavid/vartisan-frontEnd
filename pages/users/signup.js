@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import {useMutation, useQuery} from '@apollo/client';
-import { CREATE_USER } from '../../components/queries/user/user';
+import React, { useState, useContext } from 'react'
 import { MainContext } from '../../components/context/mainContext';
 import {Router, useRouter} from 'next/router';
 
@@ -14,6 +12,8 @@ export default function Signup() {
     }
     const [signUp, setSignUp] = useState(initialState);
     const [progress, setProgress] = useState(false);
+    const [err, setErr] = useState();
+    const [confirmPassword, setConfirmPassword] = useState();
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -21,22 +21,14 @@ export default function Signup() {
         setSignUp({...signUp, [name]: value});
     }
 
-    const {userSignUp} =useContext(MainContext);
+    const verifyPassword = (e) => {
+        e.preventDefault();
+        const { value } = e.target;
+        signUp.password !== confirmPassword && setErr("password does not match");
+        setConfirmPassword(value);
+    }
 
-    const [create, { data }] = useMutation(CREATE_USER, {
-        variables: {
-            createUserInput: signUp
-        },
-         onCompleted: (data) => {
-            // getData
-           console.log(data);
-        },
-        onError: (error) => {
-            if (error) {
-                console.log(error)
-            }
-        }
-    });
+    const {userSignUp} =useContext(MainContext);
 
     const submitSignUp = async (e) => {
         e.preventDefault();
@@ -96,7 +88,7 @@ export default function Signup() {
                 </div>
                 <div className="form_row">
                     <label>confirm Password</label> 
-                    <input placeholder="input your username here" type="text"/> 
+                    <input name="confirmPassword" onChange={verifyPassword} placeholder="input your username here" type="text"/> 
                 </div>
                 <div className="form_row">
                     <div className="checkbox_holder flex_show_row">

@@ -62,7 +62,7 @@ export default function Login() {
                     <p>Vartisan</p>
                     <p>The Premium Marketplace for Creatives</p>
                 </div>
-                <div className="login_image">
+                <div className="login_image flex_show_row">
                     <img src="img/v_large 1.png" alt=""/>
                 </div>
             </div>
