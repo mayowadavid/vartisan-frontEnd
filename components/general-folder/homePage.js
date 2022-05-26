@@ -288,7 +288,7 @@ export default function HomePage() {
         </div>
         <div className="image_slides">
             <div className="delivery_card">
-                <div className="delivery_container">
+                <div className="delivery_container flex_show_row">
                     <div className="delivery_image">
                         <img src="img/delivery1.png" alt=""/>
                     </div>
@@ -304,7 +304,7 @@ export default function HomePage() {
                 </div>
             </div>
             <div className="delivery_card">
-                <div className="delivery_container">
+                <div className="delivery_container flex_show_row">
                     <div className="delivery_image">
                         <img src="img/delivery2.png" alt=""/>
                     </div>
@@ -320,7 +320,7 @@ export default function HomePage() {
                 </div>
             </div>
             <div className="delivery_card">
-                <div className="delivery_container">
+                <div className="delivery_container flex_show_row">
                     <div className="delivery_image">
                         <img src="img/delivery3.png" alt=""/>
                     </div>
