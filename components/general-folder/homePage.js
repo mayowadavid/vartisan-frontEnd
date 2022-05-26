@@ -283,7 +283,7 @@ export default function HomePage() {
                 <div className="divider"></div>
             </div>
             <div className="delivery_header2">
-                <p><a href="">See More</a></p>
+                <p><a href="">See all delivery</a></p>
             </div>
         </div>
         <div className="image_slides">
