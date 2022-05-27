@@ -98,7 +98,7 @@ export default function Login() {
                     <div className="login_submit">
                         {
                             progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
-                            <p onClick={submitLogin}>Sign in</p>
+                            <button onClick={submitLogin}>Sign in</button>
                         }
                     </div>
                     <div className="login_sign_up flex_show_row">

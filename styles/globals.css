@@ -24,6 +24,10 @@ p {
   box-sizing: border-box;
 }
 
+button {
+  border: 0;
+}
+
 
 @font-face {
   font-family: "Poppins";
@@ -7039,7 +7043,7 @@ border-top: 10px solid #55FFFF;
   margin: 43px 0;
 }
 
-.login_submit > p {
+.login_submit > button {
   width: 100%;
   text-align: center;
   color: #fff;
@@ -11153,7 +11157,7 @@ margin-top: 9%;
     margin: 43px 0;
   }
 
-  .login_submit > p {
+  .login_submit > button {
     width: 100%;
   }
 
