@@ -97,7 +97,7 @@ export default function Login() {
                     </div>
                     <div className="login_submit">
                         {
-                            progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                            progress == true ? <button className="loader"><img src="svg/white-loading.svg" /></button>:
                             <button onClick={submitLogin}>Sign in</button>
                         }
                     </div>
