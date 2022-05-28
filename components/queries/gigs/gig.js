@@ -176,6 +176,7 @@ query FIND_ALL_USER_GIG{
     category {
       name
     }
+    status
     user {
       userName
       profile {

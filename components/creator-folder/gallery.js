@@ -82,7 +82,7 @@ const Gallery = () => {
         await gigImageWithId !== undefined && updateImages(gig, gigImageWithId, headers)
         const gigImageWithOutId = gigGallery.filter((data)=> data.id == undefined); 
         await gigImageWithOutId !== undefined && uploadImages(gig, gigImageWithOutId, headers);
-        await gigVideo.id == undefined && uploadVideo(gig, [gigVideo]);
+        await (gigVideo.id == undefined && gigVideo.length > 0) && uploadVideo(gig, [gigVideo]);
         const {data: gigData, error: gigError} = await getAllGig();
         await setProgress(!progress); 
         setShowGallery(false);
@@ -121,7 +121,7 @@ const Gallery = () => {
         <div className="project_submit project_submit_header flex_show_row">
             <p>Save as Draft</p>
             {
-                progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                progress == true ? <p className="loader project_load"><img src="/svg/white-loading.svg" /></p>:
                 <p onClick={submitGig}>Publish</p>
             }
         </div>
@@ -157,7 +157,7 @@ const Gallery = () => {
                 <div className="project_submit flex_show_row">
                     <p>Save as Draft</p>
                     {
-                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        progress == true ? <p className="loader project_load"><img src="/svg/white-loading.svg" /></p>:
                         <p onClick={submitGig}>Publish</p>
                     }
                 </div>

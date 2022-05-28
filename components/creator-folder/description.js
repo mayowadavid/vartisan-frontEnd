@@ -118,7 +118,7 @@ const submitDescription = async (e) => {
                 <div className="project_submit project_submit_header flex_show_row">
                     <p>Save as Draft</p>
                     {
-                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        progress == true ? <p className="loader project_load"><img src="/svg/white-loading.svg" /></p>:
                         <p onClick={submitDescription}>Continue</p>
                     }
                 </div>
@@ -145,7 +145,7 @@ const submitDescription = async (e) => {
                         <div className="project_submit flex_show_row">
                             <p>Save as Draft</p>
                             {
-                                progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                progress == true ? <p className="loader project_load"><img src="/svg/white-loading.svg" /></p>:
                                 <p onClick={submitDescription}>Continue</p>
                             }
                         </div>

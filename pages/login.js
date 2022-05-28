@@ -37,8 +37,14 @@ export default function Login() {
     const submitLogin = async (e) => {
         e.preventDefault();
         setProgress(!progress);
+        let { email, password } = loginUser;
+        email = email.trim().toLowerCase();
+        password = password.trim();
         const { data, error } = await queryUser({variables: {
-            userInput: loginUser,
+            userInput: {
+                email,
+                password,
+            },
         }});
         await data.loginUser.userName !== undefined && setProgress(!progress);
         await error !== undefined && setProgress(!progress);

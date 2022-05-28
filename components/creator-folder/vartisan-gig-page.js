@@ -27,7 +27,19 @@ const VartisanPage = ({sellerData}) => {
 
     useEffect(async ()=>{
         const {data: userGig, error: userError} = await findAllUserGig();
-        setOtherGig(userGig.findAllUserGig);
+        
+        if(!userGig && userGig.findAllUserGig.length >= 4){
+            const result = [];
+            const size = 4;
+            for(let i = 0; i < userGig.findAllUserGig.length; i += size ){
+                const chunk = userGig.findAllUserGig.slice(i, i + size);
+                result.push(chunk);
+            }
+            setOtherGig(result[0]);
+        } else {
+            setOtherGig(userGig.findAllUserGig);
+        }
+        
     }, [])
 
     const requestOrder = (e) => {

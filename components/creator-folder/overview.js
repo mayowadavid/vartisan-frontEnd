@@ -34,10 +34,12 @@ const Overview = () => {
     const reFormat = {...initialState.gigFormat, ...newFormat};
     const {ai, psd, swf, gif, blend, bmpr, eps, jpg, fig, ico, png, other, } = reFormat;
    useEffect(()=>{
-    if(category !== undefined){const { categories } = category;
+    if(category !== undefined){
+    const { categories } = category;
     setAllCategory(categories);
-    const subCategory = categories?.subCategory !== undefined && categories?.subCategory[categoryIndex];
-    setSubCategory(subCategory);}
+    console.log(categories);
+    const subCat = categories[categoryIndex]?.subCategory !== undefined && categories[categoryIndex]?.subCategory;
+    setSubCategory(subCat);}
    }, [category, categoryIndex]);
 
 useEffect(()=> {
@@ -46,7 +48,7 @@ useEffect(()=> {
             gigTag.length !== 0 && setTagHolder(gigTag);
     }
 }, [gig])
-
+console.log(subCategory);
 const handleChange = (e) => {
     e.preventDefault();
     const {name, value} = e.target;
@@ -324,7 +326,7 @@ const nextPage = (e) => {
                     <div className="project_submit project_submit_header flex_show_row">
                         <p>Save as Draft</p>
                         {
-                            progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                            progress == true ? <p className="loader project_load"><img src="/svg/white-loading.svg" /></p>:
                             <p onClick={ gig.id !== "" ? nextPage : overviewSubmit }>Save & Review</p>
                         }
                     </div>
@@ -360,7 +362,7 @@ const nextPage = (e) => {
                                     </select>
                                 </div>
                             </div>
-                            {subCategory !== undefined || null && 
+                            {(subCategory !== undefined && subCategory !== null) && 
                             (<div className="project_form">
                                 <div className="hint_display_header flex_show_row">
                                     <p>Main Type</p> <img src="/svg/info_circle.svg" alt=""/>
@@ -369,7 +371,7 @@ const nextPage = (e) => {
                                 
                                 <div className="project_category_selector flex_show_row form_border">
                                 <div className={secondRotate == true ? "rotate_arrow": "project_arrow"}><img src="/svg/caret_down.svg" alt=""/></div> 
-                                
+                                {console.log(subCategory)}
                                 <select name="subCategoryOption" defaultValue="Select Sub-Category" onClick={handleSecondArrow} onChange={handleSubCategory}>
                                     <option defaultValue hidden>{(gig?.subCategoryId !== "" && gig?.subCategory?.name !== undefined) ? gig?.subCategory?.name: "select subCategory"}</option>
                                 {subCategory?.map(({name}, i)=> { 
@@ -447,7 +449,7 @@ const nextPage = (e) => {
                             <div className="project_submit flex_show_row">
                                 <p>Save as Draft</p>
                                 {
-                                    progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                                    progress == true ? <p className="loader project_load"><img src="/svg/white-loading.svg" /></p>:
                                     <p onClick={overviewSubmit}>Continue</p>
                                 }
                             </div>

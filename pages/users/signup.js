@@ -33,9 +33,11 @@ export default function Signup() {
     const submitSignUp = async (e) => {
         e.preventDefault();
         await setProgress(!progress); 
-        const {userName, email, password, createdAt} = signUp;
+        let {userName, email, password, createdAt} = signUp;
         const date = Date.now();
         createdAt
+        email = email.trim().toLowerCase();
+        password = password.trim();
         const {data, error} = await userSignUp({
             variables: {
                 userSignUp: {
@@ -97,7 +99,7 @@ export default function Signup() {
                     </div>
                     {
                         progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
-                        <p onClick={submitSignUp}>Create Account</p>
+                        <button onClick={submitSignUp}>Create Account</button>
                     }
                 </div>
                 

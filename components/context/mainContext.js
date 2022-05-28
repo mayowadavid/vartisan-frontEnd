@@ -7,7 +7,7 @@ import { CREATE_PRIVATE_COMMiSSION } from '../mutations/PrivateCommission/privat
 import { CREATE_RUSH_ORDER } from '../mutations/RushOrder/rushOrder';
 import { useQuery } from '@apollo/client'
 import { FETCH_CATEGORIES } from '../queries/category/category';
-import { FIND_ALL_USER_GIG, GET_ALL_QUERY } from '../queries/gigs/gig';
+import { FIND_ALL_USER_GIG, FIND_GIG_BY_USER, GET_ALL_QUERY } from '../queries/gigs/gig';
 import { CREATE_ORDER, CREATE_ORDER_REQUIREMENT, UPDATE_ORDER } from '../mutations/order/order';
 import { FIND_ORDER_BY_ID, FIND_ORDER_BY_CLIENT, FIND_ORDER_BY_SELLER } from '../queries/orders/order';
 import { CREATE_MESSAGE } from '../mutations/messages/message';
@@ -454,6 +454,15 @@ const MainContextProvider = (props) => {
         }
     });
 
+    const [findUserserGig] = useLazyQuery(FIND_GIG_BY_USER, {
+        onCompleted: (data) => {
+            console.log(data);
+        },
+        onError: (error)=> {
+            console.log(error);
+        }
+    });
+
     const [findUserNotification] = useLazyQuery(FIND_USER_NOTIFICATION, {
         onCompleted: (data) => {
             console.log(data);
@@ -734,6 +743,7 @@ const MainContextProvider = (props) => {
         setAdminPage,
         newNotification, 
         setNewNotification,
+        findUserserGig
         }}>
             {props.children}
         </MainContext.Provider>

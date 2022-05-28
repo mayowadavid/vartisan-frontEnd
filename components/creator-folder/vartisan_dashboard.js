@@ -10,9 +10,14 @@ const VartisanDashboard = () => {
         gig, 
         setGig, 
         allGig, 
-        setGetAllGig
+        setGetAllGig,
+        findAllUserGig
      } = useContext(MainContext);
     
+     useEffect(async()=> {
+        const {data, error} = await findAllUserGig();
+        console.log(data);
+     }, [])
     
 
     const handleSingleGig = async(e, id) => {
@@ -22,7 +27,7 @@ const VartisanDashboard = () => {
        setGig({...gig, ...value});
        createHandler();
     }
-
+    
     
     return (
         <div className="gig_mobile_scroll">
