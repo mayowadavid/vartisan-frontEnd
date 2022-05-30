@@ -51,7 +51,7 @@ const SingleSeller = () => {
       setUserData({ id, userName, email });
     },
     onError: (error) => {
-      console.log(error);
+      error && router.push('/login');
     }
   });
 

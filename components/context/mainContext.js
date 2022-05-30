@@ -605,7 +605,7 @@ const MainContextProvider = (props) => {
             const {findUserProfile} = data;
             setUserProfile({...userProfile, ...findUserProfile})
         }catch(error){
-            router.push('/login');
+            console.log(error);
         }
     }, []);
 

@@ -95,7 +95,7 @@ export default function Signup() {
                 <div className="form_row">
                     <div className="checkbox_holder flex_show_row">
                         <input type="checkbox"/>
-                        <label>I agree to the Terms and policies.</label>  
+                        <label>I agree to the terms and policies.</label>  
                     </div>
                     {
                         progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
