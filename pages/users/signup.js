@@ -89,7 +89,7 @@ export default function Signup() {
                     <input name="password" onChange={handleSignUp} placeholder="password min 8 character" type="text"/>
                 </div>
                 <div className="form_row">
-                    <label>confirm Password</label> 
+                    <label>Confirm Password</label> 
                     <input name="confirmPassword" onChange={verifyPassword} placeholder="input your username here" type="text"/> 
                 </div>
                 <div className="form_row">
