@@ -39,6 +39,11 @@ const Footer = () => {
                 <li>Contact</li>
             </div>
         </div>
+        <div class="divider"></div>
+        <div class="copy_right">
+            <p>©2021 Streamgraphic</p>
+            <p>Cookie Policy</p>
+        </div>
     </div>
   )
 }

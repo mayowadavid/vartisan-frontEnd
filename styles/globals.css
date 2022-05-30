@@ -1616,6 +1616,13 @@ width: 60%;
   color: rgba(255, 255, 255, 0.34);
 }
 
+.footer_row_nav > h5 {
+  font-size: 15px;
+  font-weight: normal;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.34);
+}
+
 .footer_row li {
   font-size: 14px;
   font-weight: normal;
