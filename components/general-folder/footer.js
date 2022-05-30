@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="footer_wrapper">
             <div className="footer_row">
                 <div className="footer_logo">
-                    <p>Logo</p>
+                    <p>Vartisan</p>
                     <p>Subscribe to our newsletter and stay updated on the latest music release and albums</p>
                 </div>
                 <div className="social-icon">

@@ -555,6 +555,17 @@ input:focus {
   margin-bottom: 4%;
 }
 
+.category_all {
+  width: 45%;
+  margin: 0 auto;
+}
+
+.category_all > p{
+  font-size: 20px;
+  color: #555BFF;
+  text-align: center;
+}
+
 .category_header .divider {
   margin: 0 auto;
 }

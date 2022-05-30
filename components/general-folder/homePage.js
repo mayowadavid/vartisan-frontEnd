@@ -28,83 +28,83 @@ export default function HomePage() {
     <div>
     <HomeMobileHeader />
     <div className="body_wrapper">
-                <div className="header">
-                        <div className="logo">VARTISAN</div>
-                        <div className="secondary_page">
-                            <p><a href="">FAQ</a></p>
-                            <p><a href="">Support</a></p>
-                            <p><a href="">How It Works</a></p>
-                        </div>
-                        <div className="authentication">
-                            <div className="auth"><p><Link href="/login"><a>Sign In</a></Link></p></div>
-                            <div className="auth"><p className="auth2"><Link href="/users/signup"><a>Sign up</a></Link></p></div>
-                        </div>
-                </div> 
-                <div className="mobile_banner_wrap remove_margin">
-                    <p>SPICE UP YOUR STREAM</p>
-                    <p>Searching For an Artist?</p>
-                    <div className="mobile_banner">
-                        <div className="mobile_banner1">
-                            <img src="img/image_header.png" alt=""/>
-                        </div>
-                         <div className="mobile_banner2">
-                            <img src="img/image_header2.png" alt=""/> 
-                         </div>
-                    </div>
-                    <div className="mobile_banner_footer remove_margin">
-                        <p>Choose from a wide range of categories to upgrade your content creation</p>
-                    </div>
-                    <div className="banner_action_button remove_margin flex_show_row">
+    <div className="header">
+            <div className="logo">VARTISAN</div>
+            <div className="secondary_page">
+                <p><a href="">FAQ</a></p>
+                <p><a href="">Support</a></p>
+                <p><a href="">How It Works</a></p>
+            </div>
+            <div className="authentication">
+                <div className="auth"><p><Link href="/login"><a>Sign In</a></Link></p></div>
+                <div className="auth"><p className="auth2"><Link href="/users/signup"><a>Sign up</a></Link></p></div>
+            </div>
+    </div> 
+    <div className="mobile_banner_wrap remove_margin">
+        <p>SPICE UP YOUR STREAM</p>
+        <p>Searching For an Artist?</p>
+        <div className="mobile_banner">
+            <div className="mobile_banner1">
+                <img src="img/image_header.png" alt=""/>
+            </div>
+                <div className="mobile_banner2">
+                <img src="img/image_header2.png" alt=""/> 
+                </div>
+        </div>
+        <div className="mobile_banner_footer remove_margin">
+            <p>Choose from a wide range of categories to upgrade your content creation</p>
+        </div>
+        <div className="banner_action_button remove_margin flex_show_row">
+            <p>Get Started</p>
+            <p>How its Works</p>
+        </div>
+    </div>
+    <div className="banner">
+            <div className="banner_content">
+                    <div className="banner_gradient"></div>
+                <div className="banner_header">
+                        <div className="header1">
+                                <h4>SPICE UP YOUR STREAM</h4>
+                            </div>
+                            <div className="header2">
+                                <h2>Searching For an Artist?</h2>
+                            </div>
+                            <div className="header3">
+                                <p> Choose from a wide range of categories to upgrade 
+                                    your content creation.</p>
+                            </div>
+                </div>
+                <div className="banner_button">
+                    <div className="banner_button1">
                         <p>Get Started</p>
-                        <p>How its Works</p>
+                    </div>
+                    <div className="banner_button2">
+                        <p> How it Works</p>
                     </div>
                 </div>
-                <div className="banner">
-                        <div className="banner_content">
-                                <div className="banner_gradient"></div>
-                            <div className="banner_header">
-                                    <div className="header1">
-                                            <h4>SPICE UP YOUR STREAM</h4>
-                                        </div>
-                                        <div className="header2">
-                                            <h2>Searching For an Artist?</h2>
-                                        </div>
-                                        <div className="header3">
-                                            <p> Choose from a wide range of categories to upgrade 
-                                                your content creation.</p>
-                                        </div>
-                            </div>
-                            <div className="banner_button">
-                                <div className="banner_button1">
-                                    <p>Get Started</p>
-                                </div>
-                                <div className="banner_button2">
-                                    <p> How it Works</p>
-                                </div>
+            </div>
+            <div className="banner_image">
+                <div className="banner_image_wrapper">
+                    <div className="top_banner_image">
+                        <div className="banner_background image1"> 
+                        </div>
+                        <div className="banner_background image2">
+                        </div>                            
+                    </div>
+                        <div className="image_dispaly1">
+                            <div className="image_container image_position1">
+                                <img src="img/image_header.png" alt=""/> 
                             </div>
                         </div>
-                        <div className="banner_image">
-                            <div className="banner_image_wrapper">
-                                <div className="top_banner_image">
-                                    <div className="banner_background image1"> 
-                                    </div>
-                                    <div className="banner_background image2">
-                                    </div>                            
-                                </div>
-                                    <div className="image_dispaly1">
-                                        <div className="image_container image_position1">
-                                            <img src="img/image_header.png" alt=""/> 
-                                        </div>
-                                    </div>
-                                     <div className="image_display2">
-                                        <div className="image_container image_position2">
-                                              <img src="img/image_header2.png" alt=""/>
-                                        </div> 
-                                     </div>
-                                
-                            </div>                       
-                        </div>
-                </div>
+                            <div className="image_display2">
+                            <div className="image_container image_position2">
+                                    <img src="img/image_header2.png" alt=""/>
+                            </div> 
+                            </div>
+                    
+                </div>                       
+            </div>
+    </div>
     </div>
     <div className="featured">
         <div className="featured_wrapper">
@@ -114,92 +114,95 @@ export default function HomePage() {
                     <h3>Categories</h3>
                     <div className="divider"></div>
                 </div>
-            <div className="categories_wrapper">
-                    <div className="category_card">
-                    <Link href="/categories"><a>
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category.png" alt=""/>
-                            </div>
-                            <h5>Logos</h5>
-                        </div>
-                    </a></Link>
-                    </div>
-                    <div className="category_card">
+                <div className="categories_wrapper">
+                        <div className="category_card">
                         <Link href="/categories"><a>
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category1.png" alt=""/>
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category.png" alt=""/>
+                                </div>
+                                <h5>Logos</h5>
                             </div>
-                            <h5>Overlays</h5>
-                        </div>
                         </a></Link>
-                    </div>
-                    <div className="category_card">
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category2.png" alt=""/>
-                            </div>
-                            <h5>Alerts</h5>
                         </div>
-                    </div>
-                    <div className="category_card">
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category3.png" alt=""/>
+                        <div className="category_card">
+                            <Link href="/categories"><a>
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category1.png" alt=""/>
+                                </div>
+                                <h5>Overlays</h5>
                             </div>
-                            <h5>Scenes</h5>
+                            </a></Link>
                         </div>
-                    </div>
-                    <div className="category_card">
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category4.png" alt=""/>
+                        <div className="category_card">
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category2.png" alt=""/>
+                                </div>
+                                <h5>Alerts</h5>
                             </div>
-                            <h5>Transitions</h5>
                         </div>
-                    </div>
-                    <div className="category_card">
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category5.png" alt=""/>
+                        <div className="category_card">
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category3.png" alt=""/>
+                                </div>
+                                <h5>Scenes</h5>
                             </div>
-                            <h5>BGM</h5>
                         </div>
-                    </div>
-                    <div className="category_card">
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category6.png" alt=""/>
+                        <div className="category_card">
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category4.png" alt=""/>
+                                </div>
+                                <h5>Transitions</h5>
                             </div>
-                            <h5>Emotes</h5>
                         </div>
-                    </div>
-                    <div className="category_card">
-                        <div className="card_shadow2"></div>
-                        <div className="card_shadow1"></div>
-                        <div className="card_container">
-                            <div className="card_wrapper">
-                                <img src="img/category7.png" alt=""/>
+                        <div className="category_card">
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category5.png" alt=""/>
+                                </div>
+                                <h5>BGM</h5>
                             </div>
-                            <h5>Background Art</h5>
                         </div>
-                    </div>
-            </div>
+                        <div className="category_card">
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category6.png" alt=""/>
+                                </div>
+                                <h5>Emotes</h5>
+                            </div>
+                        </div>
+                        <div className="category_card">
+                            <div className="card_shadow2"></div>
+                            <div className="card_shadow1"></div>
+                            <div className="card_container">
+                                <div className="card_wrapper">
+                                    <img src="img/category7.png" alt=""/>
+                                </div>
+                                <h5>Background Art</h5>
+                            </div>
+                        </div>
+                </div>
+                <div className="category_all">
+                    <p>View All Categories</p>
+                </div>
             </div>
             <div className="featured_category">
                 <div className="category_right_gradient"></div>
