@@ -245,7 +245,7 @@ input:focus {
 .body_wrapper {
   width: 80%;
   height: fit-content;
-  margin: 100px auto;
+  margin: 10px auto;
 }
 
 
@@ -550,7 +550,7 @@ input:focus {
 }
 
 .category_header {
-  width: 13%;
+  width: 45%;
   margin: 0 auto;
   margin-bottom: 4%;
 }
@@ -564,7 +564,7 @@ input:focus {
   color: #090A2E;
   font-weight: 500;
   font-size: 200%;
-  margin-bottom: 10%;
+  margin-bottom: 1%;
 }
 
 .categories_wrapper {
@@ -576,7 +576,7 @@ input:focus {
 
 .category_card {
   position: relative;
-  width: 22%;
+  width: 24%;
   height: 16vw;
   color: #090A2E;
   text-align: center;
@@ -712,7 +712,7 @@ input:focus {
 }
 
 .featured_card {
-  width: 22%;
+  width: 23%;
   height: 220px;
   text-align: center;
   background-color: #fff;
@@ -786,7 +786,7 @@ input:focus {
 }
 
 .gig_price {
-  width: 35%;
+  width: 30%;
   text-align: right;
 }
 
@@ -1056,7 +1056,7 @@ height: fit-content;
 
 .faq_image1 > img{
   object-fit: cover;
-  width: 17vw;
+  width: 19vw;
 }
 
 .faq_image2 {
@@ -1082,7 +1082,7 @@ height: fit-content;
 }
 
 .faq_list_header > p {
-  text-align: left;
+  text-align: left !important;
   margin: 0;
   color: #090A2E;
   font-weight: 600;
@@ -1360,7 +1360,7 @@ font-weight: 500;
 .visual_wrapper {
   background-image: linear-gradient(
       -230deg, #0009fe24, #f2e4fe17);
-  width: 96%;
+  width: 100%;
   box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px;
   border-radius: 10px;
   align-items: center;
@@ -1453,8 +1453,8 @@ font-weight: 500;
 }
 
 .icon_background {
-  padding: 6%;
-  width: 20%;
+  padding: 6px 10px;
+  width: 60px;
   border-radius: 8%;
   height: 20%;
   margin: 0 auto;
@@ -1527,7 +1527,7 @@ font-weight: 500;
 
 
 .call_button {
-  padding: 4%;
+  padding: 8px 16px;
   text-align: center;
   color: #fff;
   border-radius: 20px;
