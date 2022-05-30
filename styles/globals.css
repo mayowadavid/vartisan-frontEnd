@@ -1478,7 +1478,7 @@ font-weight: 500;
 /* Call To Action */
 .call_to_action {
   width: 80%;
-  margin: 8% auto;
+  margin: 14% auto;
   position: relative;
   object-fit: cover;
 }
