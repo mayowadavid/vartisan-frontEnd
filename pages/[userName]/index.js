@@ -28,7 +28,6 @@ const SingleSeller = () => {
     setPopReference,
     handlePop
    } = useContext(MainContext);
-  console.log(userName);
   useEffect(()=> {
     if(userName !==  undefined){
       queryUserName({variables: {
@@ -63,7 +62,7 @@ const SingleSeller = () => {
     { editAbout == true && <ClientDescription /> }
     <ClientHeader />
     <ClientMobileHeader />
-      {!role && <ClientProfileSkeletal />}
+      {!data && <ClientProfileSkeletal />}
       {role == "client" && <ClientProfile />}
       {role == "vartisan" && <VartisanProfile />}
         <Footer />

@@ -3196,7 +3196,7 @@ color: #090A2E;
   width: 100%;
   height: 160px;
   object-fit: cover;
-  border-radius: 4%;
+  border-radius: 4% 4% 0 0;
 }
 
 .filtered_content {
@@ -3231,6 +3231,7 @@ color: #090A2E;
   flex-direction: column;
   align-items: center;
 }
+
 
 .filtered_title > p{
   margin: 0;
@@ -10530,6 +10531,22 @@ margin-top: 9%;
     width: 80%;
   }
 
+  .mobile_banner_footer > p { 
+    font-size: 12px;
+  }
+
+  .filtered_title {
+    width: 60%;
+  }
+
+  .client_gig_requirement_container {
+    width: 70%;
+  }
+
+  .filtered_price {
+    width: 20%;
+  }
+
   .back_arrow {
     display: none;
     align-items: center;
@@ -11107,6 +11124,10 @@ margin-top: 9%;
       width: 32%;
   }
 
+  .client_gig_requirement_container {
+    width: 70%;
+  }
+
   .faq_list_header > p {
     text-align: center;
   }
@@ -11597,10 +11618,6 @@ margin-top: 9%;
       font-size: 9px;
   }
 
-  .filtered_price {
-      width: 29px;
-  }
-
   .filtered_price > p:first-child {
       font-size: 9px;
   }
@@ -11634,8 +11651,13 @@ margin-top: 9%;
 
 @media (max-width: 768px) and (min-width: 60px) {
   /* Home */
-  .mobile_banner_footer > p { 
-    font-size: 12px;
+
+  .client_gig_requirement_container {
+    width: 90%;
+  }
+
+  .filtered_price {
+    width: 30%;
   }
 
   .delivery_wrapper {
@@ -12575,6 +12597,26 @@ margin-top: 9%;
     font-size: 8.66px;
   }
 
+  .category_all > p {
+    font-size: 14px;
+  }
+
+  .gig_title {
+    padding-left: 4%;
+  }
+
+  .card_container > h5 {
+    font-size: 14px;
+  }
+
+  .delivery_header1 > h3 {
+    font-size: 14px;
+  }
+
+  .delivery_header2 > p > a {
+    font-size: 14px;
+  }
+
   .gig_title > p:last-child {
     font-size: 7px;
   }
@@ -12673,5 +12715,28 @@ margin-top: 9%;
 
   .delivery_details > p:last-child {
     font-size: 7px;
+  }
+
+  .filtered_card {
+    width: 100%;
+  }
+
+  .filtered_card > a {
+    height: 200px;
+    width: 100%;
+  }
+
+  .filtered_card > a > img{
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .filtered_content {
+    width: 100%;
+  }
+
+  .filtered_price {
+    width: 30%;
   }
  }

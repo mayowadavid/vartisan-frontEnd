@@ -222,7 +222,7 @@ export default function HomePage() {
                                 <p>logo editing</p>
                             </div>
                             <div className="gig_price">
-                                <p> Start</p>
+                                <p>from</p>
                                 <p>$40</p>
                             </div>
                         </div>
@@ -238,7 +238,7 @@ export default function HomePage() {
                                 <p>logo editing</p>
                             </div>
                             <div className="gig_price">
-                                <p> Start</p>
+                                <p>from</p>
                                 <p>$40</p>
                             </div>
                         </div>
@@ -254,7 +254,7 @@ export default function HomePage() {
                                 <p>logo editing</p>
                             </div>
                             <div className="gig_price">
-                                <p> Start</p>
+                                <p>from</p>
                                 <p>$40</p>
                             </div>
                         </div>
@@ -270,7 +270,7 @@ export default function HomePage() {
                                 <p>logo editing</p>
                             </div>
                             <div className="gig_price">
-                                <p> Start</p>
+                                <p>from</p>
                                 <p>$40</p>
                             </div>
                         </div>
