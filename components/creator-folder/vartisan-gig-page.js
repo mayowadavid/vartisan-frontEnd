@@ -15,6 +15,7 @@ const VartisanPage = ({sellerData}) => {
         setOpenMessagePopUp,
         setChatId,
         findAllUserGig,
+        userProfile
     } = useContext(MainContext);
 
     const chatData = {
@@ -43,7 +44,7 @@ const VartisanPage = ({sellerData}) => {
     }, [])
 
     const requestOrder = (e) => {
-        e.preventDefault();
+        console.log("click");
         setOpenSellerPage(!openSellerPage);
         setOpenOrderDetails(!openOrderDetails);
     }
@@ -245,9 +246,9 @@ const VartisanPage = ({sellerData}) => {
                             </div>
                         </div>
                         <div className="seller_order_section">
-                            <p>Request Order</p>
+                            <p onClick={requestOrder}>Request Order</p>
                             <div className="seller_gig_contacts">
-                                <p>Message</p>
+                                <p onClick={handleMessage}>Message</p>
                                 <p>Terms</p>
                             </div>
                         </div>

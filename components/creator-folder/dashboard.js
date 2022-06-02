@@ -72,7 +72,7 @@ const Dashboard = () => {
                                 <div>
                                     <span className="indicator online"></span>
                                 </div>
-                                <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
+                                <img src={userProfile?.file !== null? userProfile?.file?.image: "../../svg/avatar.svg"} alt=""/>
                             </div>
                             <div className="avatar_content">
                                 <p>{ userName }</p>

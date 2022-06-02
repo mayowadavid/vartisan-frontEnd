@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { MainContext } from '../../components/context/mainContext';
 import {Router, useRouter} from 'next/router';
 
@@ -8,12 +8,14 @@ export default function Signup() {
         userName: "",
         email: "",
         password: "",
+        confirmPassword: "",
         createdAt: "",
     }
     const [signUp, setSignUp] = useState(initialState);
     const [progress, setProgress] = useState(false);
-    const [err, setErr] = useState();
-    const [confirmPassword, setConfirmPassword] = useState();
+    const [err, setErr] = useState({
+        confirmPassword: "",
+    });
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -23,11 +25,15 @@ export default function Signup() {
 
     const verifyPassword = (e) => {
         e.preventDefault();
-        const { value } = e.target;
-        signUp.password !== confirmPassword && setErr("password does not match");
-        setConfirmPassword(value);
+        signUp.password == signUp.confirmPassword ? 
+        setErr({
+            ...err, confirmPassword: ""
+        }):
+        setErr({
+            ...err, confirmPassword: "password does not match"
+        });
     }
-
+    console.log(signUp);
     const {userSignUp} =useContext(MainContext);
 
     const submitSignUp = async (e) => {
@@ -90,7 +96,8 @@ export default function Signup() {
                 </div>
                 <div className="form_row">
                     <label>Confirm Password</label> 
-                    <input name="confirmPassword" onChange={verifyPassword} placeholder="input your username here" type="text"/> 
+                    <input name="confirmPassword" onKeyUp={verifyPassword} onChange={handleSignUp} placeholder="input your username here" type="text"/>
+                    {err.confirmPassword !== '' ? <p className='error'>{err.confirmPassword}</p>: ''}
                 </div>
                 <div className="form_row">
                     <div className="checkbox_holder flex_show_row">
@@ -98,7 +105,7 @@ export default function Signup() {
                         <label>I agree to the terms and policies.</label>  
                     </div>
                     {
-                        progress == true ? <p className="loader"><img src="svg/white-loading.svg" /></p>:
+                        progress == true ? <button className="loader"><img src="/svg/white-loading.svg" /></button>:
                         <button onClick={submitSignUp}>Create Account</button>
                     }
                 </div>

@@ -12,6 +12,7 @@ import ClientGigOrderRequirement from '../../components/client-folder/clientGigO
 import ClientGigPayment from '../../components/client-folder/clientGigPayment';
 import SuccessModal from '../../components/client-folder/success_modal';
 import ChatMessagePop from '../../components/client-folder/chatMessagePop';
+import { VartisanPageSkeletal } from '../../components/creator-folder/vartisan-page-skeletal';
 
 const ProjectFile = () => {
     const router = useRouter();
@@ -94,6 +95,11 @@ const ProjectFile = () => {
         {
             sellerData !== undefined && 
             ( (openSellerPage == true)  && <VartisanPage sellerData={sellerData} /> )
+        
+        }
+
+        {
+            sellerData == undefined && <VartisanPageSkeletal />
         
         }
 
