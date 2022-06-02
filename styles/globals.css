@@ -7934,7 +7934,9 @@ border-top: 10px solid #55FFFF;
 }
 
 .table_image > img{
-  width: 100%;
+  width: 61px;
+  height: 47px;
+  object-fit: cover;
   border-radius: 5px;
 }
 

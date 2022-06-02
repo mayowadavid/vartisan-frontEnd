@@ -9,6 +9,7 @@ export const FETCH_CATEGORIES = gql`
         status
         displayBanner
         gig {
+            id
         user {
         userName
         profile {

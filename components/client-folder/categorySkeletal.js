@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 export const CategorySkeletal = () => {
-    const data = [1, 2, 3, 4, 5];
+    const data = [1, 2, 3, 4];
   return (
     <div className="filtered_category_body">
             <div className="category_row">
