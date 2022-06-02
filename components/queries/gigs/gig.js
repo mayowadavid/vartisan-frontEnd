@@ -200,6 +200,9 @@ query FIND_ALL_USER_GIG{
     category {
       name
     }
+    order {
+      id
+    }
     rushOrder {
       status
       price

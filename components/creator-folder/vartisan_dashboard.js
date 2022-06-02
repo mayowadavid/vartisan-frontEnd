@@ -94,7 +94,7 @@ const VartisanDashboard = () => {
                                     <p>0</p>
                                 </div>
                                 <div className="creator_project_order">
-                                    <p>{order.length > 0 ? order.length : 0}</p>
+                                    <p>{(order !== null && order?.length) > 0 ? order.length : 0}</p>
                                 </div>
                                 <div className="creator_cancelled_order">
                                     <p>0</p>
