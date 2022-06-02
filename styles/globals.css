@@ -7814,6 +7814,11 @@ border-top: 10px solid #55FFFF;
   width: 32%;
 }
 
+.vart_content {
+  display: flex;
+  align-items: center;
+}
+
 .vart_content > p {
   margin-left: 10px;
 }
@@ -7938,6 +7943,13 @@ border-top: 10px solid #55FFFF;
   height: 47px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+.table_image_vart {
+  width: 41px;
+  height: 39px;
+  display: flex;
+  align-items: center;
 }
 
 .table_content {
