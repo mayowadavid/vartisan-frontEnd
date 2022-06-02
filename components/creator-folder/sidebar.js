@@ -14,6 +14,11 @@ const Sidebar = () => {
         const {name, id} = e.target;
     }
 
+    const logOut = (e) => {
+        e.preventDefault();
+        localStorage.clear();
+    }
+
   return (
     <div className="sidebar">
             <div className="sidebar_logo">
@@ -118,8 +123,8 @@ const Sidebar = () => {
                         </a>
                     </Link>
                     </div>
-                    <div id={changeState.logOut == true ? "active": ' ' } className="side_button">
-                    <Link href="/vartisan/settings">
+                    <div id={changeState.logOut == true ? "active": ' ' } onClick={logOut} className="side_button">
+                    <Link href="/login">
                         <a>
                         <div className="side_image">
                             <img src="../../svg/Logout.svg" alt=""/>

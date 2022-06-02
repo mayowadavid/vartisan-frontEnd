@@ -171,14 +171,53 @@ query Find_Gig_By_User($userData: UserGigInput!){
 export const FIND_ALL_USER_GIG = gql `
 query FIND_ALL_USER_GIG{
   findAllUserGig{
+    id
     name
+    deliveryPeriod
+    numberOfRevision
     amount
+    description
+    commercial
+    aiFiles
+    customIllustration
+    sourceFile
+    createdAt
+    gigFormat {
+      id
+      ai
+      psd
+      swf
+      gif
+      blend
+      bmpr
+      eps
+      jpg
+      fig
+      ico
+      png
+      other
+    }
     category {
       name
     }
-    status
+    rushOrder {
+      status
+      price
+      deliveryPeriod
+    }
+    privateCommission {
+      status
+      price
+      deliveryPeriod
+    }
+    commercialUse {
+      status
+      price
+      deliveryPeriod
+    }
     user {
       userName
+      id
       profile {
         file {
           image

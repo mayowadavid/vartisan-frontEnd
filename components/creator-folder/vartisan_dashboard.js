@@ -9,20 +9,21 @@ const VartisanDashboard = () => {
         createHandler, 
         gig, 
         setGig, 
-        allGig, 
-        setGetAllGig,
         findAllUserGig
      } = useContext(MainContext);
+     const [userGig, setUserGig] = useState([]);
     
      useEffect(async()=> {
         const {data, error} = await findAllUserGig();
-        console.log(data);
+        if(data){
+            setUserGig(data.findAllUserGig);
+            }
      }, [])
     
 
     const handleSingleGig = async(e, id) => {
        e.preventDefault();
-       let result = await allGig.find((data)=> data.id === id);
+       let result = await userGig.find((data)=> data.id === id);
       let value = await clean({...result});
        setGig({...gig, ...value});
        createHandler();
@@ -70,7 +71,7 @@ const VartisanDashboard = () => {
                         </div>
                     </div>
                     <div className="creator_gig_body">
-                        {allGig.length !== 0 && allGig.map((data, i) => {
+                        {userGig.length !== 0 && userGig.map((data, i) => {
                             const {category, name, id, gig, gigGallery, order} = data;
                             return (
                             <div key={i} onClick={(e)=> handleSingleGig(e, id)} className="creator_gig_row">
@@ -87,16 +88,16 @@ const VartisanDashboard = () => {
                                     </div>
                                 </div>
                                 <div className="creator_project_impression">
-                                    <p>670</p>
+                                    <p>0</p>
                                 </div>
                                 <div className="creator_project_click">
-                                    <p>50</p>
+                                    <p>0</p>
                                 </div>
                                 <div className="creator_project_order">
                                     <p>{order.length > 0 ? order.length : 0}</p>
                                 </div>
                                 <div className="creator_cancelled_order">
-                                    <p>2</p>
+                                    <p>0</p>
                                 </div>
                                 <div className="creator_order_action">
                                     <div className="creator_order_action_image">
