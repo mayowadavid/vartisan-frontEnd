@@ -12,8 +12,11 @@ import VartisanHeader from './vartisanHeader'
 import VartisanMobileHeader from './vartisanMobileHeader'
 import { format, parseISO, subDays } from "date-fns";
 import MobileSideBar from "./mobileSidebar";
+import { useContext } from "react";
+import { MainContext } from "../context/mainContext";
 
 const Creator_analytics = () => {
+  const  {sideMenu} = useContext(MainContext);
 
 const data = [];
 for (let num = 30; num >= 0; num--) {
