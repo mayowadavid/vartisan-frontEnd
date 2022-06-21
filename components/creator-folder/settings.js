@@ -11,7 +11,8 @@ const Settings = () => {
         setChangeState, 
         vartisanState, 
         userProfile,
-        updateProfile
+        updateProfile,
+        sideMenu
     } = useContext(MainContext);
 
     useEffect(()=> {
