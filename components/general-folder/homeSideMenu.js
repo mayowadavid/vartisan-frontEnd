@@ -5,17 +5,10 @@ import {useRouter} from 'next/router'
 const HomeSideMenu = () => {
     const { handleMenu, setSideMenu } = useContext(MainContext);
     const router = useRouter();
-    const [open, setOpen] = useState(false);
 
     const handleLogin = () => {
         setSideMenu(false);
         router.push('/login');
-    }
-
-    const handleOpen = () => {
-        setOpen(!open);
-        console.log("clicked");
-        handleMenu();
     }
 
    const handleSignUp = () => {
@@ -35,7 +28,7 @@ const HomeSideMenu = () => {
                     <img src="/img/v_large 1.png" />
                     <p>Vartisan</p>
                 </div>
-                <div className="side_menu_cancel" onClick={handleOpen}>
+                <div className="side_menu_cancel" onClick={handleMenu}>
                     <img src="/img/close_small.png" alt=""/>
                 </div>
             </div>
