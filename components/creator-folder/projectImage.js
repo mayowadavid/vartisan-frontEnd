@@ -10,8 +10,6 @@ const ProjectImage = ({data, i}) => {
     const { gigGallery, gigGalleryId } = gig;
     
 
-    
-    console.log(projectImage);
     const handleFile = (e, i) => {
         const {files} = e.target;
         if(files){

@@ -60,7 +60,7 @@ const AdminArtisanRequest = () => {
                                     <div className="table_image_vart vart">
                                         <img src={gigGallery?.length > 0 ? gigGallery[0]?.file[0].image : "../../svg/no_caption.svg"} alt=""/>
                                     </div>
-                                    <div className="vart_content flex_show_col vart remove_margin">
+                                    <div className="vart_content vart remove_margin">
                                         <p>{name}</p>
                                     </div>
                                 </div>

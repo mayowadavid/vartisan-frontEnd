@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {useRouter} from 'next/router';
+import { MainContext } from '../context/mainContext';
 
 const VartisanMobileHeader = () => {
+
+    const {handleMenu, userProfile} = useContext(MainContext);
 
     const router = useRouter();
     const { userName } = router.query;
@@ -24,7 +27,7 @@ const VartisanMobileHeader = () => {
   return (
     <div className="mobile_drop_header flex_show_row">
                 <div className="menu_left_side">
-                    <div className="Menu_icon">
+                    <div className="Menu_icon" onClick={handleMenu}>
                         <img src="../../img//menu_bar.png" alt=""/>
                     </div>
                 </div>
@@ -39,7 +42,7 @@ const VartisanMobileHeader = () => {
                         <img src="../../svg/Chat.svg" alt=""/>
                     </div>
                     <div className="menu_avatar">
-                        <img src="../../svg/avatar.svg" alt=""/>
+                        <img src={userProfile?.file !== null? userProfile?.file?.image: "../../svg/avatar.png"} alt=""/>
                     </div>
                 </div>
             </div>

@@ -112,7 +112,7 @@ const VartisanPage = ({sellerData}) => {
                                         <span className="seller online"></span>
                                     </div>
                                     <img src={sellerData?.user?.profile?.file?.image !== undefined ?
-                                     sellerData?.user?.profile?.file?.image : "../svg/avatar.svg"} alt=""/>
+                                     sellerData?.user?.profile?.file?.image : "../svg/avatar.png"} alt=""/>
                                 </div>
                                 <div className="seller_gig_name">
                                     <p>{sellerData.user.userName}</p>

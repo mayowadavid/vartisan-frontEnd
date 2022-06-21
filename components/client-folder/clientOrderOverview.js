@@ -44,7 +44,7 @@ const ClientOrderOverview = () => {
 
         if(mounted == true && order?.id !== '')
         {
-        const pusher = new Pusher('7a5d084ba01736c92a64', {
+        const pusher = new Pusher(`${process.env.NEXT_PUBLIC_key}`, {
         cluster: 'mt1'
         });
         const orderId = activity;
@@ -119,7 +119,7 @@ const ClientOrderOverview = () => {
             formData.append('date', date);
             formData.append('time', time);
             formData.append('messageId', messageId);
-            axios.post('https://backend-393j.onrender.com/messages/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/messages/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         } 
@@ -132,7 +132,7 @@ const ClientOrderOverview = () => {
             let formData = new FormData();
             formData.append('file', file[0]);
             formData.append('messageId', messageId);
-            axios.post('https://backend-393j.onrender.com/messages/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/messages/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         } 

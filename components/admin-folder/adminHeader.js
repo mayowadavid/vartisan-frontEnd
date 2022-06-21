@@ -19,7 +19,7 @@ const AdminHeader = () => {
                         <img src="../../img/Notification.svg" alt="" className="src"/>
                 </div>
                 <div className="admin_avatar">
-                        <img src="../../svg/avatar.svg" alt=""/>
+                        <img src="../../svg/avatar.png" alt=""/>
                 </div>
                 <div className="admin_name_row">
                     <div className="admin_name remove_margin">

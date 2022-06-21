@@ -144,7 +144,7 @@ const uploadImage = (datum, data, headers) => {
         let formData = new FormData();
         formData.append('file', file);
         formData.append('blogId', blogId);
-        axios.post('https://backend-393j.onrender.com/blog/imageUpload', 
+        axios.post(`${process.env.NEXT_PUBLIC_url}/blog/imageUpload`, 
         formData, {headers}).then((dat)=> console.log(dat))
         .catch((error)=> console.log(error));
     }
@@ -240,7 +240,7 @@ const uploadImage = (datum, data, headers) => {
                     <div className="admin_form_wrapper flex_show_row">
                         <div className="blog_writer_details flex_show_row">
                             <div className="blog_writer_avatar">
-                                <img src={ userProfile?.profile !== undefined ? userProfile?.file?.image : "../../svg/avatar.svg"} alt=""/>
+                                <img src={ userProfile?.profile !== undefined ? userProfile?.file?.image : "../../svg/avatar.png"} alt=""/>
                             </div>
                             <div className="blog_writer_name remove_margin">
                                 <p>{userProfile?.user?.userName}</p>

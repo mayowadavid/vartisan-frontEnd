@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import HomeMobileHeader from './homeMobileHeader';
 import Link from 'next/link';
 import Footer from './footer';
 import client from '../Apollo/ApolloClient';
 import { gql } from "@apollo/client"
+import { HomeSideMenu } from './homeSideMenu';
+import { MainContext } from '../context/mainContext';
 
 export default function HomePage() {
     const ALL_PROJECT = gql`query{
@@ -17,6 +19,8 @@ export default function HomePage() {
         }
     }`
 
+    const {sideMenu} = useContext(MainContext);
+
     useEffect(async()=> {
        const {data} = await client.query({
            query: ALL_PROJECT
@@ -26,6 +30,7 @@ export default function HomePage() {
 
   return (
     <div>
+    {sideMenu == true && <HomeSideMenu />}
     <HomeMobileHeader />
     <div className="body_wrapper">
     <div className="header">

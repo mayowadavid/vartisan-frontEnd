@@ -9,6 +9,7 @@ import Pricing from '../../../components/creator-folder/pricing'
 import Description from '../../../components/creator-folder/description'
 import Requirement from '../../../components/creator-folder/requirement'
 import Gallery from '../../../components/creator-folder/gallery'
+import MobileSideBar from '../../../components/creator-folder/mobileSidebar'
 
 const Gig = () => {
     const {
@@ -19,7 +20,8 @@ const Gig = () => {
       showRequirement, 
       showGallery, 
       vartisanState,
-      setChangeState
+      setChangeState,
+      sideMenu
     } = useContext(MainContext);
     
     useEffect(()=> {
@@ -27,19 +29,22 @@ const Gig = () => {
   }, [])
 
   return (
-    <div className="dashboard_wrapper">
-    <Sidebar />
-    <div className="admin_content">
-        <VartisanHeader />
-        <VartisanMobileHeader />
-        { closeDashboard == true && <VartisanDashboard /> }
-        { overview == true && <Overview /> }
-        { pricing == true && <Pricing /> }
-        { showDescription == true && <Description /> }
-        { showRequirement == true && <Requirement /> }
-        { showGallery == true && <Gallery /> }
-    </div>
-    </div>
+    <>
+        { sideMenu == true && <MobileSideBar />}
+        <div className="dashboard_wrapper">
+        <Sidebar />
+        <div className="admin_content">
+            <VartisanHeader />
+            <VartisanMobileHeader />
+            { closeDashboard == true && <VartisanDashboard /> }
+            { overview == true && <Overview /> }
+            { pricing == true && <Pricing /> }
+            { showDescription == true && <Description /> }
+            { showRequirement == true && <Requirement /> }
+            { showGallery == true && <Gallery /> }
+        </div>
+        </div>
+    </>
   )
 }
 

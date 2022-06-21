@@ -11,6 +11,7 @@ import Sidebar from './sidebar'
 import VartisanHeader from './vartisanHeader'
 import VartisanMobileHeader from './vartisanMobileHeader'
 import { format, parseISO, subDays } from "date-fns";
+import MobileSideBar from "./mobileSidebar";
 
 const Creator_analytics = () => {
 
@@ -35,7 +36,9 @@ const CustomTooltip = ({ active, payload, label }) => {
   }
 
   return (
-    <div className="dashboard_wrapper">
+    <>
+      { sideMenu == true && <MobileSideBar />}
+      <div className="dashboard_wrapper">
         <Sidebar />
         <div className="admin_content">
             <VartisanHeader />
@@ -115,6 +118,7 @@ const CustomTooltip = ({ active, payload, label }) => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

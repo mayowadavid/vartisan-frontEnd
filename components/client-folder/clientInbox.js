@@ -45,7 +45,7 @@ const ClientInbox = () => {
 
         if(selectedChat !== undefined && mounted == true)
         {
-        const pusher = new Pusher('7a5d084ba01736c92a64', {
+        const pusher = new Pusher(`${process.env.NEXT_PUBLIC_key}`, {
         cluster: 'mt1'
         });
         const chatId = selectedChat.id;
@@ -191,7 +191,7 @@ console.log(selectedChat);
             formData.append('date', date);
             formData.append('time', time);
             formData.append('messageId', messageId);
-            axios.post('https://backend-393j.onrender.com/messages/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/messages/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         } 
@@ -204,7 +204,7 @@ console.log(selectedChat);
             let formData = new FormData();
             formData.append('file', file[0]);
             formData.append('messageId', messageId);
-            axios.post('https://backend-393j.onrender.com/messages/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/messages/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         } 
@@ -280,7 +280,7 @@ console.log(selectedChat);
                              receiver?.profile?.file?.image:
                               sender?.profile?.file !== null?
                               sender?.profile?.file?.image :
-                              "../../svg/avatar.svg"} alt=""/>
+                              "../../svg/avatar.png"} alt=""/>
                         </div>
                         <div className="individual_contact_title">
                             <p>{ sender?.userName == userName ? receiver?.userName : sender?.userName }</p>
@@ -344,7 +344,7 @@ console.log(selectedChat);
                                         <div className="individual_message">
                                             <div className="individual_message_row">
                                                 <div className="message_avatar">
-                                                    <img src={user?.profile?.file?.image !== undefined ? user?.profile?.file?.image :"../../svg/avatar.svg"} alt="../../svg/avatar.svg" />
+                                                    <img src={user?.profile?.file?.image !== undefined ? user?.profile?.file?.image :"../../svg/avatar.png"} alt="../../svg/avatar.png" />
                                                 </div>
                                                 <div className="message_details">
                                                     <p>{user?.userName == userName ? "Me": user?.userName}</p>

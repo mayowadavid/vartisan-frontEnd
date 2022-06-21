@@ -43,7 +43,7 @@ const ClientProfile = () => {
             let formData = new FormData()
             formData.append('file', file);
             formData.append('profileId', profileId);
-            axios.post('https://backend-393j.onrender.com/profile/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/profile/imageUpload`, 
             formData, {headers}).then((dat)=>{ dat !== undefined && fetchUserProfile()}).catch((error)=> console.log(error));
         }
     }
@@ -78,7 +78,7 @@ const ClientProfile = () => {
                             <p>Change image</p>
                         </label>
                         <label htmlFor="profileImage">
-                            <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
+                            <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.png"} alt=""/>
                         </label>
                     </div>
                     <div className="client_details_content">

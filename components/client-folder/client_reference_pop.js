@@ -60,7 +60,7 @@ const ClientReferencePop = ({handlePop}) => {
             formData.append('name', title);
             formData.append('description', description);
             formData.append('file', file[0]);
-            axios.post('https://backend-393j.onrender.com/reference/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/reference/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }

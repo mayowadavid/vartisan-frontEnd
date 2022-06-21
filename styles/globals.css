@@ -1341,6 +1341,103 @@ font-weight: 500;
   stroke-opacity: 0;
 }
 
+/* Side menu */
+.side_menu_overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  overflow: auto;
+  z-index: 4000;
+}
+
+.menu_overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+}
+
+.mobile_side_menu {
+  position: absolute;
+  width: 300px;
+  background-color: #fff;
+}
+
+.side_menu_header {
+  width: 100%;
+  height: 100px;
+  padding: 0 6%;
+  border: 0;
+  border-style: solid;
+  border-bottom-width: 1.5px;
+  border-color: rgba(128, 129, 148, 0.5);
+}
+
+.side_menu_logo {
+  width: 80%;
+}
+
+.side_menu_logo > img {
+  width: 20%;
+}
+
+.side_menu_logo > p {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.side_menu_cancel {
+ width: 20%;
+ text-align: right;
+}
+
+.side_menu_cancel > img {
+  width: 30px;
+}
+
+.side_menu_body {
+  padding: 20px 0;
+}
+
+.side_menu_button {
+  width: 80%;
+  margin: 20px auto;
+  border-radius: 5px;
+  background-color: rgba(229, 235, 255, 0.5);
+}
+
+.side_menu_button > p {
+  padding: 4%;
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.side_menu_option {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.side_menu_option > img {
+  width: 30px;
+  padding-right: 12px;
+}
+
+.side_menu_option > p {
+  margin: 0;
+}
+
+.menu_sub_footer {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.menu_footer {
+  height: 200px;
+  justify-content: flex-end;
+}
+
+
 /* Visuals */
 .divider {
   width: 62px;
@@ -2529,7 +2626,7 @@ width: 10%;
   flex-wrap: wrap;
   height: fit-content;
   color: #090A2E;
-  justify-content: space-between;
+  gap: 3%;
 }
 
 .active_card {

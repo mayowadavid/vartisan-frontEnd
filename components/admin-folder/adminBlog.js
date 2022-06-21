@@ -80,7 +80,7 @@ const BlogCard = ({
             <div className="admin_blog_card_header flex_show_row">
                 <div className="blog_blog_hold flex_show_row">
                     <div className="blog_card_image">
-                        <img src={user?.userProfile?.profile !== undefined ? user?.userProfile?.file?.image : "../../svg/avatar.svg"} alt=""/>
+                        <img src={user?.userProfile?.profile !== undefined ? user?.userProfile?.file?.image : "../../svg/avatar.png"} alt=""/>
                     </div>
                     <div className="blog_card_name remove_margin">
                         <p>{user?.userName}</p>

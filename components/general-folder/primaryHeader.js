@@ -31,7 +31,7 @@ const PrimaryHeader = () => {
                     <img src="../../svg/chat.svg" alt=""/>
                 </div>
                 <div className="category_header_avatar">
-                    <img src={userProfile?.file !== null? userProfile?.file?.image :"../../svg/avatar.svg"} alt=""/>
+                    <img src={userProfile?.file !== null? userProfile?.file?.image :"../../svg/avatar.png"} alt=""/>
                 </div>
             </div>
             <div className="category_container_header">

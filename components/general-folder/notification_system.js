@@ -13,7 +13,7 @@ const NotificationSystem = () => {
 
         if(userProfile.user !== undefined){
         const {user} = userProfile;
-        const pusher = new Pusher('7a5d084ba01736c92a64', {
+        const pusher = new Pusher(`${process.env.NEXT_PUBLIC_key}`, {
         cluster: 'mt1'
         });
         const userId = user.id;

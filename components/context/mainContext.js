@@ -53,6 +53,7 @@ const MainContextProvider = (props) => {
     const [projectImage, setProjectImage] = useState([]);
     const [selectedBlog, setSelectedBlog] = useState();
     const [newNotification, setNewNotification] = useState(false);
+    const [sideMenu, setSideMenu] = useState(false);
     const vartisanState = {
         dashboard: false,
         projects: false,
@@ -632,6 +633,10 @@ const MainContextProvider = (props) => {
 
     const { categories } = category !== undefined && category;
 
+    const handleMenu = () => {
+        setSideMenu(!sideMenu);
+    }
+
     return (
         <MainContext.Provider value={{ 
         userProfile,
@@ -743,7 +748,10 @@ const MainContextProvider = (props) => {
         setAdminPage,
         newNotification, 
         setNewNotification,
-        findUserserGig
+        findUserserGig,
+        sideMenu, 
+        setSideMenu,
+        handleMenu
         }}>
             {props.children}
         </MainContext.Provider>

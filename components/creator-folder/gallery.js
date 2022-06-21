@@ -26,7 +26,7 @@ const Gallery = () => {
             formData.append('file', file[0]);
             formData.append('gigId', gigId);
 
-            axios.post('https://backend-393j.onrender.com/gig-video/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/gig-video/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }
@@ -44,7 +44,7 @@ const Gallery = () => {
             formData.append('selected', selected);
             formData.append('file', file[0]);
             formData.append('gigId', gigId);
-            axios.post('https://backend-393j.onrender.com/gig-gallery/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/gig-gallery/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }
@@ -65,7 +65,7 @@ const Gallery = () => {
             formData.append('selected', selected);
             formData.append('file', file[0]);
             formData.append('gigId', gigId);
-            axios.post('https://backend-393j.onrender.com/gig-gallery/imageUpload', 
+            axios.post(`${process.env.NEXT_PUBLIC_url}/gig-gallery/imageUpload`, 
             formData, {headers}).then((dat)=> console.log(dat))
             .catch((error)=> console.log(error));
         }
