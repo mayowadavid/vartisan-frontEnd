@@ -6,6 +6,7 @@ import client from '../Apollo/ApolloClient';
 import { gql } from "@apollo/client"
 import { MainContext } from '../context/mainContext';
 import HomeSideMenu from './homeSideMenu';
+import {useRouter} from 'next/router'
 
 export default function HomePage() {
     const ALL_PROJECT = gql`query{
@@ -18,7 +19,7 @@ export default function HomePage() {
             }
         }
     }`
-
+    const router = useRouter();
     const {sideMenu} = useContext(MainContext);
 
     useEffect(async()=> {
@@ -27,6 +28,10 @@ export default function HomePage() {
        })
        console.log(data);
     }, [])
+
+    const handleSignUp = () => {
+        router.push('/users/signup');
+    }
 
   return (
     <div>
@@ -489,7 +494,7 @@ export default function HomePage() {
             </div>
             <div className="call_to_action_content">
                 <p>Found something you need? Sign up now!</p>
-                    <div className="call_button">Sign Up</div>
+                    <div onClick={handleSignUp} className="call_button">Sign Up</div>
             </div>
         </div>
     </div>
