@@ -635,7 +635,6 @@ const MainContextProvider = (props) => {
 
     const handleMenu = () => {
         setSideMenu(!sideMenu);
-        console.log("clicked");
     }
 
     return (
