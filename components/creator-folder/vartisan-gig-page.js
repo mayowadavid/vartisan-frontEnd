@@ -22,7 +22,7 @@ const VartisanPage = ({sellerData}) => {
         chatExist: false,
         createNew: false,
     }
-   
+   const [imageIndex, setImageIndex] = useState(0);
     const [createChat, setCreateChat] = useState(chatData);
     const [otherGig, setOtherGig] = useState();
 
@@ -52,6 +52,11 @@ const VartisanPage = ({sellerData}) => {
     const handleMessage = (e) => {
         e.preventDefault();
         setOpenMessagePopUp(!openMessagePopUp);
+    }
+
+    const handleImageIndex = (e, i) => {
+        e.preventDefault();
+        setImageIndex(i);
     }
 
     useEffect(async()=>{
@@ -89,13 +94,13 @@ const VartisanPage = ({sellerData}) => {
                 <div className="seller_gig_wrapper">
                     <div className="seller_gig_media">
                             <div className="seller_showcase">
-                                <img src={sellerData?.galleryFormat[0]?.image !== undefined ? sellerData.galleryFormat[0]?.image :"../img/Seller_image.jpg"} alt=""/>
+                                <img src={sellerData?.galleryFormat[imageIndex]?.image !== undefined ? sellerData.galleryFormat[imageIndex]?.image :"../img/Seller_image.jpg"} alt=""/>
                             </div>
                             <div className="seller_thumbnail">
                                 {sellerData.galleryFormat.length !== 0 ?
                                     sellerData.galleryFormat.map(({image}, i)=> {
                                         return (
-                                    <div key={i} className="thumbnail_wrap">
+                                    <div key={i} onClick={(event)=>handleImageIndex(event, i)} className="thumbnail_wrap">
                                         <img src={image} alt=""/>
                                     </div>)
                                     })

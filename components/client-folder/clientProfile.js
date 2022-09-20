@@ -78,7 +78,7 @@ const ClientProfile = () => {
                             <p>Change image</p>
                         </label>
                         <label htmlFor="profileImage">
-                            <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.png"} alt=""/>
+                            <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
                         </label>
                     </div>
                     <div className="client_details_content">

@@ -46,6 +46,7 @@ export default function Login() {
                 password,
             },
         }});
+        console.log(data, error);
         await data.loginUser.userName !== undefined && setProgress(!progress);
         await error !== undefined && setProgress(!progress);
     }

@@ -15,12 +15,28 @@ export default function Signup() {
     const [progress, setProgress] = useState(false);
     const [err, setErr] = useState({
         confirmPassword: "",
+        confirmEmail: "",
     });
+
+    const verifyEmail = () => {
+        let emailVerify = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]/g;
+        //Email test
+        if(emailVerify.test(signUp.email) == true){
+            setErr({
+                ...err, confirmEmail: ""
+            })
+        }else{
+            setErr({
+                ...err, confirmEmail: "invalid email"
+            });
+        }
+    }
 
     const handleSignUp = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
         setSignUp({...signUp, [name]: value});
+        verifyEmail();
     }
 
     const verifyPassword = (e) => {
@@ -33,7 +49,6 @@ export default function Signup() {
             ...err, confirmPassword: "password does not match"
         });
     }
-    console.log(signUp);
     const {userSignUp} =useContext(MainContext);
 
     const submitSignUp = async (e) => {
@@ -54,10 +69,16 @@ export default function Signup() {
                 }
             }
         })
+        console.log(data, error);
         if(data){
             await setProgress(!progress); 
             router.replace('/login');
         } 
+    }
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        router.push('/login');
     }
 
     
@@ -89,6 +110,7 @@ export default function Signup() {
                 <div className="form_row">
                     <label>Email </label>
                     <input name="email" onChange={handleSignUp} placeholder="input your email here" type="text"/> 
+                    {err.confirmEmail !== '' ? <p className='error'>{err.confirmEmail}</p>: ''}
                 </div>
                 <div className="form_row">
                     <label>Password</label> 
@@ -109,7 +131,10 @@ export default function Signup() {
                         <button onClick={submitSignUp}>Create Account</button>
                     }
                 </div>
-                
+                <div className="login_sign_up flex_show_row">
+                        <p>Already have an account?</p>
+                        <p onClick={handleLogin}>Login</p>
+                </div>
             </form>
         </div>
     </div>

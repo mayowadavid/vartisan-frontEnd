@@ -82,25 +82,20 @@ export const CategorySkeletal = () => {
                 <div className="category_displayed_row">
                     {data.map((data, i)=> {
                        return (<div className="filtered_card" key={i}>
-                        <Link href=''><a>
+                        <a>
                         <img className="skeleton" alt=""/>
                         </a>
-                        </Link>
                         <div className="filtered_content">
                             <div className="filtered_image">
                                 <img className="skeleton" alt=""/>
                             </div>
-                            <div className="filtered_title">
+                            <div className="full_title">
                                 <p className='skeleton skeleton-text'></p>
                                 <p className='skeleton skeleton-text'></p>
                                 <div className="gig_creator_detail flex_show_row">
                                     <img className='skeleton' alt=""/>
                                     <p className='skeleton skeleton-text'></p>
                                 </div>
-                            </div>
-                            <div className="filtered_price">
-                                <p className='skeleton skeleton-text'></p>
-                                <p className='skeleton skeleton-text'></p>
                             </div>
                         </div>
                         </div>)

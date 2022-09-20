@@ -11,14 +11,18 @@ const PrimaryHeader = () => {
         e.preventDefault();
         router.push(`/${userName}/vartisan/dashboard`);
    }
+
+   const home = () => {
+    router.replace('/');
+    }
   return (
     <div className="category_container">
             <div className="admin_header">
                 <div className="category_logo">
-                    <p>Logo</p>
+                    <p onClick={home}>Logo</p>
                 </div>
                 <div className="category_search_bar">
-                    <img src="../../img/Search.png" alt=""/>
+                    <img src="/img/Search.png" alt=""/>
                     <input type="text" placeholder="Search"/>
                 </div>
                 <div className="category_header_content">
@@ -27,11 +31,11 @@ const PrimaryHeader = () => {
                     <p onClick={handleRoute}>Dashboard</p>
                 </div>
                 <div className="category_header_icon">
-                    <img src="../../svg/Notification.svg" alt=""/>
-                    <img src="../../svg/chat.svg" alt=""/>
+                    <img src="/svg/Notification.svg" alt=""/>
+                    <img src="/svg/chat.svg" alt=""/>
                 </div>
                 <div className="category_header_avatar">
-                    <img src={userProfile?.file !== null? userProfile?.file?.image :"../../svg/avatar.png"} alt=""/>
+                    <img src={userProfile?.file !== null? userProfile?.file?.image : "/svg/avatar.svg"} alt=""/>
                 </div>
             </div>
             <div className="category_container_header">

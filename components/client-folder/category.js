@@ -105,13 +105,13 @@ const Category = () => {
                     </Link>
                     <div className="filtered_content">
                         <div className="filtered_image">
-                            <img src={user?.profile?.file?.image !== undefined ? user?.profile?.file?.image :"svg/avatar.png"} alt=""/>
+                            <img src={user?.profile?.file?.image !== undefined ? user?.profile?.file?.image :"svg/avatar.svg"} alt=""/>
                         </div>
                         <div className="filtered_title">
                             <p>{ name }</p>
                             <p>{user?.userName}</p>
                             <div className="gig_creator_detail flex_show_row">
-                                <img src="svg/avatar.png" alt=""/>
+                                <img src={user?.profile?.file?.image !== undefined ? user?.profile?.file?.image :"svg/avatar.svg"} alt=""/>
                                 <p>{user?.userName}</p>
                             </div>
                         </div>

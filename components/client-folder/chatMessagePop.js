@@ -147,7 +147,7 @@ const ChatMessagePop = ({sellerData}) => {
                     <p>Send a message</p>
                 </div>
                 <div onClick={closePop} className="cancel_chat_message flex_show_row">
-                    <img src="../../img/close_small.svg" alt=""/>
+                    <img src="../../svg/close_small.svg" alt=""/>
                 </div>
             </div>
             <div className="chat_message_body_wrap flex_show_row">

@@ -43,7 +43,7 @@ const VartisanHeader = () => {
                     </div>
                 </div>
                 <div className="header_avatar">
-                    <img src={userProfile?.file !== null? userProfile?.file?.image: "../../svg/avatar.png"} alt=""/>
+                    <img src={userProfile?.file !== null? userProfile?.file?.image: "../../svg/avatar.svg"} alt=""/>
                 </div>
             </div>
   )
