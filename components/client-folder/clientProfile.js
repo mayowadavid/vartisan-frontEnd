@@ -56,6 +56,7 @@ const ClientProfile = () => {
         const headers = {authorization: token ? `Bearer ${JSON.parse(token)}` : ""}
         userProfile.id !== undefined && await uploadImage(userProfile, files, headers);
     }
+    
   return (
       <>
         <div className="filtered_category_body">
@@ -78,7 +79,7 @@ const ClientProfile = () => {
                             <p>Change image</p>
                         </label>
                         <label htmlFor="profileImage">
-                            <img src={userProfile?.file !== null? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
+                            <img src={userProfile?.file !== undefined ? userProfile?.file?.image: "svg/avatar.svg"} alt=""/>
                         </label>
                     </div>
                     <div className="client_details_content">

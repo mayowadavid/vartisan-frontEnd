@@ -8,7 +8,6 @@ const Sidebar = () => {
     const {changeState, setChangeState, vartisanState} = useContext(MainContext);
     const router = useRouter();
    const { userName } = router.query;
-   console.log(userName);
     const handleSideBar = (e) => {
         e.preventDefault();
         const {name, id} = e.target;

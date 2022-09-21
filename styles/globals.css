@@ -11243,6 +11243,10 @@ margin-top: 9%;
 }
 
 @media (max-width: 1000px) and (min-width: 60px) {
+  .hex-client_tab {
+     width: 100%;
+  }
+
   .create_category_header_button{
       width: 32%;
   }

@@ -12,6 +12,7 @@ import { clean } from '../../components/functions/functions';
 import ClientDescription from '../../components/client-folder/clientDescription';
 import ClientReferencePop from '../../components/client-folder/client_reference_pop';
 import { ClientProfileSkeletal } from '../../components/client-folder/clientProfileSkeletal';
+import VartisanSideMenu from '../../components/general-folder/vartisanMobileMenu';
 
 
 const SingleSeller = () => {
@@ -26,13 +27,16 @@ const SingleSeller = () => {
     editAbout,
     popReference, 
     setPopReference,
-    handlePop
+    handlePop,
+    sideMenu
    } = useContext(MainContext);
   useEffect(()=> {
     if(userName !==  undefined){
       queryUserName({variables: {
         userName
       }});
+    } else {
+      router.push('/login');
     }
   }, [userName])
 
@@ -58,6 +62,7 @@ const SingleSeller = () => {
 
   return (
     <>
+    {sideMenu == true && <VartisanSideMenu />}
     { popReference == true && <ClientReferencePop handlePop={handlePop} /> }
     { editAbout == true && <ClientDescription /> }
     <ClientHeader />
